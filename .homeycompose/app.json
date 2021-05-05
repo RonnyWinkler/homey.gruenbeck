@@ -32,6 +32,8 @@
       }
     ]
   },
+  "source": "https://github.com/RonnyWinkler/homey.gruenbeck",
+  "homeyCommunityTopicId": 47110,
   "permissions": [],
   "contributing": {
       "donate": {
