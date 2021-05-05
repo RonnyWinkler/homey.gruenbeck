@@ -1,0 +1,328 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="lwsa.css">
+
+    <!-- The '/homey.js' script must be included in your settings view to work -->
+    <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+</head>
+
+<body>
+    <!-- Tab links -->
+    <div class="tab">
+        <button class="tablinks" onclick="setPage(event, 'settings')" id="defaultOpen"><span data-i18n="settings.settings"></span></button>
+        <button class="tablinks" onclick="setPage(event, 'detected')"><span data-i18n="settings.detected"></span></button>
+        <button class="tablinks" onclick="setPage(event, 'log')"><span data-i18n="settings.diagnosticsLog"></span></button>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <div id="settings" class="tabcontent">
+
+        <p data-i18n="settings.subtitle"></p>
+
+        <fieldset>
+            <legend><span data-i18n="settings.accountDetails"></span></legend>
+            <fieldset>
+                <div class="field row">
+                    <label for="user"><span data-i18n="settings.user"></span></label>
+                    <input id="user" type="text" value="" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="field row">
+                    <label for="password"><span data-i18n="settings.password"></span></label>
+                    <input id="password" type="password" value="" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="field row">
+                    <label for="updateInterval"><span data-i18n="settings.updateInterval"></span></label>
+                    <input id="updateInterval" type="number" value="" />
+                    <br>
+                    <label for="updateIntervalDescr"><span data-i18n="settings.updateIntervalDescr"></span></label>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="field row">
+                    <input id="active" type="checkbox"  />
+                    <label for="active"><span data-i18n="settings.active"></span></label>
+                    <br>
+                </div>
+            </fieldset>
+        </fieldset>
+        <fieldset>
+            <p><button id="save" class="right"><span data-i18n="settings.saveChanges"></span></button></p>
+            <br>
+            <p><button id="testLogin" class="right"><span data-i18n="settings.testLogin"></span></button></p>
+        </fieldset>
+    </div>
+
+    <!-- detected-->
+    <div id="detected" class="tabcontent">
+        <fieldset>
+            <div class="field row">
+                <textarea id="detectedDevices"></textarea>
+            </div>
+        </fieldset>
+    </div>
+
+    <!-- LOG PAGE -->
+    <div id="log" class="tabcontent">
+        <fieldset>
+            <p data-i18n="settings.diagnosticsLog">
+            </p>
+            <div class="field row">
+                <label for="logEnabled"><span data-i18n="settings.logEnabled"></span></label>
+                <input id="logEnabled" type="checkbox" value="logEnabled" />
+            </div>
+        </fieldset>
+        <fieldset>
+            <p><button id="clearDiagLog"><span data-i18n="settings.clearLog"></span></button></p>
+            <div class="field row">
+                <textarea id="diagLog"></textarea>
+            </div>
+        </fieldset>
+    </div>
+    
+    <script type="text/javascript">
+        var userElement = document.getElementById('user');
+        var passwordElement = document.getElementById('password');
+        var updateIntervalElement = document.getElementById('updateInterval');
+        var activeElement = document.getElementById('active');
+        var detectedDevicesElement = document.getElementById('detectedDevices');
+        var diagLogElement = document.getElementById('diagLog');
+        var logEnabledElement = document.getElementById('logEnabled');
+
+        var saveElement = document.getElementById('save');
+        var clearLogElement = document.getElementById('clearDiagLog');
+        var testLoginElement = document.getElementById('testLogin');
+
+        // a method named 'onHomeyReady' must be present in your code
+        function onHomeyReady(Homey)
+        {
+            document.getElementById("defaultOpen").click();
+
+            Homey.on('de.ronnywinkler.homey.gruenbeck.detectedDevicesUpdated', function(data)
+            {
+                detectedDevicesElement.value = data.devices;
+            });
+
+            Homey.on('de.ronnywinkler.homey.gruenbeck.logupdated', function(data)
+            {
+                diagLogElement.value = data.log;
+            });
+
+            Homey.on('settings.set', function()
+            {
+                Homey.get('settings', function(err, settings)
+                {
+                    if (err) return Homey.alert(err);
+                    passwordElement.value = settings.password;
+                    userElement.value = settings.user;
+                    updateIntervalElement.value = settings.updateInterval;
+                    activeElement.checked = settings.active;
+                });
+            });
+
+            Homey.get('settings', function(err, settings)
+            {
+                if (err) return Homey.alert(err);
+                if (settings){
+                    passwordElement.value = settings.password;
+                    userElement.value = settings.user;
+                    updateIntervalElement.value = settings.updateInterval;
+                    activeElement.checked = settings.active;
+                }
+            });
+
+            // Homey.get('password', function(err, password)
+            // {
+            //     if (err) return Homey.alert(err);
+            //     passwordElement.value = password;
+            // });
+
+            // Homey.get('user', function(err, user)
+            // {
+            //     if (err) return Homey.alert(err);
+            //     userElement.value = user;
+            // });
+
+            // Homey.get('updateInterval', function(err, updateInterval)
+            // {
+            //     if (err) return Homey.alert(err);
+            //     updateIntervalElement.value = updateInterval;
+            // });
+
+            // Homey.get('logEnabled', function(err, logEnabled)
+            // {
+            //     if (err) return Homey.alert(err);
+            //     logEnabledElement.checked = logEnabled;
+            // });
+
+            Homey.api('GET', '/getLog/',
+            {
+                notify: true
+            }, function(err, result)
+            {
+                if (err)
+                {
+                    return Homey.alert(err);
+                }
+                else
+                {
+                    diagLogElement.value = result;
+                }
+            });
+
+            Homey.api('GET', '/getDetect/',
+            {
+                notify: true
+            }, function(err, result)
+            {
+                if (err)
+                {
+                    return Homey.alert(err);
+                }
+                else
+                {
+                    detectedDevicesElement.value = result;
+                }
+            });
+
+            saveElement.addEventListener('click', function(e)
+            {
+                // //passwordElement.value = passwordElement.value.replace(/[\"\']/g, '');
+                // Homey.set('password', passwordElement.value, function(err)
+                // {
+                //     if (err) return Homey.alert(err);
+                // });
+
+                // Homey.set('user', userElement.value, function(err)
+                // {
+                //     if (err) return Homey.alert(err);
+                // });
+
+                // Homey.set('updateInterval', updateIntervalElement.value, function(err)
+                // {
+                //     if (err) return Homey.alert(err);
+                // });
+                let settings = {};
+                settings = {
+                    "user": userElement.value,
+                    "password": passwordElement.value,
+                    "updateInterval": updateIntervalElement.value,
+                    "active": activeElement.checked
+                }
+                Homey.set('settings', settings, function(err)
+                {
+                    if (err) return Homey.alert(err);
+                });
+
+                return Homey.alert(Homey.__('settings.saved'));
+            });
+
+            logEnabledElement.addEventListener('click', function(e)
+            {
+                Homey.set('logEnabled', logEnabledElement.checked, function(err)
+                {
+                    if (err) return Homey.alert(err);
+                });
+            });
+
+            clearLogElement.addEventListener('click', function(e)
+            {
+                Homey.api('POST', '/clearLog/',
+                {
+                    notify: true
+                }, function(err, result)
+                {
+                    if (err)
+                    {
+                        return Homey.alert(err);
+                    }
+                    else
+                    {
+                        diagLogElement.value = "";
+                    }
+                });
+            });
+
+
+            testLoginElement.addEventListener('click', function(e)
+            {
+
+                Homey.api('GET', '/loginTest/',
+                {
+                    notify: true
+                }, function(err, result)
+                {
+                    if (err)
+                    {
+                        return Homey.alert(err);
+                    }
+                    else
+                    {
+                        //return Homey.alert(Homey.__('settings.loginOK'));
+                        return Homey.alert(result);
+                    }
+                });
+                /*
+                if ( login( ) )
+                    return Homey.alert(Homey.__('settings.loginOK'));
+                else
+                    return Homey.alert(Homey.__('settings.loginError'));
+                */
+            });
+
+            // Tell Homey we're ready to be displayed
+            Homey.ready();
+        }
+
+        function setPage(evt, tabPage)
+        {
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++)
+            {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++)
+            {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabPage).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            if (tabPage == 'log')
+            {
+                // Refresh the log data
+                Homey.get('logEnabled', function(err, logEnabled)
+                {
+                    if (err) return Homey.alert(err);
+                    logEnabledElement.checked = logEnabled;
+                });
+
+                // Make the log text area fill the page
+                diagLogElement.setAttribute('cols', diagLogElement.parentElement.clientWidth / 8);
+                diagLogElement.style.height = (window.innerHeight - diagLogElement.offsetTop - 20) + 'px';
+            }
+            else if (tabPage == 'detected')
+            {
+                // Make the detected devices text area fill the page
+                detectedDevicesElement.setAttribute('cols', detectedDevicesElement.parentElement.clientWidth / 8);
+                detectedDevicesElement.style.height = (window.innerHeight - detectedDevicesElement.offsetTop - 20) + 'px';
+            }
+        }
+    </script>
+
+</body>
+
+</html>

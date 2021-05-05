@@ -1,0 +1,21 @@
+{
+    "settings": {
+        "settings": "Settings",
+        "detected": "Detected devices",
+        "subtitle": "Application settings",
+        "accountDetails": "Account details",
+        "user": "User Name",
+        "password": "Password",
+        "updateInterval": "Update interval (min)",
+        "updateIntervalDescr": "Set value >5min to avoid rate limit. Default is 15min.",
+        "active": "Activate data retrieval from Grünbeck cloud",
+        "saveChanges": "Save changes",
+        "saved": "The settings have been saved",
+        "testLogin": "Test login",
+        "loginOK": "Login OK",
+        "loginError": "Login not possible.",
+        "diagnosticsLog": "Diagnistic log",
+        "logEnabled": "Log enabled",
+        "clearLog": "Clear log"
+    }
+}

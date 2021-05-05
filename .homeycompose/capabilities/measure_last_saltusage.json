@@ -1,0 +1,12 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Last Saltusage",
+        "de": "Letzter Salzverbrauch"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/meter_salt.svg"
+}

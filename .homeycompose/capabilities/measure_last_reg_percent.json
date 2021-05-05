@@ -1,0 +1,12 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Last Regeneration",
+        "de": "Letzte Regeneration"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_last_reg_percent.svg"
+}

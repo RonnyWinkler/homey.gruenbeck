@@ -1,0 +1,90 @@
+{
+  "id": "softliq-sd",
+  "name": {
+    "en": "softliQ-SD"
+  },
+  "class": "other",
+  "capabilities": [
+    "measure_remaining_capacity",
+    "measure_last_update",
+    "measure_salt_level",
+    "alarm_regeneration_active",
+
+    "measure_last_waterusage",
+    "measure_last_saltusage",
+
+    "meter_water",
+    "meter_salt",
+
+    "measure_last_reg_percent",
+
+    "button.reset_measure_salt_level"
+  ],
+  "capabilitiesOptions": {
+    "measure_remaining_capacity": {
+      "units": "l"
+    },
+    "measure_last_waterusage": {
+        "units": "l"
+    },
+    "measure_last_saltusage": {
+        "units": "g"
+    },
+    "measure_last_reg_percent": {
+      "units": "%" 
+    },
+    "measure_salt_level": {
+      "units": "kg" 
+    },
+    "meter_water": {
+      "units": "l"
+    },
+    "meter_salt": {
+      "units": "kg"
+    },
+    "button.reset_measure_salt_level": {
+      "maintenanceAction": true,
+      "title": {
+         "en": "Reset salt level",
+         "de": "Salz-Füllstand zurücksetzen"
+      },
+      "desc": {
+         "en": "Reset the salt level after filling up salt to default value set in device options.",
+         "de": "Zurücksetzen des Salz-Füllstands nach Auffüllen mit neuem Salz auf den in den Geräteeinstellungen festgelegten Wert."
+      }
+    }
+  },
+  "pair": [
+    {
+        "id": "list_my_devices",
+        "template": "list_devices",
+        "navigation": {
+            "next": "add_my_devices"
+        }
+    },
+    {
+        "id": "add_my_devices",
+        "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "/drivers/softliq-sd/assets/images/small.png",
+    "large": "/drivers/softliq-sd/assets/images/large.png"
+  },
+  "settings": [
+    {
+      "id": "salt_level",
+      "type": "number",
+      "value": 25,
+      "label": {
+        "en": "Salt level for reset",
+        "de": "Salz-Füllstand für Zurücksetzen"
+      },
+      "hint": {
+        "en": "Set a desired salt level for reset in maintenance view.",
+        "de": "Salz-Füllstand angeben, der beim Zurücksetzen des Füllstands im Wartungsdialog verwendet werden soll."
+      },
+      "units": "kg"
+    }
+  ]
+}

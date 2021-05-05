@@ -1,0 +1,20 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "Regeneration active",
+        "de": "Regeneration aktiv"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "insightsTitleTrue": { 
+        "en": "Regeneration",
+        "de": "Regeneration"
+    },
+    "insightsTitleFalse": { 
+        "en": "usage",
+        "de": "Nutzung"
+    },
+    "icon": "/assets/alarm_regeneration_active.svg"
+}

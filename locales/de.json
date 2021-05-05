@@ -1,0 +1,21 @@
+{
+    "settings": {
+        "settings": "Einstellungen",
+        "detected": "Erkannte Geräte",
+        "subtitle": "Anwendungs-Einstellungen",
+        "accountDetails": "Konto-Details",
+        "user": "Benutzername",
+        "password": "Passwort",
+        "updateInterval": "Update-Intervall (min)",
+        "updateIntervalDescr": "Verwende einen Wert >5min, um eine Limit-Sperre zu vermeiden . Der Standardwert ist 15min.",
+        "active": "Aktiviere Datenermittlung aus der Grünbeck-Cloud",
+        "saveChanges": "Einstellungen speichern",
+        "saved": "Die Einstellungen wurden gespeichert",
+        "testLogin": "Login-Test",
+        "loginOK": "Login OK",
+        "loginError": "Login nicht möglich.",
+        "diagnosticsLog": "Diagnose-Log",
+        "logEnabled": "Log aktiviert",
+        "clearLog": "Clear Löschen"
+    }
+}

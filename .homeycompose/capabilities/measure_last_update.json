@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Last update",
+        "de": "Letzte Aktualisierung"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_last_update.svg"
+}

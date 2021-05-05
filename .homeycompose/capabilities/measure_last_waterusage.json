@@ -1,0 +1,12 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Last Waterusage",
+        "de": "Letzter Wasserverbrauch"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/meter_water.svg"
+}

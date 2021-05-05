@@ -1,0 +1,12 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Salt counter",
+        "de": "Salzzähler"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/meter_salt.svg"
+}

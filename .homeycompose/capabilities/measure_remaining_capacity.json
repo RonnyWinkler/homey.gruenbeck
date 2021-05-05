@@ -1,0 +1,12 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Remaining Capacity",
+        "de": "Restkapazität"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_remaining_capacity.svg"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "de.ronnywinkler.homey.gruenbeck",
+  "version": "0.1.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "name": {
+    "en": "Gruenbeck",
+    "de": "Grünbeck"
+  },
+  "description": {
+    "en": "Experience new worlds of soft water!",
+    "de": "Erleben Sie neue Welten weichen Wassers!"
+  },
+  "category": [
+    "appliances"
+  ],
+  "brandColor":"#63B32D",
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Ronny Winkler",
+    "email": "ronny.winkler@web.de"
+  },
+  "contributors":{
+    "developers":[
+      {
+        "name":"TA2k: (ioBroker adapter)",
+        "email":""
+      }
+    ]
+  },
+  "permissions": [],
+  "contributing": {
+      "donate": {
+          "paypal": {
+              "username": "winklerronny"
+          }
+      }
+  },
+  "api": {
+    "getLog": {
+      "method": "get",
+      "path": "/getLog/"
+    },
+    "getDetect": {
+      "method": "get",
+      "path": "/getDetect/"
+    },
+    "clearLog": {
+      "method": "post",
+      "path": "/clearLog/"
+    },
+    "loginTest": {
+      "method": "get",
+      "path": "/loginTest/"
+    }
+  }
+}
