@@ -1,5 +1,3 @@
-Experience new worlds of soft water!
-
 Integrate your Grünbeck water softener from the softliQ-SD series in Homey.
 Monitor the remaining capacity and the salt supply. Let Homey notify you of any changes.
 

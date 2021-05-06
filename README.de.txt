@@ -1,5 +1,3 @@
-Erleben Sie neue Welten weichen Wassers!
-
 Integrieren Sie Ihren Grünbeck Wasserenthärter der Serie softliQ-SD in Homey.
 Überwachen Sie die Restkapazität und den Salzvorrat. Lassen Sie sich von Homey bei Änderungen informieren.
 
