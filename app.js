@@ -40,19 +40,6 @@ class GruenbeckApp extends Homey.App {
     
     this.homey.settings.on('set', (key) =>
     {
-        // if (key === 'password')
-        // {
-        //     this.password = this.homey.settings.get('password');
-        // }
-        // else if (key === 'user')
-        // {
-        //     this.user = this.homey.settings.get('user');
-        // }
-        // else if (key === 'updateInterval')
-        // {
-        //     this.updateInterval = this.homey.settings.get('updateInterval');
-        // }
-
         if (key === 'settings')
         {
             let settings = this.homey.settings.get('settings');
@@ -67,16 +54,6 @@ class GruenbeckApp extends Homey.App {
               this.timeoutLoginAttempt = setTimeout(() => this.start().catch(e => console.log(e)), 3 * 1000 );
         }
       });
-
-    // this.password = this.homey.settings.get('password');
-    // this.user = this.homey.settings.get('user');
-    // this.updateInterval = this.homey.settings.get('updateInterval');
-    // if ( this.updateInterval < 5 )
-    //   this.updateInterval = 5;
-    // this.detectedDevices = "";
-    // if (this.homey.settings.get('detectedDevices'))
-    // this.detectedDevices = this.homey.settings.get('detectedDevices');
-    // this.active = this.homey.settings.get('active');
 
     if (this.active)
       this.timeoutLoginAttempt = setTimeout(() => this.start().catch(e => console.log(e)), 3 * 1000 );
@@ -136,18 +113,6 @@ class GruenbeckApp extends Homey.App {
     this.updateLog("===> Login");
     return this.gruenbeckSrv.login(this.user, this.password);
   }
-
-  // async loginAttempt()
-  // {
-  //   if (! await this.gruenbeckSrv.isConnected()){
-  //     this.updateLog("===== Not connected - Login Attempt =====");
-  //     if ( await this.login() ) {
-  //       await this.getDevices();
-  //     }  
-  //   }
-  //   clearTimeout(this.timeoutLoginAttempt);
-  //   this.timeoutLoginAttempt = setTimeout(() => this.loginAttempt().catch(e => console.log(e)), 10 * 1000 );
-  // }
 
   async devicesUpdate() {
     this.updateLog("===> Devices Update");
@@ -273,13 +238,34 @@ class GruenbeckApp extends Homey.App {
       {
           console.log(newMessage);
   
-          const nowTime = new Date(Date.now());
+          // const nowTime = new Date(Date.now());
   
+          // this.diagLog += "\r\n* ";
+          // this.diagLog += (nowTime.getHours());
+          // this.diagLog += ":";
+          // this.diagLog += nowTime.getMinutes();
+          // this.diagLog += ":";
+          // this.diagLog += nowTime.getSeconds();
+          // this.diagLog += ".";
+
+          const tz  = this.homey.clock.getTimezone();
+          const nowTime = new Date();
+          const now = nowTime.toLocaleString('de-DE', 
+              { 
+                  hour12: false, 
+                  timeZone: tz,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric"
+              });
+          var date = now.split(", ")[0];
+          date = date.split("/")[2] + "-" + date.split("/")[0] + "-" + date.split("/")[1]; 
+          var time = now.split(", ")[1];
+          
           this.diagLog += "\r\n* ";
-          this.diagLog += (nowTime.getHours());
-          this.diagLog += ":";
-          this.diagLog += nowTime.getMinutes();
-          this.diagLog += ":";
+          this.diagLog += date + " " + time + ":";
           this.diagLog += nowTime.getSeconds();
           this.diagLog += ".";
           let milliSeconds = nowTime.getMilliseconds().toString();
@@ -292,7 +278,6 @@ class GruenbeckApp extends Homey.App {
               this.diagLog += '00';
           }
           this.diagLog += milliSeconds;
-          this.diagLog += ": ";
           this.diagLog += "\r\n";
   
           this.diagLog += newMessage;

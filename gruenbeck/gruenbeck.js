@@ -249,7 +249,7 @@ class GruenbeckSrv extends EventEmitter{
                         try {
                             //filter for softliq devices
                             //console.log(JSON.stringify(response.data));
-                            response.data = response.data.filter((el) => el.id.toLowerCase().indexOf("soft") > -1);
+                            response.data = response.data.filter((el) => el.id.toLowerCase().indexOf("softliq.d") > -1);
                             //console.log(JSON.stringify(response.data));
                             //this.homey.settings.set('detectedDevices', JSON.stringify(response.data));
                             //const device = response.data[0];

@@ -1,5 +1,13 @@
 {
   "0.1.0": {
     "en": "Initial release"
+  },
+  "0.1.1": {
+    "en": "App description corrected, log timestamp set to local time.",
+    "de": "App-Beschreibung korrigiert, Log-Zeitpunkt in lokaler Zeit."
+  },
+  "0.1.2": {
+    "en": "Devices list filtered by softliq.D series.",
+    "de": "Geräte-Auswahl gefiltert nach softliq.D-Serie."
   }
 }
