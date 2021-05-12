@@ -4,7 +4,8 @@ const Homey = require('homey');
 // Events
 const EventEmitter = require('events');
 // Services
-const gruenbeckSrv = require("./gruenbeck/gruenbeck.js");
+const gruenbeckSDSrv = require("./gruenbeck/gruenbeckSD.js");
+const gruenbeckSCSrv = require("./gruenbeck/gruenbeckSC.js");
 const updateIntervalDefault = 15;
 
 class GruenbeckApp extends Homey.App {
@@ -16,7 +17,8 @@ class GruenbeckApp extends Homey.App {
     // Eventhandler
     this.events = new EventEmitter();
     // Grübbeck instance and event handler:
-    this.gruenbeckSrv = new gruenbeckSrv();
+    this.gruenbeckSrv = new gruenbeckSDSrv();
+    this.gruenbeckSCSrv = new gruenbeckSCSrv();
     this.onWsMessage = this.onWsMessage.bind(this);
     this.gruenbeckSrv.on("wsMessage", this.onWsMessage);
     // local data
@@ -119,36 +121,77 @@ class GruenbeckApp extends Homey.App {
     var deviceStatistic;
     var deviceLiveData;
     const devices = await this.getDevices();
-    for(const device of devices ){
-      //console.log(device);
-      if (device.data.serialNumber){
-        // Get Statictic data ofrom REST service 
-        this.updateLog("---> Device Statistics: "+device.data.id);
-        deviceStatistic = await this.gruenbeckSrv.parseMgInfos(device.data.id);
-        this.updateLog(JSON.stringify(deviceStatistic));
-        this.deviceUpdateStatistics(device.data.serialNumber, deviceStatistic);
-        // Get live data from WebSocket/device
-        this.updateLog("---> Device Live Data: "+device.data.id);
-        //console.log("---> Enter SD "+device.data.id);
-        //deviceLiveData = this.gruenbeckSrv.connectMgWebSocket();
-        this.gruenbeckSrv.enterSD(device.data.id)
-        .then(() => {
-            //console.log("---> Refresh SD");
-            this.gruenbeckSrv.refreshSD(device.data.id).catch(() => {
-                this.updateLog("---> Failed refresh SD");
+    if (devices){
+      for(const device of devices ){
+        //console.log(device);
+        if (device.serialNumber){
+          // ==> softliQ-SD Updates
+          if (device.series == "softliQ.D"){
+            this.updateLog("---> Device: SD");
+            // Get Statictic data ofrom REST service 
+            this.updateLog("---> Device Statistics: "+device.id);
+            deviceStatistic = await this.gruenbeckSrv.parseMgInfos(device.id);
+            this.updateLog(JSON.stringify(deviceStatistic));
+            this.deviceUpdateStatistics(device.serialNumber, deviceStatistic);
+            // Get live data from WebSocket/device
+            this.updateLog("---> Device Live Data: "+device.id);
+            //console.log("---> Enter SD "+device.data.id);
+            //deviceLiveData = this.gruenbeckSrv.connectMgWebSocket();
+            this.gruenbeckSrv.enterSD(device.id)
+            .then(() => {
+                //console.log("---> Refresh SD");
+                this.gruenbeckSrv.refreshSD(device.id).catch(() => {
+                    this.updateLog("---> Failed refresh SD");
+                });
+                //close SD-connection to prevent too much duplicate websocket updates
+                setTimeout(() => this.gruenbeckSrv.leaveSD(device.id).catch(e => console.log(e)), 3 * 1000 );
+            })
+            .catch(() => {
+                this.updateLog("---> Failed enter SD");
+                this.updateLog("---> Relogin");
+                this.login().then(() => {
+                    this.updateLog("---> Reconnect WebSocket");
+                    this.gruenbeckSrv.connectMgWebSocket();
+                });
             });
-            //close SD-connection to prevent too much duplicate websocket updates
-            setTimeout(() => this.gruenbeckSrv.leaveSD(device.data.id).catch(e => console.log(e)), 3 * 1000 );
-        })
-        .catch(() => {
-            this.updateLog("---> Failed enter SD");
-            this.updateLog("---> Relogin");
-            this.login().then(() => {
-                this.updateLog("---> Reconnect WebSocket");
-                this.gruenbeckSrv.connectMgWebSocket();
-            });
-        });
+          };
+          // ==> softliQ-SC Updates
+          if (device.series == "softliQ.C"){
+            this.updateLog("---> Device: SC (requestAllCommand)");
+            try{
+              
+              //=======================================================================
+              // TEST DATA softliQ-SC virtual device data!!!
+              // var deviceDataSC = "ok <D_D_1>19.0</D_D_1><D_A_4_1>-</D_A_4_1><D_A_4_2>-</D_A_4_2><D_A_4_3>-</D_A_4_3><D_C_1_1>0</D_C_1_1><D_C_2_1>0</D_C_2_1><D_C_5_1>0</D_C_5_1><D_C_4_1>0</D_C_4_1><D_C_4_2>15:06</D_C_4_2><D_C_4_3>02:00</D_C_4_3><D_C_6_1>0</D_C_6_1><D_C_7_1>368</D_C_7_1><D_A_2_2>183</D_A_2_2><D_A_2_3>99</D_A_2_3><D_C_3_6_1>192.168.86.32/24</D_C_3_6_1><D_C_8_1>-</D_C_8_1><D_C_8_2>-</D_C_8_2><D_C_3_6_2>192.168.86.1</D_C_3_6_2><D_C_3_6_3>192.168.86.1</D_C_3_6_3><D_C_3_6_4>0.0.0.0</D_C_3_6_4><D_C_3_6_5>1</D_C_3_6_5><D_C_3_7_1>192.168.0.1/24</D_C_3_7_1><D_C_3_7_2>softliQ:SC_bf2ec8</D_C_3_7_2><D_C_3_7_3>1</D_C_3_7_3><D_Y_5>0</D_Y_5><D_Y_7>-</D_Y_7><D_Y_6>V01.01.02</D_Y_6><D_Y_8_11>0</D_Y_8_11><D_Y_10_1> 99</D_Y_10_1><D_B_1>0</D_B_1><D_A_1_1>0.00</D_A_1_1><D_A_1_2>0.31</D_A_1_2><D_A_1_3>6.0</D_A_1_3><D_A_2_1>0.0</D_A_2_1><D_A_3_1> 6</D_A_3_1><D_A_3_2>80</D_A_3_2><D_K_1> 830</D_K_1><D_K_2> 207</D_K_2><D_K_3>1.86</D_K_3><D_K_4> 0</D_K_4><D_K_7> 480</D_K_7><D_K_8>2.0</D_K_8><D_K_9>0.11</D_K_9><D_Y_2_1>202</D_Y_2_1><D_Y_4_1> 5h 13min</D_Y_4_1><D_Y_2_2>39</D_Y_2_2><D_Y_4_2> 53h 15min</D_Y_4_2><D_Y_2_3>82</D_Y_2_3><D_Y_4_3> 124h 33min</D_Y_4_3><D_Y_2_4>51</D_Y_2_4><D_Y_4_4> 173h 44min</D_Y_4_4><D_Y_2_5>71</D_Y_2_5><D_Y_4_5> 221h 44min</D_Y_4_5><D_Y_2_6>120</D_Y_2_6><D_Y_4_6> 269h 39min</D_Y_4_6><D_Y_2_7>58</D_Y_2_7><D_Y_4_7> 319h 37min</D_Y_4_7><D_Y_2_8>157</D_Y_2_8><D_Y_4_8> 364h 50min</D_Y_4_8><D_Y_2_9>63</D_Y_2_9><D_Y_4_9> 435h 48min</D_Y_4_9><D_Y_2_10>90</D_Y_2_10><D_Y_4_10> 507h 48min</D_Y_4_10><D_Y_2_11>173</D_Y_2_11><D_Y_4_11> 555h 47min</D_Y_4_11><D_Y_2_12>167</D_Y_2_12><D_Y_4_12> 602h 24min</D_Y_4_12><D_Y_2_13>115</D_Y_2_13><D_Y_4_13> 652h 10min</D_Y_4_13><D_Y_2_14>96</D_Y_2_14><D_Y_4_14> 700h 37min</D_Y_4_14>";
+              // this.updateLog(deviceDataSC);
+              // this.deviceUpdateSC(device.serialNumber, deviceDataSC);
+              //=======================================================================
 
+              var deviceDataSC = await this.gruenbeckSCSrv.requestDataSC(device.ipAddress, this.gruenbeckSCSrv.requestAllCommand);
+              this.updateLog(deviceDataSC);
+              this.deviceUpdateSC(device.serialNumber, deviceDataSC);
+
+              // alternative parameter for data request
+              // this.updateLog("requestActualsCommand");
+              // var deviceDataSC = await this.gruenbeckSCSrv.requestDataSC(device.ipAddress, this.gruenbeckSCSrv.requestActualsCommand);
+              // this.updateLog(deviceDataSC);
+              // this.updateLog("requestAllComrequestErrorsCommandmand");
+              // var deviceDataSC = await this.gruenbeckSCSrv.requestDataSC(device.ipAddress, this.gruenbeckSCSrv.requestErrorsCommand);
+              // this.updateLog(deviceDataSC);
+              // this.updateLog("requestImpulsCommand");
+              // var deviceDataSC = await this.gruenbeckSCSrv.requestDataSC(device.ipAddress, this.gruenbeckSCSrv.requestImpulsCommand);
+              // this.updateLog(deviceDataSC);
+              // this.updateLog("requestDurchflussCommand");
+              // var deviceDataSC = await this.gruenbeckSCSrv.requestDataSC(device.ipAddress, this.gruenbeckSCSrv.requestDurchflussCommand);
+              // this.updateLog(deviceDataSC);
+            }
+            catch(err)
+            {
+              this.updateLog("Error DataRequest SC device");
+              this.updateLog(err);
+            }
+          }
+        }
       }
     }
     clearTimeout(this.timeoutDevicesUpdate);
@@ -172,28 +215,22 @@ class GruenbeckApp extends Homey.App {
     //console.log(searchData);
     if (searchData)
     {
-      // Create an array of devices
-      for (const device of searchData)
-      {
-        // Filter: only softliQ.D allowed
-        if (device.series = "softliQ.D"){  
-          let data = {}
-          data = {
-              "id": device.id,
-              "series": device.series,
-              "serialNumber": device.serialNumber
-          };
-
-          // Add this device to the table
-          devices.push(
-          {
-            "name": device.name,
-            data
-          });
-        }
-      }
+      //=======================================================================
+      //TEST DATA softliQ-SC virtual device!!!
+      // searchData.push(
+      // {
+      //   "ipAddress": "192.168.1.240",
+      //   "id": "softliQ.C/BS00037590",
+      //   "series": "softliQ.C",
+      //   "serialNumber": "BS00037590",
+      //   "name": "softliQ:sc18"
+      // });
+      // var dev = JSON.stringify(searchData);
+      // this.updateLog(dev);
+      //=======================================================================
+      
       this.updateLog(this.detectedDevices);
-      return devices;
+      return searchData;
     }
     else
     {
@@ -212,6 +249,12 @@ class GruenbeckApp extends Homey.App {
     // emit event to device instance
     //console.log("WS Data Message");
     this.events.emit("deviceUpdateData", deviceSerialNumber, deviceData);
+  }
+
+  deviceUpdateSC(deviceSerialNumber, deviceData){
+    // emit event to device instance
+    //console.log("WS Data Message");
+    this.events.emit("deviceUpdateSC", deviceSerialNumber, deviceData);
   }
 
   //async websocketCallback(data){

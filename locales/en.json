@@ -7,7 +7,7 @@
         "user": "User Name",
         "password": "Password",
         "updateInterval": "Update interval (min)",
-        "updateIntervalDescr": "Set value >5min to avoid rate limit. Default is 15min.",
+        "updateIntervalDescr": "softliQ-SD: Set value >5min to avoid rate limit.<br>softliQ-SC: Set value >1min.<br> Default is 15min.",
         "active": "Activate data retrieval from Grünbeck cloud",
         "saveChanges": "Save changes",
         "saved": "The settings have been saved",

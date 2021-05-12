@@ -9,5 +9,25 @@
   "0.1.2": {
     "en": "Devices list filtered by softliq.D series.",
     "de": "Geräte-Auswahl gefiltert nach softliq.D-Serie."
+  },
+  "0.1.3": {
+    "en": "Test version for SC integration.",
+    "de": "Testversion für SC-Integration."
+  },
+  "0.1.4": {
+    "en": "Test version for SC integration.",
+    "de": "Testversion für SC-Integration."
+  },
+  "0.1.5": {
+    "en": "Test version for SC integration.",
+    "de": "Testversion für SC-Integration."
+  },
+  "0.1.6": {
+    "en": "Test version for SC integration.",
+    "de": "Testversion für SC-Integration."
+  },
+  "0.1.7": {
+    "en": "softliQ-SC integration.",
+    "de": "softliQ-SC-Integration."
   }
 }

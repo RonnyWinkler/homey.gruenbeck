@@ -12,17 +12,6 @@
             }
         },
         {
-            "id": "measure_last_saltusage_changed",
-            "title": {
-                "en": "Last salt usage has changed",
-                "de": "Letzer Salzverbrauch hat sich geändert"
-            },
-            "hint": {
-                "en": "When device statistic was updated with salt usage of last day.",
-                "de": "Wenn die Geräte-Statistik aktualisert wurde mit dem Salzverbrauch des letzten Tages."
-            }
-        },
-        {
             "id": "measure_remaining_capacity_changed",
             "title": {
                 "en": "Remaining capacity has changed",
@@ -45,17 +34,6 @@
             }
         },
         {
-            "id": "measure_salt_level_changed",
-            "title": {
-                "en": "Salt level changed",
-                "de": "Salz-Füllstand hat sich geändert"
-            },
-            "hint": {
-                "en": "The level of regeneration salt has changed.",
-                "de": "Der Füllsatand des Regenerations-Salzes hat sich geändert."
-            }
-        },
-        {
             "id": "measure_last_update_changed",
             "title": {
                 "en": "Last update timestamp changed",
@@ -64,28 +42,6 @@
             "hint": {
                 "en": "The timestamp of last update has changed. The displayed time represents the last valid connection to the device.",
                 "de": "Der Zeitpunkt der lezten Aktualisierung hat sich geändert. Der angezeigte Wert entspricht der letzten gültigen Verbindung zum Gerät."
-            }
-        },
-        {
-            "id": "meter_water_changed",
-            "title": {
-                "en": "Water meter changed",
-                "de": "Wasserzähler hat sich geändert"
-            },
-            "hint": {
-                "en": "The water meter has changed. It's the internal water meter for soft water.",
-                "de": "Der Wasserzähler hat sich geändert. Dies ist der interne Wasserzähler für Weichwasser."
-            }
-        },
-        {
-            "id": "meter_salt_changed",
-            "title": {
-                "en": "Salt meter changed",
-                "de": "Salzzähler hat sich geändert"
-            },
-            "hint": {
-                "en": "The salt meter has changed. It's the internal counter for used salt.",
-                "de": "Der Salzzähler hat sich geändert. Dies ist der interne Zähler für verbrauchtes Salz."
             }
         },
         {
@@ -123,35 +79,6 @@
                 "en": "This Flow will continue if regeneration is/is not currently in progress.",
                 "de": "Dieser Flow wird fortgeführt, wenn die Regeneration derzeit aktiv/nicht aktiv ist."
             }
-        }
-    ],
-    "actions": [
-        {
-            "id": "set_salt_level",
-            "title": {
-                "en": "Set salt level",
-                "de": "Salz-Füllstand setzen"
-            },
-            "titleFormatted": {
-                "en": "Set salt level to [[salt_level]] kg. Use this action to (re)set the salt level of your device after filling up with salt (e.g. 25 kg).",
-                "de": "Setze Salz-Füllstand auf [[salt_level]] kg. Verwende diese Aktion, um den Füllstand des Gerätes nach dem Auffüllen von Salz auf den gewünschten Wert zu setzen (z.B. 25 kg)."
-            },
-            "args": [
-                {
-                    "name": "salt_level",
-                    "type": "number",
-                    "min": 1,
-                    "max": 100,
-                    "placeholder": {
-                        "en": "kg",
-                        "de": "kg"
-                    },
-                    "title": {
-                        "en": "New salt level",
-                        "de": "Neuer Salz-Füllstand"
-                    }
-                }
-            ]
         }
     ]
 }

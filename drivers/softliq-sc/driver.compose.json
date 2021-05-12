@@ -1,0 +1,42 @@
+{
+  "id": "softliq-sc",
+  "name": {
+    "en": "softliQ-SC"
+  },
+  "class": "other",
+  "capabilities": [
+    "measure_remaining_capacity",
+    "measure_last_update",
+    "measure_last_waterusage",
+    "alarm_regeneration_active",
+    "measure_last_reg_percent"
+  ],
+  "capabilitiesOptions": {
+    "measure_remaining_capacity": {
+      "units": "l"
+    },
+    "measure_last_waterusage": {
+        "units": "l"
+    },
+    "measure_last_reg_percent": {
+      "units": "%" 
+    }
+  },
+  "pair": [
+    {
+        "id": "list_my_devices",
+        "template": "list_devices",
+        "navigation": {
+            "next": "add_my_devices"
+        }
+    },
+    {
+        "id": "add_my_devices",
+        "template": "add_devices"
+    }
+  ],
+  "images": {
+    "small": "/drivers/softliq-sd/assets/images/small.jpg",
+    "large": "/drivers/softliq-sd/assets/images/large.jpg"
+  }
+}

@@ -2,12 +2,12 @@
 
 const { Driver } = require('homey');
 
-class softliqsdDriver extends Driver {
+class softliqscDriver extends Driver {
   /**
    * onInit is called when the driver is initialized.
    */
   async onInit() {
-    this.log('softliqsdDriver has been initialized');
+    this.log('softliqscDriver has been initialized');
 
     let regeneratingCondition = this.homey.flow.getConditionCard('is_regenerating');
     regeneratingCondition.registerRunListener(async (args, state) =>
@@ -37,7 +37,7 @@ class softliqsdDriver extends Driver {
       for (const device of searchData)
       {
         // Filter: only softliQ.D allowed
-        if (device.series == "softliQ.D"){  
+        if (device.series == "softliQ.C"){  
           data = {
               "id": device.id,
               "series": device.series,
@@ -58,4 +58,4 @@ class softliqsdDriver extends Driver {
 
 }
 
-module.exports = softliqsdDriver;
+module.exports = softliqscDriver;
