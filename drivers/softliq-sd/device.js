@@ -29,7 +29,7 @@ class softliqsdDevice extends Device {
         }
         // calculate salt level
         if (this.getCapabilityValue('measure_last_saltusage') != data.salt[0].value ){
-            var new_salt_level = this.getCapabilityValue('measure_salt_level') - (data.salt[0].value/1000);
+            let new_salt_level = ( Math.round( this.getCapabilityValue('measure_salt_level') * 1000 - (data.salt[0].value) ) ) /1000;
             await this.setCapabilityValue('measure_salt_level', new_salt_level).catch(this.error); 
         }
         await this.setCapabilityValue('measure_last_waterusage', data.water[0].value).catch(this.error);
@@ -63,9 +63,9 @@ class softliqsdDevice extends Device {
                     month: "2-digit",
                     year: "numeric"
                 });
-                var date = now.split(", ")[0];
+                let date = now.split(", ")[0];
                 date = date.split("/")[2] + "-" + date.split("/")[0] + "-" + date.split("/")[1]; 
-                var time = now.split(", ")[1];
+                let time = now.split(", ")[1];
             await this.setCapabilityValue('measure_last_update', date + " " + time).catch(this.error);
             }
     }

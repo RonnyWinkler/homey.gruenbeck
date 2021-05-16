@@ -27,7 +27,7 @@ class softliqscDevice extends Device {
             return;
         }
 
-        var indexStart, indexEnd;
+        let indexStart, indexEnd;
         // Restkapazität
         if ( data.indexOf("<D_A_1_2>") != -1 ){
           indexStart = data.indexOf("<D_A_1_2>") + 9;
@@ -77,9 +77,9 @@ class softliqscDevice extends Device {
                 month: "2-digit",
                 year: "numeric"
             });
-            var date = now.split(", ")[0];
+            let date = now.split(", ")[0];
             date = date.split("/")[2] + "-" + date.split("/")[0] + "-" + date.split("/")[1]; 
-            var time = now.split(", ")[1];
+            let time = now.split(", ")[1];
         await this.setCapabilityValue('measure_last_update', date + " " + time).catch(this.error);
     }
 

@@ -29,5 +29,29 @@
   "0.1.7": {
     "en": "softliQ-SC integration.",
     "de": "softliQ-SC-Integration."
+  },
+  "0.1.8": {
+    "en": "softliQ-SC integration.",
+    "de": "softliQ-SC-Integration."
+  },
+  "0.1.9": {
+    "en": "softliQ-SC integration, code cleanup",
+    "de": "softliQ-SC-Integration, Code-Optimierung"
+  },
+  "0.1.10": {
+    "en": "softliQ-SC integration, code cleanup",
+    "de": "softliQ-SC-Integration, Code-Optimierung"
+  },
+  "0.1.11": {
+    "en": "softliQ-SC integration, code cleanup",
+    "de": "softliQ-SC-Integration, Code-Optimierung"
+  },
+  "0.1.12": {
+    "en": "softliQ-SD retry instead of relogin on disconnects",
+    "de": "softliQ-SD Wiederholung statt Neuverbindung bei Unterbrechungen"
+  },
+  "1.0.0": {
+    "en": "softliQ-SC integration.",
+    "de": "softliQ-SC-Integration."
   }
 }

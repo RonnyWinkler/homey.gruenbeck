@@ -29,7 +29,7 @@ class GruenbeckSDSrv extends EventEmitter{
 
         this.user = "";
         this.password = "";
-        }
+    }
 
     login(user, password) {
         //console.log("===== Login =====");
@@ -50,8 +50,7 @@ class GruenbeckSDSrv extends EventEmitter{
                     "Accept-Encoding": "br, gzip, deflate",
                     Connection: "keep-alive",
                     "Accept-Language": "de-de",
-                    "User-Agent": this.userAgent,
-                    withCredentials: true
+                    "User-Agent": this.userAgent
                 },
             };
             //console.log("Login Step 1 - GET:");
@@ -60,7 +59,6 @@ class GruenbeckSDSrv extends EventEmitter{
             //"code_challenge=" +
             //codeChallange +
             //"&x-client-CPU=64&client-request-id=F2929DED-2C9D-49F5-A0F4-31215427667C&redirect_uri=msal5a83cc16-ffb1-42e9-9859-9fbf07f36df8%3A%2F%2Fauth&client_id=5a83cc16-ffb1-42e9-9859-9fbf07f36df8&haschrome=1&return-client-request-id=true&x-client-DM=iPhone")
-            axios.defaults.withCredentials = true;
             axios
                 .get( 
                     "https://gruenbeckb2c.b2clogin.com/a50d35c1-202f-4da7-aa87-76e51a3098c6/b2c_1a_signinup/oauth2/v2.0/authorize?" +
@@ -384,12 +382,12 @@ class GruenbeckSDSrv extends EventEmitter{
                     //console.log("enterSD response: "+JSON.stringify(response.data));
                     if (response.status < 400) {
                         this.heartBeatTimeout = setTimeout(() => {
-                            console.log("No Data since 2min start login");
+                            console.log("No Data since 20 min start login");
                             this.login().then(() => {
                                 console.log("Reconnect");
                                 this.connectMgWebSocket();
                             });
-                        }, 2 * 60 * 1000);
+                        }, 20 * 60 * 1000);
                         //console.log("enterSD OK");
                         resolve();
                     } else {
@@ -453,60 +451,7 @@ class GruenbeckSDSrv extends EventEmitter{
                 .get("https://prod-eu-gruenbeck-api.azurewebsites.net/api/devices/" + mgDeviceId + "/" + endpoint + "?api-version=" + this.sdVersion, axiosConfig)
                 .then(async (response) => {
                     if (response.data) {
-                        if (endpoint) {
-                            endpoint = endpoint.replace("/", ".");
-                            endpoint = endpoint;
-                        }
-                        try {
-                            //console.log(JSON.stringify(response.data));
-                            // if (Array.isArray(response.data)) {
-                            //     if (endpoint) {
-                            //         endpoint = endpoint.replace("/", ".");
-                            //     }
-                            //     // await this.setObjectNotExistsAsync(mgDeviceId + "." + endpoint, {
-                            //     //     type: "state",
-                            //     //     common: {
-                            //     //         name: endpoint,
-                            //     //         type: "string",
-                            //     //         role: "indicator",
-                            //     //         write: false,
-                            //     //         read: true,
-                            //     //     },
-                            //     //     native: {},
-                            //     // });
-                            //     // this.setState(mgDeviceId + "." + endpoint, JSON.stringify(response.data), true);
-                            // } else {
-                            //     if (endpoint) {
-                            //         endpoint = endpoint.replace("/", ".");
-                            //         endpoint = endpoint + ".";
-                            //     }
-                            //     for (const key in response.data) {
-                            //         // await this.setObjectNotExistsAsync(mgDeviceId + "." + endpoint + key, {
-                            //         //     type: "state",
-                            //         //     common: {
-                            //         //         name: descriptions[key] || key,
-                            //         //         type: typeof response.data[key],
-                            //         //         role: "indicator",
-                            //         //         write: endpoint ? true : false,
-                            //         //         read: true,
-                            //         //     },
-                            //         //     native: {},
-                            //         // });
-                            //         if (Array.isArray(response.data[key])) {
-                            //         //    this.setState(mgDeviceId + "." + endpoint + key, JSON.stringify(response.data[key]), true);
-                            //         } else {
-                            //             if (typeof response.data[key] === "object") {
-                            //                 response.data[key] = JSON.stringify(response.data[key]);
-                            //             }
-                            //         //    this.setState(mgDeviceId + "." + endpoint + key, response.data[key], true);
-                            //         }
-                            //     }
-                            // }
-                            resolve(response.data);
-                        } catch (error) {
-                            //console.log(error);
-                            reject(ERROR);
-                        }
+                        resolve(response.data);
                     } else {
                         reject("no data");
                     }
@@ -520,7 +465,7 @@ class GruenbeckSDSrv extends EventEmitter{
 
     connectMgWebSocket() {
         //console.log("===== connectMgWebSocket =====");
-        let wsMessage;
+        this.closeMgWebSocket();
         const axiosConfig = {
             headers: {
                 "Content-Type": "text/plain;charset=UTF-8",
@@ -569,22 +514,12 @@ class GruenbeckSDSrv extends EventEmitter{
 
                                             "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
                                         },
+                                        perMessageDeflate: false
                                     });
 
                                     this.ws.on("open", async () => {
                                         //console.log("WS connected");
                                         this.ws.send('{"protocol":"json","version":1}');
-                                        // await this.setObjectNotExistsAsync(mgDeviceId + ".Stream", {
-                                        //     type: "state",
-                                        //     common: {
-                                        //         name: "Streaminformation via myGruenbeck",
-                                        //         role: "indicator",
-                                        //         type: "mixed",
-                                        //         write: false,
-                                        //         read: true,
-                                        //     },
-                                        //     native: {},
-                                        // });
                                     });
                                     this.ws.on("close", (data) => {
                                         //console.log(data);
@@ -594,43 +529,20 @@ class GruenbeckSDSrv extends EventEmitter{
                                         //console.log("WS-Message: " +data);
 
                                         clearTimeout(this.heartBeatTimeout);
-                                        try {
+                                        //try {
                                             const message = JSON.parse(data.replace("", ""));
-
+                                            // event on wsMessage from device
                                             this.emit('wsMessage', JSON.stringify(message));
 
-                                            // if (message.arguments) {
-                                            //     wsMessage = message;
-                                            //     message.arguments.forEach(async (argument) => {
-                                            //         for (const key in argument) {
-                                            //             // await this.setObjectNotExistsAsync(mgDeviceId + ".Stream." + key, {
-                                            //             //     type: "state",
-                                            //             //     common: {
-                                            //             //         name: descriptions[key] || key,
-                                            //             //         type: typeof argument[key],
-                                            //             //         role: "indicator",
-                                            //             //         write: false,
-                                            //             //         read: true,
-                                            //             //     },
-                                            //             //     native: {},
-                                            //             // });
-                                            //             if (Array.isArray(response.data[key])) {
-                                            //             //    this.setState(mgDeviceId + ".Stream." + key, JSON.stringify(argument[key]), true);
-                                            //             } else {
-                                            //             //    this.setState(mgDeviceId + ".Stream." + key, argument[key], true);
-                                            //             }
-                                            //         }
-                                            //     });
-                                            // }
-                                        } catch (error) {
-                                            console.log("Websocket parse error");
-                                            console.log(error);
-                                            console.log(data);
-                                            this.ws.close();
-                                            setTimeout(() => {
-                                                this.connectMgWebSocket();
-                                            }, 5000);
-                                        }
+                                        //} catch (error) {
+                                        //    console.log("Websocket parse error");
+                                        //    console.log(error);
+                                        //    console.log(data);
+                                        //    this.ws.close();
+                                        //    setTimeout(() => {
+                                        //        this.connectMgWebSocket();
+                                        //    }, 5000);
+                                        //}
                                     });
                                 } catch (error) {
                                     console.log(error);
@@ -649,12 +561,22 @@ class GruenbeckSDSrv extends EventEmitter{
                 // handle error
                 console.log(error);
             });
-        return wsMessage;
+        return;
     }
 
     closeMgWebSocket() {
-        if (this.ws )
+        if (this.ws){
+            //this.ws.removeEventListener("open");
+            //this.ws.removeEventListener("close");
+            //this.ws.removeEventListener("message");
+            this.ws.removeAllListeners("open");
+            this.ws.removeAllListeners("close");
+            this.ws.removeAllListeners("message");
+            
             this.ws.close();
+            //this.ws.terminate();
+            this.ws = null;
+        }
     }
 
     isConnected(){

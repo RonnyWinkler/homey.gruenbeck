@@ -48,7 +48,8 @@ class GruenbeckSCSrv{
                     //log += "OnLoad "+xhr.responseText+"\r\n";
                     if (xhr.responseText) {
                         //this.parseData(domParser.parseFromString(xhr.responseText, "text/xml"));
-                        resolve(xhr.responseText);
+                        var response = xhr.responseText;
+                        resolve(response);
                     }
                 };
                 xhr.onreadystatechange = () => {
@@ -66,6 +67,7 @@ class GruenbeckSCSrv{
                             if (xhr.responseText.length === 0) {
                                 //console.log("Device returns empty repsonse. Resend request.");
                                 log += "Device returns empty repsonse. Resend request.\r\n";
+                                xhr = null;
                                 reject(log);
                             };
                             log += "Device cannot handle new connections this is normal.\r\n";

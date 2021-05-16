@@ -19,8 +19,7 @@ class GruenbeckApp extends Homey.App {
     // Grübbeck instance and event handler:
     this.gruenbeckSrv = new gruenbeckSDSrv();
     this.gruenbeckSCSrv = new gruenbeckSCSrv();
-    this.onWsMessage = this.onWsMessage.bind(this);
-    this.gruenbeckSrv.on("wsMessage", this.onWsMessage);
+    this.gruenbeckSrv.on("wsMessage", this.onWsMessage.bind(this));
     // local data
     this.diagLog = "";
     this.detectedDevices = "";
@@ -38,7 +37,6 @@ class GruenbeckApp extends Homey.App {
         this.updateInterval = updateIntervalDefault; 
       this.active = settings.active;
     }
-
     
     this.homey.settings.on('set', (key) =>
     {
@@ -116,10 +114,18 @@ class GruenbeckApp extends Homey.App {
     return this.gruenbeckSrv.login(this.user, this.password);
   }
 
+  async reconnectSD(){
+    clearTimeout(this.timeoutReconnectSD);
+    this.updateLog("---> Relogin");
+    await this.login().then(() => {
+        this.updateLog("---> Reconnect WebSocket");
+        this.gruenbeckSrv.connectMgWebSocket();
+    });
+  }
+
   async devicesUpdate() {
     this.updateLog("===> Devices Update");
-    var deviceStatistic;
-    var deviceLiveData;
+    let deviceStatistic;
     const devices = await this.getDevices();
     if (devices){
       for(const device of devices ){
@@ -136,23 +142,30 @@ class GruenbeckApp extends Homey.App {
             // Get live data from WebSocket/device
             this.updateLog("---> Device Live Data: "+device.id);
             //console.log("---> Enter SD "+device.data.id);
-            //deviceLiveData = this.gruenbeckSrv.connectMgWebSocket();
             this.gruenbeckSrv.enterSD(device.id)
             .then(() => {
                 //console.log("---> Refresh SD");
+                // clear timer from EnterSD-Error/Reconnect
+                clearTimeout(this.timeoutReconnectSD);
                 this.gruenbeckSrv.refreshSD(device.id).catch(() => {
                     this.updateLog("---> Failed refresh SD");
                 });
                 //close SD-connection to prevent too much duplicate websocket updates
-                setTimeout(() => this.gruenbeckSrv.leaveSD(device.id).catch(e => console.log(e)), 3 * 1000 );
+                setTimeout(() => this.gruenbeckSrv.leaveSD(device.id).catch(() => {
+                  this.updateLog("---> Failed leave SD")
+                }), 3 * 1000 );
             })
             .catch(() => {
-                this.updateLog("---> Failed enter SD");
-                this.updateLog("---> Relogin");
-                this.login().then(() => {
-                    this.updateLog("---> Reconnect WebSocket");
-                    this.gruenbeckSrv.connectMgWebSocket();
-                });
+                this.updateLog("---> Failed enter SD - Wait for next try and ReLogin in 20 min if still error");
+                // Set timer for ReLogin after EnterSD-Error. 
+                //This timer is cleared if next EnterSD is ok (device temporary unavailable)
+                clearTimeout(this.timeoutReconnectSD);
+                this.timeoutReconnectSD = setTimeout(() => this.reconnectSD().catch(e => console.log(e)), 1000 * 60 * 20 );
+                // this.updateLog("---> Relogin");
+                // this.login().then(() => {
+                //     this.updateLog("---> Reconnect WebSocket");
+                //     this.gruenbeckSrv.connectMgWebSocket();
+                // });
             });
           };
           // ==> softliQ-SC Updates
@@ -303,9 +316,9 @@ class GruenbeckApp extends Homey.App {
                   month: "2-digit",
                   year: "numeric"
               });
-          var date = now.split(", ")[0];
+          let date = now.split(", ")[0];
           date = date.split("/")[2] + "-" + date.split("/")[0] + "-" + date.split("/")[1]; 
-          var time = now.split(", ")[1];
+          let time = now.split(", ")[1];
           
           this.diagLog += "\r\n* ";
           this.diagLog += date + " " + time + ":";
