@@ -7,7 +7,7 @@ const EventEmitter = require('events');
 const gruenbeckSDSrv = require("./gruenbeck/gruenbeckSD.js");
 const gruenbeckSCSrv = require("./gruenbeck/gruenbeckSC.js");
 const updateIntervalDefault = 15;
-const reconnectTimer = 5;
+const reconnectTimer = 30;
 
 class GruenbeckApp extends Homey.App {
   /**
