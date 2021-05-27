@@ -7,6 +7,7 @@ const EventEmitter = require('events');
 const gruenbeckSDSrv = require("./gruenbeck/gruenbeckSD.js");
 const gruenbeckSCSrv = require("./gruenbeck/gruenbeckSC.js");
 const updateIntervalDefault = 15;
+const reconnectTimer = 5;
 
 class GruenbeckApp extends Homey.App {
   /**
@@ -20,6 +21,8 @@ class GruenbeckApp extends Homey.App {
     this.gruenbeckSrv = new gruenbeckSDSrv();
     this.gruenbeckSCSrv = new gruenbeckSCSrv();
     this.gruenbeckSrv.on("wsMessage", this.onWsMessage.bind(this));
+    // Timer
+    this.timeoutReconnectSD = null;
     // local data
     this.diagLog = "";
     this.detectedDevices = "";
@@ -116,7 +119,8 @@ class GruenbeckApp extends Homey.App {
 
   async reconnectSD(){
     clearTimeout(this.timeoutReconnectSD);
-    this.updateLog("---> Relogin");
+    this.timeoutReconnectSD = null;
+    this.updateLog("---> Relogin (Reconnect timer)");
     await this.login().then(() => {
         this.updateLog("---> Reconnect WebSocket");
         this.gruenbeckSrv.connectMgWebSocket();
@@ -147,6 +151,7 @@ class GruenbeckApp extends Homey.App {
                 //console.log("---> Refresh SD");
                 // clear timer from EnterSD-Error/Reconnect
                 clearTimeout(this.timeoutReconnectSD);
+                this.timeoutReconnectSD = null;
                 this.gruenbeckSrv.refreshSD(device.id).catch(() => {
                     this.updateLog("---> Failed refresh SD");
                 });
@@ -156,12 +161,18 @@ class GruenbeckApp extends Homey.App {
                 }), 3 * 1000 );
             })
             .catch(() => {
-                this.updateLog("---> Failed enter SD - Wait for next try and ReLogin in 20 min if still error");
                 // Set timer for ReLogin after EnterSD-Error. 
                 //This timer is cleared if next EnterSD is ok (device temporary unavailable)
-                clearTimeout(this.timeoutReconnectSD);
-                this.timeoutReconnectSD = setTimeout(() => this.reconnectSD().catch(e => console.log(e)), 1000 * 60 * 20 );
-                // this.updateLog("---> Relogin");
+                //Only clear/set timer if not already active to prevent endless timer restarts 
+                if (!this.timeoutReconnectSD){
+                  this.updateLog("---> Failed enter SD - Started reconnect timer. Wait for next try and ReLogin in "+reconnectTimer+" min if error still occours.");
+                  clearTimeout(this.timeoutReconnectSD);
+                  this.timeoutReconnectSD = setTimeout(() => this.reconnectSD().catch(e => console.log(e)), 1000 * 60 * reconnectTimer );
+                }
+                else{
+                  this.updateLog("---> Failed enter SD - Reconnect timer is still active. Waiting for connection or reconnect timer.");
+                }
+                  // this.updateLog("---> Relogin");
                 // this.login().then(() => {
                 //     this.updateLog("---> Reconnect WebSocket");
                 //     this.gruenbeckSrv.connectMgWebSocket();
@@ -232,10 +243,10 @@ class GruenbeckApp extends Homey.App {
       //TEST DATA softliQ-SC virtual device!!!
       // searchData.push(
       // {
-      //   "ipAddress": "192.168.1.240",
-      //   "id": "softliQ.C/BS00037590",
+      //   "ipAddress": "192.168.1.XXX",
+      //   "id": "softliQ.C/BS000XXXXX",
       //   "series": "softliQ.C",
-      //   "serialNumber": "BS00037590",
+      //   "serialNumber": "BS000XXXXX",
       //   "name": "softliQ:sc18"
       // });
       // var dev = JSON.stringify(searchData);

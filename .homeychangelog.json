@@ -57,5 +57,9 @@
   "1.0.1": {
     "en": "softliQ-SC integration.",
     "de": "softliQ-SC-Integration."
+  },
+  "1.0.2": {
+    "en": "softliQ-SD: Improved reconnect on cloud disconnect.",
+    "de": "softliQ-SD: Verbesserte Wiederverbindung bei Cloud-Unterbrechung."
   }
 }
