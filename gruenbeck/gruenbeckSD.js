@@ -382,9 +382,9 @@ class GruenbeckSDSrv extends EventEmitter{
                     //console.log("enterSD response: "+JSON.stringify(response.data));
                     if (response.status < 400) {
                         this.heartBeatTimeout = setTimeout(() => {
-                            console.log("No Data since 20 min start login");
+                            //console.log("No Data since 20 min start login");
                             this.login().then(() => {
-                                console.log("Reconnect");
+                                //console.log("Reconnect");
                                 this.connectMgWebSocket();
                             });
                         }, 20 * 60 * 1000);
