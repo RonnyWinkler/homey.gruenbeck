@@ -128,6 +128,8 @@ class GruenbeckApp extends Homey.App {
   }
 
   async devicesUpdate() {
+    clearTimeout(this.timeoutDevicesUpdate);
+    this.timeoutDevicesUpdate = setTimeout(() => this.devicesUpdate().catch(e => console.log(e)), 1000 * 60 * this.updateInterval );
     this.updateLog("===> Devices Update");
     let deviceStatistic;
     const devices = await this.getDevices();
@@ -218,8 +220,6 @@ class GruenbeckApp extends Homey.App {
         }
       }
     }
-    clearTimeout(this.timeoutDevicesUpdate);
-    this.timeoutDevicesUpdate = setTimeout(() => this.devicesUpdate().catch(e => console.log(e)), 1000 * 60 * this.updateInterval );
   }
 
   async getDevices(forceLogin)
@@ -233,34 +233,39 @@ class GruenbeckApp extends Homey.App {
     }
     this.updateLog("---> Get Devices");
     const devices = [];
-    const searchData = await this.gruenbeckSrv.getMgDevices();
-    this.detectedDevices = JSON.stringify(searchData);
-    this.homey.api.realtime('de.ronnywinkler.homey.gruenbeck.detectedDevicesUpdated', { 'devices': this.detectedDevices });
-    //console.log(searchData);
-    if (searchData)
-    {
-      //=======================================================================
-      //TEST DATA softliQ-SC virtual device!!!
-      // searchData.push(
-      // {
-      //   "ipAddress": "192.168.1.XXX",
-      //   "id": "softliQ.C/BS000XXXXX",
-      //   "series": "softliQ.C",
-      //   "serialNumber": "BS000XXXXX",
-      //   "name": "softliQ:sc18"
-      // });
-      // var dev = JSON.stringify(searchData);
-      // this.updateLog(dev);
-      //=======================================================================
-      
-      this.updateLog(this.detectedDevices);
-      return searchData;
+    //const searchData = await this.gruenbeckSrv.getMgDevices()
+    try{
+      const searchData = await this.gruenbeckSrv.getMgDevices();
+      this.detectedDevices = JSON.stringify(searchData);
+      this.homey.api.realtime('de.ronnywinkler.homey.gruenbeck.detectedDevicesUpdated', { 'devices': this.detectedDevices });
+      //console.log(searchData);
+      if (searchData)
+      {
+        //=======================================================================
+        //TEST DATA softliQ-SC virtual device!!!
+        // searchData.push(
+        // {
+        //   "ipAddress": "192.168.1.XXX",
+        //   "id": "softliQ.C/BS000XXXXX",
+        //   "series": "softliQ.C",
+        //   "serialNumber": "BS000XXXXX",
+        //   "name": "softliQ:sc18"
+        // });
+        // var dev = JSON.stringify(searchData);
+        // this.updateLog(dev);
+        //=======================================================================
+        
+        this.updateLog(this.detectedDevices);
+        return searchData;
+      }
+      else
+      {
+        this.updateLog("No devices found.");
+      }
     }
-    else
-    {
-      this.updateLog("No devices found.");
-        //throw (new Error("No devices found"));
-    }
+    catch(err){
+      this.updateLog("Error Get Devices: "+err);
+    };
   }
 
   deviceUpdateStatistics(deviceSerialNumber, deviceData){

@@ -61,5 +61,9 @@
   "1.0.2": {
     "en": "softliQ-SD: Improved reconnect on cloud disconnect.",
     "de": "softliQ-SD: Verbesserte Wiederverbindung bei Cloud-Unterbrechung."
+  },
+  "1.0.3": {
+    "en": "softliQ-SD: Improved reconnect.",
+    "de": "softliQ-SD: Verbesserte Wiederverbindung."
   }
 }
