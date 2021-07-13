@@ -1,0 +1,12 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Regeneration steps remaining",
+        "de": "Regenerations-Schritte verbleibend"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_reg_remaining_step.svg"
+}

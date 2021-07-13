@@ -18,7 +18,18 @@
 
     "measure_last_reg_percent",
 
+    "measure_reg_progress",
+    "measure_reg_progress_text",
+    "measure_reg_progress_description",
+    "measure_reg_remaining_step",
+
+    "meter_water.remaining_capacity",
+
+    "button.refresh",
     "button.reset_measure_salt_level"
+  ],
+  "defaultCapabilities": [
+    "meter_water.remaining_capacity"
   ],
   "capabilitiesOptions": {
     "measure_remaining_capacity": {
@@ -42,6 +53,15 @@
     "meter_salt": {
       "units": "kg"
     },
+    "measure_reg_progress": {
+      "units": "%" 
+    },
+    "measure_reg_remaining_step": {
+      "units": "" 
+    },
+    "measure_reg_remaining_desctiption": {
+      "units": "" 
+    },
     "button.reset_measure_salt_level": {
       "maintenanceAction": true,
       "title": {
@@ -51,6 +71,17 @@
       "desc": {
          "en": "Reset the salt level after filling up salt to default value set in device options.",
          "de": "Zurücksetzen des Salz-Füllstands nach Auffüllen mit neuem Salz auf den in den Geräteeinstellungen festgelegten Wert."
+      }
+    },
+    "button.refresh": {
+      "maintenanceAction": true,
+      "title": {
+         "en": "Refresh device data",
+         "de": "Daten aktualisieren"
+      },
+      "desc": {
+         "en": "One-time refresh of device data.",
+         "de": "Gerätedaten einmalig aktualisieren."
       }
     }
   },

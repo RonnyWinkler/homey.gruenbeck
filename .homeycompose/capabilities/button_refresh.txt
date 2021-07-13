@@ -1,0 +1,13 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "Refresh",
+        "de": "Aktualisieren"
+    },
+    "getable": true,
+    "setable": true,
+    "uiComponent": "toggle",
+    "uiQuickAction": false,
+    "insights": false,
+    "icon": "/assets/alarm_regeneration_active.svg"
+}

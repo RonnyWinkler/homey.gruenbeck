@@ -1,0 +1,51 @@
+{
+    "type": "enum",
+    "title": {
+        "en": "state",
+        "de": "Status"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": true,
+    "icon": "/assets/measure_reg_progress.svg",
+    "values": [
+        { 
+            "id": "00", 
+            "title": {
+                "de": "Nutzung", 
+                "en": "Usage" }
+        },
+        { 
+            "id": "01", 
+            "title": {
+                "de": "Salztank füllen", 
+                "en": "Fill salt tank" }
+        },
+        { 
+            "id": "02", 
+            "title": {
+                "de": "Besalzen", 
+                "en": "Salting" }
+        },
+        { 
+            "id": "03", 
+            "title": {
+                "de": "Verdrängen", 
+                "en": "Displace" }
+        },
+        { 
+            "id": "04", 
+            "title": {
+                "de": "Rückspülen", 
+                "en": "Backwash" }
+        },
+        { 
+            "id": "05", 
+            "title": {
+                "de": "Auswaschen", 
+                "en": "Wash out" }
+        }
+
+    ]
+}

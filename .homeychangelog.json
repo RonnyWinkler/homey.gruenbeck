@@ -65,5 +65,9 @@
   "1.0.3": {
     "en": "softliQ-SD: Improved reconnect.",
     "de": "softliQ-SD: Verbesserte Wiederverbindung."
+  },
+  "1.0.4": {
+    "en": "softliQ-SD: Added regeneration status and manual refresh (maintenance view)",
+    "de": "softliQ-SD: Regenerations-Status und manuelle Aktualisierung (Wartungssicht) hinzugefügt."
   }
 }

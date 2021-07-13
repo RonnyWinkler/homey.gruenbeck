@@ -17,5 +17,13 @@
         "diagnosticsLog": "Diagnose-Log",
         "logEnabled": "Log aktiviert",
         "clearLog": "Clear Löschen"
+    },
+    "capabilityCaption": {
+        "regProgressDescription00": "Nutzung",
+        "regProgressDescription01": "Salztank füllen",
+        "regProgressDescription02": "Besalzen",
+        "regProgressDescription03": "Verdrängen",
+        "regProgressDescription04": "Rückspülen",
+        "regProgressDescription05": "Auswaschen"
     }
 }

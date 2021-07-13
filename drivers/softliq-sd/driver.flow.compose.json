@@ -89,6 +89,28 @@
             }
         },
         {
+            "id": "measure_reg_progress",
+            "title": {
+                "en": "Regeneration progress changed",
+                "de": "Regenerations-Fortschritt hat sich geändert"
+            },
+            "hint": {
+                "en": "The regeneration progress has changed.",
+                "de": "Der Regenerations-Fortschritt hat sich geändert."
+            }
+        },
+        {
+            "id": "measure_reg_remaining_step",
+            "title": {
+                "en": "Regeneration step changed",
+                "de": "Regenerations-Schritt hat sich geändert"
+            },
+            "hint": {
+                "en": "The remaining regeneration steps have changed.",
+                "de": "Die verbleibenden Regenerations-Schritte haben sich geändert.."
+            }
+        },
+        {
             "id": "alarm_regeneration_active_true",
             "title": {
                 "en": "Regeneration has started",

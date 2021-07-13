@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Regeneration progress description",
+        "de": "Regenerations-Fortschritt Beschreibung"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": null,
+    "insights": false,
+    "icon": "/assets/measure_reg_progress.svg"
+}

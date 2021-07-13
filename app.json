@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.ronnywinkler.homey.gruenbeck",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "name": {
@@ -316,6 +316,42 @@
         ]
       },
       {
+        "id": "measure_reg_progress",
+        "title": {
+          "en": "Regeneration progress changed",
+          "de": "Regenerations-Fortschritt hat sich geändert"
+        },
+        "hint": {
+          "en": "The regeneration progress has changed.",
+          "de": "Der Regenerations-Fortschritt hat sich geändert."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=softliq-sd"
+          }
+        ]
+      },
+      {
+        "id": "measure_reg_remaining_step",
+        "title": {
+          "en": "Regeneration step changed",
+          "de": "Regenerations-Schritt hat sich geändert"
+        },
+        "hint": {
+          "en": "The remaining regeneration steps have changed.",
+          "de": "Die verbleibenden Regenerations-Schritte haben sich geändert.."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=softliq-sd"
+          }
+        ]
+      },
+      {
         "id": "alarm_regeneration_active_true",
         "title": {
           "en": "Regeneration has started",
@@ -484,7 +520,16 @@
         "meter_water",
         "meter_salt",
         "measure_last_reg_percent",
+        "measure_reg_progress",
+        "measure_reg_progress_text",
+        "measure_reg_progress_description",
+        "measure_reg_remaining_step",
+        "meter_water.remaining_capacity",
+        "button.refresh",
         "button.reset_measure_salt_level"
+      ],
+      "defaultCapabilities": [
+        "meter_water.remaining_capacity"
       ],
       "capabilitiesOptions": {
         "measure_remaining_capacity": {
@@ -508,6 +553,15 @@
         "meter_salt": {
           "units": "kg"
         },
+        "measure_reg_progress": {
+          "units": "%"
+        },
+        "measure_reg_remaining_step": {
+          "units": ""
+        },
+        "measure_reg_remaining_desctiption": {
+          "units": ""
+        },
         "button.reset_measure_salt_level": {
           "maintenanceAction": true,
           "title": {
@@ -517,6 +571,17 @@
           "desc": {
             "en": "Reset the salt level after filling up salt to default value set in device options.",
             "de": "Zurücksetzen des Salz-Füllstands nach Auffüllen mit neuem Salz auf den in den Geräteeinstellungen festgelegten Wert."
+          }
+        },
+        "button.refresh": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Refresh device data",
+            "de": "Daten aktualisieren"
+          },
+          "desc": {
+            "en": "One-time refresh of device data.",
+            "de": "Gerätedaten einmalig aktualisieren."
           }
         }
       },
@@ -623,6 +688,98 @@
       "uiComponent": "sensor",
       "insights": true,
       "icon": "/assets/meter_water.svg"
+    },
+    "measure_reg_progress": {
+      "type": "number",
+      "title": {
+        "en": "Regeneration progress",
+        "de": "Regenerations-Fortschritt"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_reg_progress.svg"
+    },
+    "measure_reg_progress_description": {
+      "type": "string",
+      "title": {
+        "en": "Regeneration progress description",
+        "de": "Regenerations-Fortschritt Beschreibung"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": null,
+      "insights": false,
+      "icon": "/assets/measure_reg_progress.svg"
+    },
+    "measure_reg_progress_text": {
+      "type": "enum",
+      "title": {
+        "en": "state",
+        "de": "Status"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": true,
+      "icon": "/assets/measure_reg_progress.svg",
+      "values": [
+        {
+          "id": "00",
+          "title": {
+            "de": "Nutzung",
+            "en": "Usage"
+          }
+        },
+        {
+          "id": "01",
+          "title": {
+            "de": "Salztank füllen",
+            "en": "Fill salt tank"
+          }
+        },
+        {
+          "id": "02",
+          "title": {
+            "de": "Besalzen",
+            "en": "Salting"
+          }
+        },
+        {
+          "id": "03",
+          "title": {
+            "de": "Verdrängen",
+            "en": "Displace"
+          }
+        },
+        {
+          "id": "04",
+          "title": {
+            "de": "Rückspülen",
+            "en": "Backwash"
+          }
+        },
+        {
+          "id": "05",
+          "title": {
+            "de": "Auswaschen",
+            "en": "Wash out"
+          }
+        }
+      ]
+    },
+    "measure_reg_remaining_step": {
+      "type": "number",
+      "title": {
+        "en": "Regeneration steps remaining",
+        "de": "Regenerations-Schritte verbleibend"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "insights": false,
+      "icon": "/assets/measure_reg_remaining_step.svg"
     },
     "measure_remaining_capacity": {
       "type": "number",

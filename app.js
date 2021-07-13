@@ -127,9 +127,14 @@ class GruenbeckApp extends Homey.App {
     });
   }
 
-  async devicesUpdate() {
-    clearTimeout(this.timeoutDevicesUpdate);
-    this.timeoutDevicesUpdate = setTimeout(() => this.devicesUpdate().catch(e => console.log(e)), 1000 * 60 * this.updateInterval );
+  async devicesUpdate(noTimeout) {
+    if (!noTimeout){
+      clearTimeout(this.timeoutDevicesUpdate);
+      this.timeoutDevicesUpdate = setTimeout(() => this.devicesUpdate().catch(e => console.log(e)), 1000 * 60 * this.updateInterval );
+    }
+    if (!this.gruenbeckSrv.isConnected()){
+      await this.login();
+    }
     this.updateLog("===> Devices Update");
     let deviceStatistic;
     const devices = await this.getDevices();

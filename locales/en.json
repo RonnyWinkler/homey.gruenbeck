@@ -17,5 +17,13 @@
         "diagnosticsLog": "Diagnistic log",
         "logEnabled": "Log enabled",
         "clearLog": "Clear log"
+    },
+    "capabilityCaption": {
+        "regProgressDescription00": "Usage",
+        "regProgressDescription01": "Fill salt tank",
+        "regProgressDescription02": "Salting",
+        "regProgressDescription03": "Displace",
+        "regProgressDescription04": "Backwash",
+        "regProgressDescription05": "Wash out"
     }
 }
