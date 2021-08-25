@@ -1,0 +1,29 @@
+{
+    "id": "measure_salt_level_changed",
+    "title": {
+        "en": "Salt level changed",
+        "de": "Salz-Füllstand hat sich geändert"
+    },
+    "hint": {
+        "en": "The level of regeneration salt has changed.",
+        "de": "Der Füllsatand des Regenerations-Salzes hat sich geändert."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_salt_level",
+            "type": "number",
+            "title": {
+                "en": "Salt level (kg)",
+                "de": "Salz-Füllstand (kg)"
+            },
+            "example": 25
+        }
+    ]
+}

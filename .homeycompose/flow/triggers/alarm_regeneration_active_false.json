@@ -1,0 +1,18 @@
+{
+    "id": "alarm_regeneration_active_false",
+    "title": {
+        "en": "Regeneration has finished",
+        "de": "Regeneration ist beendet"
+    },
+    "hint": {
+        "en": "When the regeneration has finished",
+        "de": "Wenn die Regeneration beendet ist"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+        }
+      ]
+}

@@ -1,0 +1,28 @@
+{
+    "id": "measure_reg_remaining_step_changed",
+    "title": {
+        "en": "Regeneration step changed",
+        "de": "Regenerations-Schritt hat sich geändert"
+    },
+    "hint": {
+        "en": "The remaining regeneration steps have changed.",
+        "de": "Die verbleibenden Regenerations-Schritte haben sich geändert.."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_reg_remaining_step",
+            "type": "number",
+            "title": {
+                "en": "Regeneration steps remaining",
+                "de": "Regenerations-Schritte verbleibend"
+            }
+        }
+    ]
+}

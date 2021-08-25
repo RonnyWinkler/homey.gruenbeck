@@ -1,0 +1,18 @@
+{
+    "id": "is_regenerating",
+    "title": {
+        "en": "Regeneration !{{is|isn't}} in progress",
+        "de": "Regeneration !{{ist|ist nicht}} aktiv"
+    },
+    "hint": {
+        "en": "This Flow will continue if regeneration is/is not currently in progress.",
+        "de": "Dieser Flow wird fortgeführt, wenn die Regeneration derzeit aktiv/nicht aktiv ist."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+        }
+      ]
+}

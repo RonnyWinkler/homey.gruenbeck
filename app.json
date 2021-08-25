@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.ronnywinkler.homey.gruenbeck",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "name": {
@@ -64,74 +64,20 @@
   "flow": {
     "triggers": [
       {
-        "id": "measure_last_waterusage_changed",
+        "id": "alarm_regeneration_active_false",
         "title": {
-          "en": "Last water usage has changed",
-          "de": "Letzer Wasserverbrauch hat sich geändert"
+          "en": "Regeneration has finished",
+          "de": "Regeneration ist beendet"
         },
         "hint": {
-          "en": "When device statistic was updated with water usage of last day.",
-          "de": "Wenn die Geräte-Statistik aktualisert wurde mit dem Wasserverbrauch des letzten Tages."
+          "en": "When the regeneration has finished",
+          "de": "Wenn die Regeneration beendet ist"
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
-            "filter": "driver_id=softliq-sc"
-          }
-        ]
-      },
-      {
-        "id": "measure_remaining_capacity_changed",
-        "title": {
-          "en": "Remaining capacity has changed",
-          "de": "Restkapazität hat sich geändert"
-        },
-        "hint": {
-          "en": "When remaining capacity has changed.",
-          "de": "Wenn sich die Restkapazität geändert hat."
-        },
-        "args": [
-          {
             "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sc"
-          }
-        ]
-      },
-      {
-        "id": "measure_last_reg_percent_changed",
-        "title": {
-          "en": "Last regeneration percent has changed",
-          "de": "Letzte Regeneration (Prozent) hat sich geändert"
-        },
-        "hint": {
-          "en": "The percentage of a full regeration if not the whole capacity was used.",
-          "de": "Der Prozentsatz einer vollen Regeneration, wenn nicht die gesamte Kapazität aufgebraucht wurde."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sc"
-          }
-        ]
-      },
-      {
-        "id": "measure_last_update_changed",
-        "title": {
-          "en": "Last update timestamp changed",
-          "de": "Aktualisierungszeitpunkt hat sich geändert"
-        },
-        "hint": {
-          "en": "The timestamp of last update has changed. The displayed time represents the last valid connection to the device.",
-          "de": "Der Zeitpunkt der lezten Aktualisierung hat sich geändert. Der angezeigte Wert entspricht der letzten gültigen Verbindung zum Gerät."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sc"
+            "filter": "driver_id=softliq-sc|softliq-sd"
           }
         ]
       },
@@ -147,45 +93,38 @@
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
-            "filter": "driver_id=softliq-sc"
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
           }
         ]
       },
       {
-        "id": "alarm_regeneration_active_false",
+        "id": "measure_last_reg_percent_changed",
         "title": {
-          "en": "Regeneration has finished",
-          "de": "Regeneration ist beendet"
+          "en": "Last regeneration percent has changed",
+          "de": "Letzte Regeneration (Prozent) hat sich geändert"
         },
         "hint": {
-          "en": "When the regeneration has finished",
-          "de": "Wenn die Regeneration beendet ist"
+          "en": "The percentage of a full regeration if not the whole capacity was used.",
+          "de": "Der Prozentsatz einer vollen Regeneration, wenn nicht die gesamte Kapazität aufgebraucht wurde."
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
-            "filter": "driver_id=softliq-sc"
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
           }
-        ]
-      },
-      {
-        "id": "measure_last_waterusage_changed",
-        "title": {
-          "en": "Last water usage has changed",
-          "de": "Letzer Wasserverbrauch hat sich geändert"
-        },
-        "hint": {
-          "en": "When device statistic was updated with water usage of last day.",
-          "de": "Wenn die Geräte-Statistik aktualisert wurde mit dem Wasserverbrauch des letzten Tages."
-        },
-        "args": [
+        ],
+        "tokens": [
           {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sd"
+            "name": "measure_last_reg_percent",
+            "type": "number",
+            "title": {
+              "en": "Last Regeneration (%)",
+              "de": "Letzte Regeneration (%)"
+            },
+            "example": 90
           }
         ]
       },
@@ -201,63 +140,20 @@
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
+            "type": "device",
             "filter": "driver_id=softliq-sd"
           }
-        ]
-      },
-      {
-        "id": "measure_remaining_capacity_changed",
-        "title": {
-          "en": "Remaining capacity has changed",
-          "de": "Restkapazität hat sich geändert"
-        },
-        "hint": {
-          "en": "When remaining capacity has changed.",
-          "de": "Wenn sich die Restkapazität geändert hat."
-        },
-        "args": [
+        ],
+        "tokens": [
           {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sd"
-          }
-        ]
-      },
-      {
-        "id": "measure_last_reg_percent_changed",
-        "title": {
-          "en": "Last regeneration percent has changed",
-          "de": "Letzte Regeneration (Prozent) hat sich geändert"
-        },
-        "hint": {
-          "en": "The percentage of a full regeration if not the whole capacity was used.",
-          "de": "Der Prozentsatz einer vollen Regeneration, wenn nicht die gesamte Kapazität aufgebraucht wurde."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sd"
-          }
-        ]
-      },
-      {
-        "id": "measure_salt_level_changed",
-        "title": {
-          "en": "Salt level changed",
-          "de": "Salz-Füllstand hat sich geändert"
-        },
-        "hint": {
-          "en": "The level of regeneration salt has changed.",
-          "de": "Der Füllsatand des Regenerations-Salzes hat sich geändert."
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sd"
+            "name": "measure_last_saltusage",
+            "type": "number",
+            "title": {
+              "en": "Last Saltusage (g)",
+              "de": "Letzter Salzverbrauch (g)"
+            },
+            "example": 250
           }
         ]
       },
@@ -273,27 +169,164 @@
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
-            "filter": "driver_id=softliq-sd"
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_last_update",
+            "type": "string",
+            "title": {
+              "en": "Last update (YYYY-MM-DD HH:MM)",
+              "de": "Letzte Aktualisierung (YYYY-MM-DD HH:MM)"
+            },
+            "example": "2021-08-25 15:20"
           }
         ]
       },
       {
-        "id": "meter_water_changed",
+        "id": "measure_last_waterusage_changed",
         "title": {
-          "en": "Water meter changed",
-          "de": "Wasserzähler hat sich geändert"
+          "en": "Last water usage has changed",
+          "de": "Letzer Wasserverbrauch hat sich geändert"
         },
         "hint": {
-          "en": "The water meter has changed. It's the internal water meter for soft water.",
-          "de": "Der Wasserzähler hat sich geändert. Dies ist der interne Wasserzähler für Weichwasser."
+          "en": "When device statistic was updated with water usage of last day.",
+          "de": "Wenn die Geräte-Statistik aktualisert wurde mit dem Wasserverbrauch des letzten Tages."
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_last_waterusage",
+            "type": "number",
+            "title": {
+              "en": "Last waterusage (l)",
+              "de": "Letzter Wasserverbrauch (l)"
+            },
+            "example": 450
+          }
+        ]
+      },
+      {
+        "id": "measure_reg_progress_changed",
+        "title": {
+          "en": "Regeneration progress changed",
+          "de": "Regenerations-Fortschritt hat sich geändert"
+        },
+        "hint": {
+          "en": "The regeneration progress has changed.",
+          "de": "Der Regenerations-Fortschritt hat sich geändert."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
             "filter": "driver_id=softliq-sd"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_reg_progress",
+            "type": "number",
+            "title": {
+              "en": "Regeneration progress (%)",
+              "de": "Regenerations-Fortschritt (%)"
+            },
+            "example": 60
+          }
+        ]
+      },
+      {
+        "id": "measure_reg_remaining_step_changed",
+        "title": {
+          "en": "Regeneration step changed",
+          "de": "Regenerations-Schritt hat sich geändert"
+        },
+        "hint": {
+          "en": "The remaining regeneration steps have changed.",
+          "de": "Die verbleibenden Regenerations-Schritte haben sich geändert.."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_reg_remaining_step",
+            "type": "number",
+            "title": {
+              "en": "Regeneration steps remaining",
+              "de": "Regenerations-Schritte verbleibend"
+            }
+          }
+        ]
+      },
+      {
+        "id": "measure_remaining_capacity_changed",
+        "title": {
+          "en": "Remaining capacity has changed",
+          "de": "Restkapazität hat sich geändert"
+        },
+        "hint": {
+          "en": "When remaining capacity has changed.",
+          "de": "Wenn sich die Restkapazität geändert hat."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_remaining_capacity",
+            "type": "number",
+            "title": {
+              "en": "Remaining Capacity (l)",
+              "de": "Restkapazität (l)"
+            },
+            "example": 345
+          }
+        ]
+      },
+      {
+        "id": "measure_salt_level_changed",
+        "title": {
+          "en": "Salt level changed",
+          "de": "Salz-Füllstand hat sich geändert"
+        },
+        "hint": {
+          "en": "The level of regeneration salt has changed.",
+          "de": "Der Füllsatand des Regenerations-Salzes hat sich geändert."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "measure_salt_level",
+            "type": "number",
+            "title": {
+              "en": "Salt level (kg)",
+              "de": "Salz-Füllstand (kg)"
+            },
+            "example": 25
           }
         ]
       },
@@ -309,81 +342,48 @@
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
+            "type": "device",
             "filter": "driver_id=softliq-sd"
+          }
+        ],
+        "tokens": [
+          {
+            "name": "meter_salt",
+            "type": "number",
+            "title": {
+              "en": "Salt counter (kg)",
+              "de": "Salzzähler (kg)"
+            },
+            "example": 123
           }
         ]
       },
       {
-        "id": "measure_reg_progress",
+        "id": "meter_water_changed",
         "title": {
-          "en": "Regeneration progress changed",
-          "de": "Regenerations-Fortschritt hat sich geändert"
+          "en": "Water meter changed",
+          "de": "Wasserzähler hat sich geändert"
         },
         "hint": {
-          "en": "The regeneration progress has changed.",
-          "de": "Der Regenerations-Fortschritt hat sich geändert."
+          "en": "The water meter has changed. It's the internal water meter for soft water.",
+          "de": "Der Wasserzähler hat sich geändert. Dies ist der interne Wasserzähler für Weichwasser."
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
+            "type": "device",
             "filter": "driver_id=softliq-sd"
           }
-        ]
-      },
-      {
-        "id": "measure_reg_remaining_step",
-        "title": {
-          "en": "Regeneration step changed",
-          "de": "Regenerations-Schritt hat sich geändert"
-        },
-        "hint": {
-          "en": "The remaining regeneration steps have changed.",
-          "de": "Die verbleibenden Regenerations-Schritte haben sich geändert.."
-        },
-        "args": [
+        ],
+        "tokens": [
           {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sd"
-          }
-        ]
-      },
-      {
-        "id": "alarm_regeneration_active_true",
-        "title": {
-          "en": "Regeneration has started",
-          "de": "Regeneration hat begonnen"
-        },
-        "hint": {
-          "en": "When the regeneration has started",
-          "de": "Wenn die Regeneration begonnen hat"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sd"
-          }
-        ]
-      },
-      {
-        "id": "alarm_regeneration_active_false",
-        "title": {
-          "en": "Regeneration has finished",
-          "de": "Regeneration ist beendet"
-        },
-        "hint": {
-          "en": "When the regeneration has finished",
-          "de": "Wenn die Regeneration beendet ist"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sd"
+            "name": "meter_salt",
+            "type": "number",
+            "title": {
+              "en": "Water counter (l)",
+              "de": "Wasserzähler (l)"
+            }
           }
         ]
       }
@@ -401,27 +401,9 @@
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
-            "filter": "driver_id=softliq-sc"
-          }
-        ]
-      },
-      {
-        "id": "is_regenerating",
-        "title": {
-          "en": "Regeneration !{{is|isn't}} in progress",
-          "de": "Regeneration !{{ist|ist nicht}} aktiv"
-        },
-        "hint": {
-          "en": "This Flow will continue if regeneration is/is not currently in progress.",
-          "de": "Dieser Flow wird fortgeführt, wenn die Regeneration derzeit aktiv/nicht aktiv ist."
-        },
-        "args": [
-          {
             "type": "device",
-            "name": "device",
-            "filter": "driver_id=softliq-sd"
+            "filter": "driver_id=softliq-sc|softliq-sd"
           }
         ]
       }
@@ -439,8 +421,8 @@
         },
         "args": [
           {
-            "type": "device",
             "name": "device",
+            "type": "device",
             "filter": "driver_id=softliq-sd"
           },
           {

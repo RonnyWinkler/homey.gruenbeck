@@ -1,0 +1,29 @@
+{
+    "id": "measure_reg_progress_changed",
+    "title": {
+        "en": "Regeneration progress changed",
+        "de": "Regenerations-Fortschritt hat sich geändert"
+    },
+    "hint": {
+        "en": "The regeneration progress has changed.",
+        "de": "Der Regenerations-Fortschritt hat sich geändert."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_reg_progress",
+            "type": "number",
+            "title": {
+                "en": "Regeneration progress (%)",
+                "de": "Regenerations-Fortschritt (%)"
+            },
+            "example": 60
+        }
+    ]
+}

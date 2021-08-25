@@ -1,0 +1,29 @@
+{
+    "id": "measure_last_waterusage_changed",
+    "title": {
+        "en": "Last water usage has changed",
+        "de": "Letzer Wasserverbrauch hat sich geändert"
+    },
+    "hint": {
+        "en": "When device statistic was updated with water usage of last day.",
+        "de": "Wenn die Geräte-Statistik aktualisert wurde mit dem Wasserverbrauch des letzten Tages."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_last_waterusage",
+            "type": "number",
+            "title": {
+                "en": "Last waterusage (l)",
+                "de": "Letzter Wasserverbrauch (l)"
+            },
+            "example": 450
+        }
+    ]
+}

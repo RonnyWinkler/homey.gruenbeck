@@ -1,0 +1,29 @@
+{
+    "id": "measure_last_update_changed",
+    "title": {
+        "en": "Last update timestamp changed",
+        "de": "Aktualisierungszeitpunkt hat sich geändert"
+    },
+    "hint": {
+        "en": "The timestamp of last update has changed. The displayed time represents the last valid connection to the device.",
+        "de": "Der Zeitpunkt der lezten Aktualisierung hat sich geändert. Der angezeigte Wert entspricht der letzten gültigen Verbindung zum Gerät."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_last_update",
+            "type": "string",
+            "title": {
+                "en": "Last update (YYYY-MM-DD HH:MM)",
+                "de": "Letzte Aktualisierung (YYYY-MM-DD HH:MM)"
+            },
+            "example": "2021-08-25 15:20"
+        }
+    ]
+}

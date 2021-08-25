@@ -1,0 +1,32 @@
+{
+    "id": "set_salt_level",
+    "title": {
+        "en": "Set salt level",
+        "de": "Salz-Füllstand setzen"
+    },
+    "titleFormatted": {
+        "en": "Set salt level to [[salt_level]] kg. Use this action to (re)set the salt level of your device after filling up with salt (e.g. 25 kg).",
+        "de": "Setze Salz-Füllstand auf [[salt_level]] kg. Verwende diese Aktion, um den Füllstand des Gerätes nach dem Auffüllen von Salz auf den gewünschten Wert zu setzen (z.B. 25 kg)."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+        },
+        {
+            "name": "salt_level",
+            "type": "number",
+            "min": 1,
+            "max": 100,
+            "placeholder": {
+                "en": "kg",
+                "de": "kg"
+            },
+            "title": {
+                "en": "New salt level",
+                "de": "Neuer Salz-Füllstand"
+            }
+        }
+    ]
+}

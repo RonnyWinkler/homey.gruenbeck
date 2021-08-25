@@ -10,9 +10,6 @@ class softliqsdDevice extends Device {
         this.log('softliqsdDevice has been initialized');
 
         // add new capabilities for version 1.0.4
-        await this.removeCapability('measure_reg_progress');
-        await this.removeCapability('measure_reg_remaining_step');
-
         if (!this.hasCapability('measure_reg_progress_text'))
         {
             this.addCapability('measure_reg_progress_text');

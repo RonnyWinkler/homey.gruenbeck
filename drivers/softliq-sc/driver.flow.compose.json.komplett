@@ -1,0 +1,84 @@
+{
+    "triggers": [
+        {
+            "id": "measure_last_waterusage_changed",
+            "title": {
+                "en": "Last water usage has changed",
+                "de": "Letzer Wasserverbrauch hat sich geändert"
+            },
+            "hint": {
+                "en": "When device statistic was updated with water usage of last day.",
+                "de": "Wenn die Geräte-Statistik aktualisert wurde mit dem Wasserverbrauch des letzten Tages."
+            }
+        },
+        {
+            "id": "measure_remaining_capacity_changed",
+            "title": {
+                "en": "Remaining capacity has changed",
+                "de": "Restkapazität hat sich geändert"
+            },
+            "hint": {
+                "en": "When remaining capacity has changed.",
+                "de": "Wenn sich die Restkapazität geändert hat."
+            }
+        },
+        {
+            "id": "measure_last_reg_percent_changed",
+            "title": {
+                "en": "Last regeneration percent has changed",
+                "de": "Letzte Regeneration (Prozent) hat sich geändert"
+            },
+            "hint": {
+                "en": "The percentage of a full regeration if not the whole capacity was used.",
+                "de": "Der Prozentsatz einer vollen Regeneration, wenn nicht die gesamte Kapazität aufgebraucht wurde."
+            }
+        },
+        {
+            "id": "measure_last_update_changed",
+            "title": {
+                "en": "Last update timestamp changed",
+                "de": "Aktualisierungszeitpunkt hat sich geändert"
+            },
+            "hint": {
+                "en": "The timestamp of last update has changed. The displayed time represents the last valid connection to the device.",
+                "de": "Der Zeitpunkt der lezten Aktualisierung hat sich geändert. Der angezeigte Wert entspricht der letzten gültigen Verbindung zum Gerät."
+            }
+        },
+        {
+            "id": "alarm_regeneration_active_true",
+            "title": {
+                "en": "Regeneration has started",
+                "de": "Regeneration hat begonnen"
+            },
+            "hint": {
+                "en": "When the regeneration has started",
+                "de": "Wenn die Regeneration begonnen hat"
+            }
+        },
+        {
+            "id": "alarm_regeneration_active_false",
+            "title": {
+                "en": "Regeneration has finished",
+                "de": "Regeneration ist beendet"
+            },
+            "hint": {
+                "en": "When the regeneration has finished",
+                "de": "Wenn die Regeneration beendet ist"
+            }
+        }
+    
+    ],
+    "conditions": [
+        {
+            "id": "is_regenerating",
+            "title": {
+                "en": "Regeneration !{{is|isn't}} in progress",
+                "de": "Regeneration !{{ist|ist nicht}} aktiv"
+            },
+            "hint": {
+                "en": "This Flow will continue if regeneration is/is not currently in progress.",
+                "de": "Dieser Flow wird fortgeführt, wenn die Regeneration derzeit aktiv/nicht aktiv ist."
+            }
+        }
+    ]
+}

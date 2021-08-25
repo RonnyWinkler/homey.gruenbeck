@@ -69,5 +69,13 @@
   "1.0.4": {
     "en": "softliQ-SD: Added regeneration status and manual refresh (maintenance view)",
     "de": "softliQ-SD: Regenerations-Status und manuelle Aktualisierung (Wartungssicht) hinzugefügt."
+  },
+  "1.0.5": {
+    "en": "Technical update, flow definition updated.",
+    "de": "Technisches Update. Flow-Definition aktualisiert."
+  },
+  "1.0.6": {
+    "en": "Added tokens to flow triggers.",
+    "de": "Tokens in den Flow-Auslösern ergänzt."
   }
 }

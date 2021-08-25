@@ -29,6 +29,7 @@ class GruenbeckApp extends Homey.App {
     this.user = "";
     this.password = "";
     this.updateInterval = updateIntervalDefault;
+    
     // read app settings
     let settings = this.homey.settings.get('settings');
     if (settings){
@@ -41,23 +42,36 @@ class GruenbeckApp extends Homey.App {
       this.active = settings.active;
     }
     
+    // Register Settings-Listener
     this.homey.settings.on('set', (key) =>
     {
-        if (key === 'settings')
-        {
-            let settings = this.homey.settings.get('settings');
-            this.password = settings.password;
-            this.user = settings.user;
-            this.updateInterval = parseFloat(settings.updateInterval);
-            if (!this.updateInterval || this.updateInterval == 0)
-              this.updateInterval = updateIntervalDefault; 
-            this.active = settings.active;
-            this.stop();
-            if (this.active)
-              this.timeoutLoginAttempt = setTimeout(() => this.start().catch(e => console.log(e)), 3 * 1000 );
-        }
-      });
+      if (key === 'settings')
+      {
+          let settings = this.homey.settings.get('settings');
+          this.password = settings.password;
+          this.user = settings.user;
+          this.updateInterval = parseFloat(settings.updateInterval);
+          if (!this.updateInterval || this.updateInterval == 0)
+            this.updateInterval = updateIntervalDefault; 
+          this.active = settings.active;
+          this.stop();
+          if (this.active)
+            this.timeoutLoginAttempt = setTimeout(() => this.start().catch(e => console.log(e)), 3 * 1000 );
+      }
+    });
 
+    // Register Flow Condition-Listener
+    const isRegeneratingCondition = this.homey.flow.getConditionCard('is_regenerating');
+    isRegeneratingCondition.registerRunListener(async (args, state) => {
+          return args.device.getCapabilityValue('alarm_regeneration_active'); // true or false
+    });
+    // Register Flow-Action-Listener
+    const setSaltLevelAction = this.homey.flow.getActionCard('set_salt_level');
+    setSaltLevelAction.registerRunListener(async (args, state) => {
+            return args.device.setSaltLevel(args.salt_level);
+    });
+    
+    // START WORK...
     if (this.active)
       this.timeoutLoginAttempt = setTimeout(() => this.start().catch(e => console.log(e)), 3 * 1000 );
     else

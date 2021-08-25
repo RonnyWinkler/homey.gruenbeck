@@ -1,0 +1,28 @@
+{
+    "id": "meter_water_changed",
+    "title": {
+        "en": "Water meter changed",
+        "de": "Wasserzähler hat sich geändert"
+    },
+    "hint": {
+        "en": "The water meter has changed. It's the internal water meter for soft water.",
+        "de": "Der Wasserzähler hat sich geändert. Dies ist der interne Wasserzähler für Weichwasser."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "meter_salt",
+            "type": "number",
+            "title": {
+                "en": "Water counter (l)",
+                "de": "Wasserzähler (l)"
+            }
+        }
+    ]
+}

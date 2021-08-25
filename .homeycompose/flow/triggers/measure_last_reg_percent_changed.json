@@ -1,0 +1,29 @@
+{
+    "id": "measure_last_reg_percent_changed",
+    "title": {
+        "en": "Last regeneration percent has changed",
+        "de": "Letzte Regeneration (Prozent) hat sich geändert"
+    },
+    "hint": {
+        "en": "The percentage of a full regeration if not the whole capacity was used.",
+        "de": "Der Prozentsatz einer vollen Regeneration, wenn nicht die gesamte Kapazität aufgebraucht wurde."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_last_reg_percent",
+            "type": "number",
+            "title": {
+                "en": "Last Regeneration (%)",
+                "de": "Letzte Regeneration (%)"
+            },
+            "example": 90
+        }
+    ]
+}

@@ -8,20 +8,6 @@ class softliqscDriver extends Driver {
    */
   async onInit() {
     this.log('softliqscDriver has been initialized');
-
-    let regeneratingCondition = this.homey.flow.getConditionCard('is_regenerating');
-    regeneratingCondition.registerRunListener(async (args, state) =>
-    {
-        return args.device.getCapabilityValue('is_regenerating'); // true or false
-    });
-
-    const setSaltLevel = this.homey.flow.getActionCard('set_salt_level');
-    setSaltLevel
-        .registerRunListener(async (args, state) =>
-        {
-            return args.device.setSaltLevel(args.salt_level);
-        });
-
   }
 
   /**

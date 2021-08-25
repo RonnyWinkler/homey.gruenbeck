@@ -1,0 +1,29 @@
+{
+    "id": "measure_last_saltusage_changed",
+    "title": {
+        "en": "Last salt usage has changed",
+        "de": "Letzer Salzverbrauch hat sich geändert"
+    },
+    "hint": {
+        "en": "When device statistic was updated with salt usage of last day.",
+        "de": "Wenn die Geräte-Statistik aktualisert wurde mit dem Salzverbrauch des letzten Tages."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+        }
+    ],
+    "tokens": [
+        {
+            "name": "measure_last_saltusage",
+            "type": "number",
+            "title": {
+                "en": "Last Saltusage (g)",
+                "de": "Letzter Salzverbrauch (g)"
+            },
+            "example": 250
+        }
+    ]
+}

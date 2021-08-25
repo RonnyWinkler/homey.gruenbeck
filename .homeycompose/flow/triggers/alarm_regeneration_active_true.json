@@ -1,0 +1,18 @@
+{
+    "id": "alarm_regeneration_active_true",
+    "title": {
+        "en": "Regeneration has started",
+        "de": "Regeneration hat begonnen"
+    },
+    "hint": {
+        "en": "When the regeneration has started",
+        "de": "Wenn die Regeneration begonnen hat"
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sc|softliq-sd"
+        }
+      ]
+}
