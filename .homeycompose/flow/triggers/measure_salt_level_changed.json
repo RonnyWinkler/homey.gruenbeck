@@ -1,5 +1,6 @@
 {
     "id": "measure_salt_level_changed",
+    "highlight": true,
     "title": {
         "en": "Salt level changed",
         "de": "Salz-Füllstand hat sich geändert"

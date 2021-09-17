@@ -1,5 +1,6 @@
 {
     "id": "alarm_regeneration_active_true",
+    "highlight": true,
     "title": {
         "en": "Regeneration has started",
         "de": "Regeneration hat begonnen"

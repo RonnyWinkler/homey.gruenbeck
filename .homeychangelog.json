@@ -77,5 +77,9 @@
   "1.0.6": {
     "en": "Added tokens to flow triggers.",
     "de": "Tokens in den Flow-Auslösern ergänzt."
+  },
+  "1.0.7": {
+    "en": "Highlight most important trigger flows",
+    "de": "Die wichtigsten Flow-Auslöser in Auswahl hervorheben."
   }
 }

@@ -1,5 +1,6 @@
 {
     "id": "measure_remaining_capacity_changed",
+    "highlight": true,
     "title": {
         "en": "Remaining capacity has changed",
         "de": "Restkapazität hat sich geändert"

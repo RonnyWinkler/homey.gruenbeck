@@ -1,5 +1,6 @@
 {
     "id": "alarm_regeneration_active_false",
+    "highlight": true,
     "title": {
         "en": "Regeneration has finished",
         "de": "Regeneration ist beendet"
