@@ -1,0 +1,18 @@
+{
+    "id": "start_regeneration",
+    "title": {
+        "en": "Request regeneration",
+        "de": "Regenerierung anfordern"
+    },
+    "titleFormatted": {
+        "en": "Start of regeneration is requested via Grünbeck Cloud.",
+        "de": "Start der Regeneration wird über Grünbeck-Cloud angefordert."
+    },
+    "args": [
+        {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+        }
+    ]
+}

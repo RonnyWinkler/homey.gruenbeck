@@ -227,7 +227,7 @@ class GruenbeckSDSrv extends EventEmitter{
         });
       }
     
-      getMgDevices() {
+    getMgDevices() {
         //console.log("===== Get Devices =====");
         return new Promise((resolve, reject) => {
             const axiosConfig = {
@@ -266,9 +266,9 @@ class GruenbeckSDSrv extends EventEmitter{
                     reject(error);
                 });
         });
-      }
+    }
 
-      startRefreshToken() {
+    startRefreshToken() {
         //console.log("===== Start Refresh Token =====");
         const axiosPostConfig = {
             maxRedirects: 0,
@@ -316,7 +316,7 @@ class GruenbeckSDSrv extends EventEmitter{
             });
       }
     
-      getCodeChallenge() {
+    getCodeChallenge() {
         let hash = "";
         let result = "";
         while (hash === "" || hash.indexOf("+") !== -1 || hash.indexOf("/") !== -1 || hash.indexOf("=") !== -1 || result.indexOf("+") !== -1 || result.indexOf("/") !== -1) {
@@ -331,7 +331,7 @@ class GruenbeckSDSrv extends EventEmitter{
         return [result, hash];
       }
 
-      refreshSD(mgDeviceId) {
+    refreshSD(mgDeviceId) {
         return new Promise((resolve, reject) => {
             //console.log("===== refreshSD "+mgDeviceId+" =====");
             const axiosConfig = {
@@ -458,6 +458,72 @@ class GruenbeckSDSrv extends EventEmitter{
                 })
                 .catch((error) => {
                     //console.log(error);
+                    reject(error);
+                });
+        });
+    }
+
+    pushMgParameter(mgDeviceId, data) {
+        return new Promise((resolve, reject) => {
+            //console.log("pushMgParameter() data: " + JSON.stringify(data));
+            const config = {
+                method: "patch",
+                url: "https://prod-eu-gruenbeck-api.azurewebsites.net/api/devices/" + mgDeviceId + "/parameters?api-version=" + this.sdVersion,
+                headers: {
+                    Host: "prod-eu-gruenbeck-api.azurewebsites.net",
+                    "Content-Type": "application/json",
+                    Accept: "application/json, text/plain, */*",
+                    "Accept-Language": "de-de",
+                    "User-Agent": this.userAgent,
+                    Authorization: "Bearer " + this.accessToken,
+                },
+                data: data,
+            };
+            console.log("https://prod-eu-gruenbeck-api.azurewebsites.net/api/devices/" + mgDeviceId + "/parameters?api-version=" + this.sdVersion);
+            console.log("Header:");
+            console.log(config.headers);
+
+            axios(config)
+                .then((response) => {
+                    //console.log(JSON.stringify(response.data));
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
+    }
+
+    startRegeneration(mgDeviceId) {
+        return new Promise((resolve, reject) => {
+            //console.log("startRegeneration()"");
+            const config = {
+                method: "post",
+                url: "https://prod-eu-gruenbeck-api.azurewebsites.net/api/devices/" + mgDeviceId + "/regenerate?api-version=" + this.sdVersion,
+                headers: {
+                    Host: "prod-eu-gruenbeck-api.azurewebsites.net",
+                    "Content-Type": "application/json",
+                    Accept: "application/json, text/plain, */*",
+                    "Accept-Language": "de-de",
+                    "User-Agent": this.userAgent,
+                    Authorization: "Bearer " + this.accessToken,
+                },
+                data: "{}",
+            };
+            // console.log("https://prod-eu-gruenbeck-api.azurewebsites.net/api/devices/" + mgDeviceId + "/regenerate?api-version=" + this.sdVersion);
+            // console.log("Header:");
+            // console.log(config.headers);
+            // console.log("Body:");
+            // console.log(config.data);
+
+            axios(config)
+                .then((response) => {
+                    // console.log("Response: "+JSON.stringify(response.data));
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
                     reject(error);
                 });
         });

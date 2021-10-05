@@ -70,6 +70,10 @@ class GruenbeckApp extends Homey.App {
     setSaltLevelAction.registerRunListener(async (args, state) => {
             return args.device.setSaltLevel(args.salt_level);
     });
+    const startRegenerationAction = this.homey.flow.getActionCard('start_regeneration');
+    startRegenerationAction.registerRunListener(async (args, state) => {
+            return args.device.startRegeneration();
+    });
     
     // START WORK...
     if (this.active)
@@ -151,6 +155,7 @@ class GruenbeckApp extends Homey.App {
     }
     this.updateLog("===> Devices Update");
     let deviceStatistic;
+    let deviceParameters;
     const devices = await this.getDevices();
     if (devices){
       for(const device of devices ){
@@ -162,8 +167,11 @@ class GruenbeckApp extends Homey.App {
             // Get Statictic data ofrom REST service 
             this.updateLog("---> Device Statistics: "+device.id);
             deviceStatistic = await this.gruenbeckSrv.parseMgInfos(device.id);
-            this.updateLog(JSON.stringify(deviceStatistic));
+            deviceParameters = await this.gruenbeckSrv.parseMgInfos(device.id, "parameters");
+            this.updateLog("DeviceStatistics:" + JSON.stringify(deviceStatistic));
+            this.updateLog("DeviceParameters:" + JSON.stringify(deviceParameters));
             this.deviceUpdateStatistics(device.serialNumber, deviceStatistic);
+            this.deviceUpdateParameters(device.serialNumber, deviceParameters);
             // Get live data from WebSocket/device
             this.updateLog("---> Device Live Data: "+device.id);
             //console.log("---> Enter SD "+device.data.id);
@@ -287,12 +295,43 @@ class GruenbeckApp extends Homey.App {
     };
   }
 
+  async deviceSetParameter(mgDeviceID, parameter, value){
+    this.log("Parameter Changed: "+parameter+"="+value);
+    let data = {};
+    data[parameter] = value;
+
+    this.gruenbeckSrv.pushMgParameter(mgDeviceID, data)
+      .then((response) => {
+        this.log("Parameter changed. Current parameters:");
+        this.log(response);
+      })
+      .catch((error) =>{
+        this.log(error);
+      });
+  }
+
+  async deviceStartRegeneration(mgDeviceID){
+    this.gruenbeckSrv.startRegeneration(mgDeviceID)
+      .then((response) => {
+        this.log("Regeneration requested.");
+        this.log(response);
+      })
+      .catch((error) =>{
+        this.log(error);
+      });
+  }
+
   deviceUpdateStatistics(deviceSerialNumber, deviceData){
     // emit event to device instance
     //console.log("WS Statistics Message");
     this.events.emit("deviceUpdateStatics", deviceSerialNumber, deviceData);
   }
 
+  deviceUpdateParameters(deviceSerialNumber, deviceParameters){
+    // emit event to device instance
+    //console.log("WS Paramneters Message");
+    this.events.emit("deviceUpdateParameters", deviceSerialNumber, deviceParameters);
+  }
   deviceUpdateData(deviceSerialNumber, deviceData){
     // emit event to device instance
     //console.log("WS Data Message");

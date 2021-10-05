@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.ronnywinkler.homey.gruenbeck",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "name": {
@@ -444,6 +444,24 @@
             }
           }
         ]
+      },
+      {
+        "id": "start_regeneration",
+        "title": {
+          "en": "Request regeneration",
+          "de": "Regenerierung anfordern"
+        },
+        "titleFormatted": {
+          "en": "Start of regeneration is requested via Grünbeck Cloud.",
+          "de": "Start der Regeneration wird über Grünbeck-Cloud angefordert."
+        },
+        "args": [
+          {
+            "name": "device",
+            "type": "device",
+            "filter": "driver_id=softliq-sd"
+          }
+        ]
       }
     ]
   },
@@ -548,6 +566,17 @@
         "measure_reg_remaining_desctiption": {
           "units": ""
         },
+        "button.refresh": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Refresh device data",
+            "de": "Daten aktualisieren"
+          },
+          "desc": {
+            "en": "One-time refresh of device data.",
+            "de": "Gerätedaten einmalig aktualisieren."
+          }
+        },
         "button.reset_measure_salt_level": {
           "maintenanceAction": true,
           "title": {
@@ -559,15 +588,15 @@
             "de": "Zurücksetzen des Salz-Füllstands nach Auffüllen mit neuem Salz auf den in den Geräteeinstellungen festgelegten Wert."
           }
         },
-        "button.refresh": {
+        "button.regeneration": {
           "maintenanceAction": true,
           "title": {
-            "en": "Refresh device data",
-            "de": "Daten aktualisieren"
+            "en": "Request regeneration",
+            "de": "Regenerierung anfordern"
           },
           "desc": {
-            "en": "One-time refresh of device data.",
-            "de": "Gerätedaten einmalig aktualisieren."
+            "en": "Start of regeneration is requested via Grünbeck Cloud.",
+            "de": "Start der Regeneration wird über Grünbeck-Cloud angefordert."
           }
         }
       },
@@ -602,6 +631,398 @@
             "de": "Salz-Füllstand angeben, der beim Zurücksetzen des Füllstands im Wartungsdialog verwendet werden soll."
           },
           "units": "kg"
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Working method",
+            "de": "Arbeitsweise"
+          },
+          "children": [
+            {
+              "id": "working_mode",
+              "type": "dropdown",
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Eco",
+                    "de": "Eco"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Comfort",
+                    "de": "Komfort"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Power",
+                    "de": "Power"
+                  }
+                },
+                {
+                  "id": "4",
+                  "label": {
+                    "en": "Individual",
+                    "de": "Individuell"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Working method",
+                "de": "Arbeitsweise"
+              },
+              "hint": {
+                "en": "Changes the working method. The change will take effect after the next regeneration.",
+                "de": "Ändert die Arbeitsweise des Gerätes. Die Änderung wird nach der nächsten Regeneration wirksam."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Daily way of working (individual)",
+            "de": "Tägliche Arbeitsweise (individuell)"
+          },
+          "children": [
+            {
+              "id": "working_mode_mo",
+              "type": "dropdown",
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Eco",
+                    "de": "Eco"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Comfort",
+                    "de": "Komfort"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Power",
+                    "de": "Power"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Monday",
+                "de": "Montag"
+              },
+              "hint": {
+                "en": "Monday working method for individual mode",
+                "de": "Montag-Arbeitsweise bei individuellem Modus."
+              }
+            },
+            {
+              "id": "working_mode_tu",
+              "type": "dropdown",
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Eco",
+                    "de": "Eco"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Comfort",
+                    "de": "Komfort"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Power",
+                    "de": "Power"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Tuesday",
+                "de": "Dienstag"
+              },
+              "hint": {
+                "en": "Tuesday working method for individual mode",
+                "de": "Dienstag-Arbeitsweise bei individuellem Modus."
+              }
+            },
+            {
+              "id": "working_mode_we",
+              "type": "dropdown",
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Eco",
+                    "de": "Eco"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Comfort",
+                    "de": "Komfort"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Power",
+                    "de": "Power"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Wednesday",
+                "de": "Mittwoch"
+              },
+              "hint": {
+                "en": "Wednesday working method for individual mode",
+                "de": "Mittwoch-Arbeitsweise bei individuellem Modus."
+              }
+            },
+            {
+              "id": "working_mode_th",
+              "type": "dropdown",
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Eco",
+                    "de": "Eco"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Comfort",
+                    "de": "Komfort"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Power",
+                    "de": "Power"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Thursday",
+                "de": "Donnerstag"
+              },
+              "hint": {
+                "en": "Thursday working method for individual mode",
+                "de": "Donnerstag-Arbeitsweise bei individuellem Modus."
+              }
+            },
+            {
+              "id": "working_mode_fr",
+              "type": "dropdown",
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Eco",
+                    "de": "Eco"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Comfort",
+                    "de": "Komfort"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Power",
+                    "de": "Power"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Friday",
+                "de": "Freitag"
+              },
+              "hint": {
+                "en": "Freiday working method for individual mode",
+                "de": "Freitag-Arbeitsweise bei individuellem Modus."
+              }
+            },
+            {
+              "id": "working_mode_sa",
+              "type": "dropdown",
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Eco",
+                    "de": "Eco"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Comfort",
+                    "de": "Komfort"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Power",
+                    "de": "Power"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Saturday",
+                "de": "Samstag"
+              },
+              "hint": {
+                "en": "Saturday working method for individual mode",
+                "de": "Samstag-Arbeitsweise bei individuellem Modus."
+              }
+            },
+            {
+              "id": "working_mode_su",
+              "type": "dropdown",
+              "value": "1",
+              "values": [
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Eco",
+                    "de": "Eco"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Comfort",
+                    "de": "Komfort"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Power",
+                    "de": "Power"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Sunday",
+                "de": "Sonntag"
+              },
+              "hint": {
+                "en": "Sunday working method for individual mode",
+                "de": "Sonntag-Arbeitsweise bei individuellem Modus."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Regeneration",
+            "de": "Regeneration"
+          },
+          "children": [
+            {
+              "id": "reg_mode",
+              "type": "dropdown",
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Automatic",
+                    "de": "Automatik"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "fixed",
+                    "de": "Fest"
+                  }
+                }
+              ],
+              "label": {
+                "en": "Regeneration time",
+                "de": "Regenerationszeitpunkt"
+              },
+              "hint": {
+                "en": "Time at which the regeneration starts.",
+                "de": "Zeitpunkt zum Start der Regeneration."
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Regeneration time (fixed)",
+            "de": "Regenerationszeit (fest)"
+          },
+          "children": [
+            {
+              "id": "reg_mode_hours",
+              "type": "number",
+              "value": 0,
+              "min": 0,
+              "max": 23,
+              "steps": 1,
+              "label": {
+                "en": "",
+                "de": "Uhrzeit (Stunde)"
+              },
+              "hint": {
+                "en": "Time for fixed regeneration time (hour). ",
+                "de": "Uhrzeit für feste Regenerationszeit (Stunde)."
+              }
+            },
+            {
+              "id": "reg_mode_minutes",
+              "type": "number",
+              "value": 0,
+              "min": 0,
+              "max": 59,
+              "steps": 1,
+              "label": {
+                "en": "",
+                "de": "Uhrzeit (Minuten)"
+              },
+              "hint": {
+                "en": "Time for fixed regeneration time (minutes).",
+                "de": "Uhrzeit für feste Regenerationszeit (Minuten)."
+              }
+            }
+          ]
         }
       ]
     }

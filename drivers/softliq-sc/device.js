@@ -9,11 +9,18 @@ class softliqscDevice extends Device {
     async onInit() {
         this.log('softliqscDevice has been initialized');
 
+        await this.updateCapabilities();
+
         // register eventhandler for device updates
-        this.homey.app.events.on("deviceUpdateSC", this.onDeviceUpdateSC.bind(this));
+        this.onDeviceUpdateSCHandler = this.onDeviceUpdateSC.bind(this);
+        this.homey.app.events.on("deviceUpdateSC", this.onDeviceUpdateSCHandler);
 
         // register eventhandler for maintenance buttons
         this.registerCapabilityListener('button.reset_measure_salt_level', this.resetSaltLevel.bind(this));
+    }
+
+    async updateCapabilities(){
+      // Add new capabilities (if not already added)
     }
 
     async resetSaltLevel(){
@@ -117,6 +124,7 @@ class softliqscDevice extends Device {
    */
   async onDeleted() {
     this.log('softliqscDevice has been deleted');
+    this.homey.app.events.removeListener("deviceUpdateSC", this.onDeviceUpdateSCHandler);
   }
 
   async setSaltLevel(saltLevel){

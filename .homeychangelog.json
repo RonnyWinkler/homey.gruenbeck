@@ -81,5 +81,9 @@
   "1.0.7": {
     "en": "Highlight most important trigger flows",
     "de": "Die wichtigsten Flow-Auslöser in Auswahl hervorheben."
+  },
+  "1.1.0": {
+    "en": "softliqSD: Start regeneration and change device options in the device settings.",
+    "de": "softliqSD: Regenerierung starten und Geräteoptionen ändern in den Geräte-Einstellungen."
   }
 }
