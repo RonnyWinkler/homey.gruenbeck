@@ -1,0 +1,12 @@
+{
+    "type": "string",
+    "title": {
+        "en": "Regeneration remaining in the current regeneration step",
+        "de": "Regeneration verbleibend im aktuellen Regerationsschritt"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "insights": false,
+    "icon": "/assets/measure_reg_remaining_step.svg"
+}

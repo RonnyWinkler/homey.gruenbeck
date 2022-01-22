@@ -85,5 +85,9 @@
   "1.1.0": {
     "en": "softliqSD: Start regeneration and change device options in the device settings.",
     "de": "softliqSD: Regenerierung starten und Geräteoptionen ändern in den Geräte-Einstellungen."
+  },
+  "1.1.1": {
+    "en": "softliqSD: Remaining litres/time added in the current regeneration step.",
+    "de": "softliqSD: Verbleibende Liter/Zeit im aktuellen Regenerationsschritt ergänzt."
   }
 }

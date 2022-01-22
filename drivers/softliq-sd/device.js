@@ -23,7 +23,9 @@ class softliqsdDevice extends Device {
         this.registerCapabilityListener('button.reset_measure_salt_level', this.resetSaltLevel.bind(this));
         this.registerCapabilityListener('button.refresh', this.devicesRefresh.bind(this));
         this.registerCapabilityListener('button.regeneration', this.startRegeneration.bind(this));
-    }
+        // register eventhandler for capability changes (setable capabilities)
+        this.registerCapabilityListener('measure_salt_level', this.setSaltLevel.bind(this));
+      }
 
     async updateCapabilities(){
       // Add new capabilities (if not already added)
@@ -52,6 +54,11 @@ class softliqsdDevice extends Device {
       if (!this.hasCapability('button.regeneration'))
       {
         await this.addCapability('button.regeneration');
+      }
+      // add new capabilities for version 1.1.1
+      if (!this.hasCapability('measure_reg_remaining_step_description'))
+      {
+        await this.addCapability('measure_reg_remaining_step_description');
       }
     }
 
@@ -182,6 +189,9 @@ class softliqsdDevice extends Device {
             let time = now.split(", ")[1];
         await this.setCapabilityValue('measure_last_update', date + " " + time).catch(this.error);
         let regStatus = 0;
+        let regRemaining = '-';
+        let minutes = 0;
+        let seconds = 0;
         switch(parseInt( data.mregstatus)){
           case 0:
             regStatus = 0;
@@ -192,35 +202,57 @@ class softliqsdDevice extends Device {
             regStatus = 20;
             await this.setCapabilityValue('measure_reg_progress_text', '01' ).catch(this.error);
             await this.setCapabilityValue('measure_reg_progress_description', this.homey.__('capabilityCaption.regProgressDescription01') ).catch(this.error);
+            regRemaining = (Math.round(parseFloat(data.mremregstep) * 100 ) / 100).toString() + ' l';
             break;
           case 20:
             regStatus = 40;
             await this.setCapabilityValue('measure_reg_progress_text', '02' ).catch(this.error);
             await this.setCapabilityValue('measure_reg_progress_description', this.homey.__('capabilityCaption.regProgressDescription02') ).catch(this.error);
+            minutes = Math.round(parseInt(data.mremregstep) /60 );
+            seconds = parseInt(data.mremregstep) - (minutes * 60);
+            regRemaining = minutes + ':' + seconds + ' min';
             break;
           case 30:
             regStatus = 60;
             await this.setCapabilityValue('measure_reg_progress_text', '03' ).catch(this.error);
             await this.setCapabilityValue('measure_reg_progress_description', this.homey.__('capabilityCaption.regProgressDescription03') ).catch(this.error);
+            minutes = Math.round(parseInt(data.mremregstep) /60 );
+            seconds = parseInt(data.mremregstep) - (minutes * 60);
+            regRemaining = minutes + ':' + seconds + ' min';
             break;
           case 40:
             regStatus = 80;
             await this.setCapabilityValue('measure_reg_progress_text', '04' ).catch(this.error);
             await this.setCapabilityValue('measure_reg_progress_description', this.homey.__('capabilityCaption.regProgressDescription04') ).catch(this.error);
+            regRemaining = (Math.round(parseFloat(data.mremregstep) * 100 ) / 100).toString() + ' l';
             break;
           case 60:
             await this.setCapabilityValue('measure_reg_progress_text', '05' ).catch(this.error);
             await this.setCapabilityValue('measure_reg_progress_description', this.homey.__('capabilityCaption.regProgressDescription05') ).catch(this.error);
             regStatus = 90;
+            regRemaining = (Math.round(parseFloat(data.mremregstep) * 100 ) / 100).toString() + ' l';
             break;
           case 50:
             await this.setCapabilityValue('measure_reg_progress_text', '05' ).catch(this.error);
             await this.setCapabilityValue('measure_reg_progress_description', this.homey.__('capabilityCaption.regProgressDescription05') ).catch(this.error);
             regStatus = 100;
+            regRemaining = (Math.round(parseFloat(data.mremregstep) * 100 ) / 100).toString() + ' l';
             break;
           }
         await this.setCapabilityValue('measure_reg_progress', regStatus).catch(this.error);
         await this.setCapabilityValue('measure_reg_remaining_step', parseFloat(data.mremregstep) ).catch(this.error);
+
+        // TEST Minutenangabe
+        // data.mremregstep = '1234';
+        // minutes = parseInt(parseInt(data.mremregstep) /60 );
+        // seconds = parseInt(data.mremregstep) - (minutes * 60);
+        // regRemaining = minutes + ':' + seconds + ' min';
+
+        // TEST Literangabe
+        // data.mremregstep = '12.5678';
+        // regRemaining = (Math.round(parseFloat(data.mremregstep) * 100 ) / 100).toString() + ' l';
+
+        await this.setCapabilityValue('measure_reg_remaining_step_description', regRemaining ).catch(this.error);
       }
     }
 
