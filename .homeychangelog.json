@@ -89,5 +89,9 @@
   "1.1.1": {
     "en": "softliqSD: Remaining litres/time added in the current regeneration step.",
     "de": "softliqSD: Verbleibende Liter/Zeit im aktuellen Regenerationsschritt ergänzt."
+  },
+  "1.1.2": {
+    "en": "softliqSD: Remaining litres/time added in the current regeneration step.",
+    "de": "softliqSD: Verbleibende Liter/Zeit im aktuellen Regenerationsschritt ergänzt."
   }
 }

@@ -208,7 +208,7 @@ class softliqsdDevice extends Device {
             regStatus = 40;
             await this.setCapabilityValue('measure_reg_progress_text', '02' ).catch(this.error);
             await this.setCapabilityValue('measure_reg_progress_description', this.homey.__('capabilityCaption.regProgressDescription02') ).catch(this.error);
-            minutes = Math.round(parseInt(data.mremregstep) /60 );
+            minutes = parseInt(parseInt(data.mremregstep) /60 );
             seconds = parseInt(data.mremregstep) - (minutes * 60);
             regRemaining = minutes + ':' + seconds + ' min';
             break;
@@ -216,7 +216,7 @@ class softliqsdDevice extends Device {
             regStatus = 60;
             await this.setCapabilityValue('measure_reg_progress_text', '03' ).catch(this.error);
             await this.setCapabilityValue('measure_reg_progress_description', this.homey.__('capabilityCaption.regProgressDescription03') ).catch(this.error);
-            minutes = Math.round(parseInt(data.mremregstep) /60 );
+            minutes = parseInt(parseInt(data.mremregstep) /60 );
             seconds = parseInt(data.mremregstep) - (minutes * 60);
             regRemaining = minutes + ':' + seconds + ' min';
             break;
