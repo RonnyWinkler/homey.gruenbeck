@@ -529,9 +529,9 @@ class GruenbeckSDSrv extends EventEmitter{
         });
     }
 
-    connectMgWebSocket() {
+    async connectMgWebSocket() {
         //console.log("===== connectMgWebSocket =====");
-        this.closeMgWebSocket();
+        await this.closeMgWebSocket();
         const axiosConfig = {
             headers: {
                 "Content-Type": "text/plain;charset=UTF-8",
@@ -630,7 +630,7 @@ class GruenbeckSDSrv extends EventEmitter{
         return;
     }
 
-    closeMgWebSocket() {
+    async closeMgWebSocket() {
         if (this.ws){
             //this.ws.removeEventListener("open");
             //this.ws.removeEventListener("close");

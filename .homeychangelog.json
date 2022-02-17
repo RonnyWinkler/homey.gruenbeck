@@ -93,5 +93,9 @@
   "1.1.2": {
     "en": "softliqSD: Remaining litres/time added in the current regeneration step.",
     "de": "softliqSD: Verbleibende Liter/Zeit im aktuellen Regenerationsschritt ergänzt."
+  },
+  "1.1.3": {
+    "en": "Optimized memory usage.",
+    "de": "Speicherverbrauch optimiert."
   }
 }
