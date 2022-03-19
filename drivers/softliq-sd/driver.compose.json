@@ -23,8 +23,6 @@
     "measure_reg_progress_description",
     "measure_reg_remaining_step",
 
-    "meter_water.remaining_capacity",
-
     "button.refresh",
     "button.reset_measure_salt_level"
   ],
@@ -48,7 +46,7 @@
       "units": "kg" 
     },
     "meter_water": {
-      "units": "l"
+      "units": "m³"
     },
     "meter_salt": {
       "units": "kg"

@@ -97,5 +97,9 @@
   "1.1.3": {
     "en": "Optimized memory usage.",
     "de": "Speicherverbrauch optimiert."
+  },
+  "1.1.4": {
+    "en": "Changed water meter from l to m³ to use Homey default.",
+    "de": "Wasserzähler von l auf m³ geändert, um Homey-Standard zu verwenden."
   }
 }

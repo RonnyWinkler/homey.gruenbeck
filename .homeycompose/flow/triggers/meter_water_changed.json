@@ -17,11 +17,11 @@
     ],
     "tokens": [
         {
-            "name": "meter_salt",
+            "name": "meter_water",
             "type": "number",
             "title": {
-                "en": "Water counter (l)",
-                "de": "Wasserzähler (l)"
+                "en": "Water counter (m³)",
+                "de": "Wasserzähler (m³)"
             }
         }
     ]

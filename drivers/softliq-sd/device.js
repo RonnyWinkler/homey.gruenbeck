@@ -60,6 +60,12 @@ class softliqsdDevice extends Device {
       {
         await this.addCapability('measure_reg_remaining_step_description');
       }
+
+      // remove unused capabilities if existzing
+      if (this.hasCapability('meter_water.remaining_capacity'))
+      {
+        await this.removeCapability('meter_water.remaining_capacity');
+      }
     }
 
     async resetSaltLevel(){
@@ -162,7 +168,7 @@ class softliqsdDevice extends Device {
           return;
       }
       if (data.type == "CurrSlow"){
-          await this.setCapabilityValue('meter_water', parseInt( data.mcountwater1 ) ).catch(this.error);
+          await this.setCapabilityValue('meter_water', parseInt( data.mcountwater1 ) / 1000 ).catch(this.error);
           await this.setCapabilityValue('meter_salt', parseFloat( data.msaltusage ) ).catch(this.error);            
       }
       if (data.type == "Current"){
