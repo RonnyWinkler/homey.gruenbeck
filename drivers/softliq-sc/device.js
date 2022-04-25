@@ -74,7 +74,7 @@ class softliqscDevice extends Device {
         // last changed date/time
         //var date = new Date().toISOString().replace("T", " ").split(".")[0];
         const tz  = this.homey.clock.getTimezone();
-        const now = new Date().toLocaleString('de-DE', 
+        const now = new Date().toLocaleString('en-US', 
             { 
                 hour12: false, 
                 timeZone: tz,
