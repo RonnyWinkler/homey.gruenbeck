@@ -105,5 +105,9 @@
   "1.1.5": {
     "en": "Adaptet date convertion to FW 7.4.x",
     "de": "Datums-Konvertierung angepasst an FW 7.4.0."
-    }
+    },
+    "1.1.6": {
+      "en": "softliQSD: Fix for invalid JSON data from device.",
+      "de": "softliQSD: Korrektur für fehlerhafte JSON-Daten vom Gerät."
+      }
 }

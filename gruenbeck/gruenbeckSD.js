@@ -595,20 +595,20 @@ class GruenbeckSDSrv extends EventEmitter{
                                         //console.log("WS-Message: " +data);
 
                                         clearTimeout(this.heartBeatTimeout);
-                                        //try {
+                                        try {
                                             const message = JSON.parse(data.replace("", ""));
                                             // event on wsMessage from device
                                             this.emit('wsMessage', JSON.stringify(message));
 
-                                        //} catch (error) {
-                                        //    console.log("Websocket parse error");
-                                        //    console.log(error);
-                                        //    console.log(data);
+                                        } catch (error) {
+                                            console.log("Websocket parse error");
+                                            console.log(error);
+                                            console.log(data);
                                         //    this.ws.close();
                                         //    setTimeout(() => {
                                         //        this.connectMgWebSocket();
                                         //    }, 5000);
-                                        //}
+                                        }
                                     });
                                 } catch (error) {
                                     console.log(error);
