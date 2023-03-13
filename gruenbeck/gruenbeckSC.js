@@ -1,6 +1,6 @@
 'use strict';
 
-const { XMLHttpRequest } = require("xmlhttprequest-ts");
+const http = require('http');
 
 class GruenbeckSCSrv{
 
@@ -16,71 +16,129 @@ class GruenbeckSCSrv{
         this.requestDurchflussCommand = "id=0000&show=D_A_1_1~";
 
     }
+
+    async requestDataSC(ipAddress, command){
+        let url = "http://" + ipAddress + "/mux_http";
+        return await this._http(url, {method: 'POST'});
+    }
+
+    // requestDataSC(ipAddress, command){
+    //     return new Promise((resolve, reject) => {
+    //         let log = "";
+    //         let currentCommand = this.requestAllCommand;
+    //         const xhr = new XMLHttpRequest();
+    //         if (!command)
+    //             currentCommand = this.requestAllCommand;
+    //         //console.log(currentCommand);
+    //         try {
+    //             //console.log("sendRequest ");
+    //             log += "SD sendRequest http://"+ ipAddress + "/mux_http\r\n";
+    //             //console.log("http://" + ipAddress + "/mux_http");
+    //             xhr.open("POST", "http://" + ipAddress + "/mux_http", true);
+    //             xhr.setRequestHeader("Content-type", "application/json");
+    //             xhr.timeout = 10 * 1000;
+    //             //xhr.timeout = (this.config.pollInterval - 1 > 1 ? this.config.pollInterval - 1 : 1) * 1000;
+    //             xhr.send(currentCommand);
+    //             xhr.ontimeout = (error) => {
+    //                 //xhr.abort();
+    //                 //console.log(error.message);
+    //                 log += "Timeout\r\n";
+    //                 log += error.message;
+    //                 //reject(error.message);
+    //                 reject(log);
+    //             };
+    //             xhr.onload = () => {
+    //                 //console.log("onload");
+    //                 //console.log(xhr.responseText);
+    //                 //log += "OnLoad "+xhr.responseText+"\r\n";
+    //                 if (xhr.responseText) {
+    //                     //this.parseData(domParser.parseFromString(xhr.responseText, "text/xml"));
+    //                     var response = xhr.responseText;
+    //                     resolve(response);
+    //                 }
+    //             };
+    //             xhr.onreadystatechange = () => {
+    //                 // 0 UNSENT - open()has not been called yet
+    //                 // 1 OPENED - send()has not been called yet
+    //                 // 2 HEADERS_RECEIVED - send() has been called, and headers and status are available
+    //                 // 3 LOADING Downloading; - responseText holds partial data
+    //                 // 4 - The operation is complete
+    //                 //console.log("statechange: " + xhr.readyState + " " + xhr.responseText.length);
+    //                 //console.log(xhr.responseText);
+    //                 log += "StatusChange "+xhr.readyState+"\r\n";
+    //                 log += xhr.responseText+"\r\n";
+    //                 if (xhr.readyState === 4) {
+    //                     if (xhr.responseText.length === 0 || xhr.responseText.indexOf("Error: ") != -1) {
+    //                         if (xhr.responseText.length === 0) {
+    //                             //console.log("Device returns empty repsonse. Resend request.");
+    //                             log += "Device returns empty repsonse. Resend request.\r\n";
+    //                             reject(log);
+    //                         };
+    //                         log += "Device cannot handle new connections this is normal.\r\n";
+    //                         reject(log);
+    //                     }
+    //                 }
+    //             };
+    //          } catch (error) {
+    //             xhr.abort();
+    //             //console.log(error);
+    //             reject(error);
+    //         }
+    //     });
+    // }
+
+    async _http(url, options){
+        return new Promise( ( resolve, reject ) =>
+        {
+            try
+            {
+              let request = http
+                .get(url, options, (response) => { 
+                  if (response.statusCode !== 200){
+                    response.resume();
     
-    requestDataSC(ipAddress, command){
-        return new Promise((resolve, reject) => {
-            let log = "";
-            let currentCommand = this.requestAllCommand;
-            const xhr = new XMLHttpRequest();
-            if (!command)
-                currentCommand = this.requestAllCommand;
-            //console.log(currentCommand);
-            try {
-                //console.log("sendRequest ");
-                log += "SD sendRequest http://"+ ipAddress + "/mux_http\r\n";
-                //console.log("http://" + ipAddress + "/mux_http");
-                xhr.open("POST", "http://" + ipAddress + "/mux_http", true);
-                xhr.setRequestHeader("Content-type", "application/json");
-                xhr.timeout = 10 * 1000;
-                //xhr.timeout = (this.config.pollInterval - 1 > 1 ? this.config.pollInterval - 1 : 1) * 1000;
-                xhr.send(currentCommand);
-                xhr.ontimeout = (error) => {
-                    //xhr.abort();
-                    //console.log(error.message);
-                    log += "Timeout\r\n";
-                    log += error.message;
-                    //reject(error.message);
-                    reject(log);
-                };
-                xhr.onload = () => {
-                    //console.log("onload");
-                    //console.log(xhr.responseText);
-                    //log += "OnLoad "+xhr.responseText+"\r\n";
-                    if (xhr.responseText) {
-                        //this.parseData(domParser.parseFromString(xhr.responseText, "text/xml"));
-                        var response = xhr.responseText;
-                        resolve(response);
-                    }
-                };
-                xhr.onreadystatechange = () => {
-                    // 0 UNSENT - open()has not been called yet
-                    // 1 OPENED - send()has not been called yet
-                    // 2 HEADERS_RECEIVED - send() has been called, and headers and status are available
-                    // 3 LOADING Downloading; - responseText holds partial data
-                    // 4 - The operation is complete
-                    //console.log("statechange: " + xhr.readyState + " " + xhr.responseText.length);
-                    //console.log(xhr.responseText);
-                    log += "StatusChange "+xhr.readyState+"\r\n";
-                    log += xhr.responseText+"\r\n";
-                    if (xhr.readyState === 4) {
-                        if (xhr.responseText.length === 0 || xhr.responseText.indexOf("Error: ") != -1) {
-                            if (xhr.responseText.length === 0) {
-                                //console.log("Device returns empty repsonse. Resend request.");
-                                log += "Device returns empty repsonse. Resend request.\r\n";
-                                reject(log);
-                            };
-                            log += "Device cannot handle new connections this is normal.\r\n";
-                            reject(log);
-                        }
-                    }
-                };
-             } catch (error) {
-                xhr.abort();
-                //console.log(error);
-                reject(error);
+                    let message = "";
+                    if ( response.statusCode === 204 )
+                    { message = "No Data Found"; }
+                    else if ( response.statusCode === 400 )
+                    { message = "Bad request"; }
+                    else if ( response.statusCode === 401 )
+                    { message = "Unauthorized"; }
+                    else if ( response.statusCode === 403 )
+                    { message = "Forbidden"; }
+                    else if ( response.statusCode === 404 )
+                    { message = "Not Found"; }
+                    reject( new Error( "HTTP Error: " + response.statusCode + " " + message ) );
+                    return;
+                  }
+                  else{
+                    let rawData = '';
+                    response.setEncoding('utf8');
+                    response.on( 'data', (chunk) => { rawData += chunk; })
+                    response.on( 'end', () => {
+                      resolve( rawData );
+                    })
+                  }
+                })
+                .on('error', (err) => {
+                  //console.log(err);
+                  reject( new Error( "HTTP Error: " + err.message ) );
+                  return;
+                });
+              request.setTimeout( 5000, function()
+                {
+                  request.destroy();
+                  reject( new Error( "HTTP Catch: Timeout" ) );
+                  return;
+                });
+              }
+            catch ( err )
+            {
+                reject( new Error( "HTTP Catch: " + err.message ) );
+                return;
             }
         });
-    }
+      }
 }
 
 module.exports = GruenbeckSCSrv;

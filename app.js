@@ -1,6 +1,6 @@
 if (process.env.DEBUG === '1')
 {
-    require('inspector').open(9222, '0.0.0.0', true);
+    require('inspector').open(9231, '0.0.0.0', true);
 }
 
 'use strict';
@@ -130,8 +130,8 @@ class GruenbeckApp extends Homey.App {
     }
     catch(err)
     {
-      this.updateLog(JSON.stringify(err));
-      return JSON.stringify(err);
+      this.updateLog("===> LoginTest: "+err.message);
+      return err.message;
     }
   }
 
@@ -161,7 +161,13 @@ class GruenbeckApp extends Homey.App {
     this.updateLog("===> Devices Update");
     let deviceStatistic;
     let deviceParameters;
-    const devices = await this.getDevices();
+    let devices;
+    try{
+       devices = await this.getDevices();
+    }
+    catch(error){
+      this.updateLog("---> devicesUpdate() Error get devices: "+error);
+    }
     if (devices){
       for(const device of devices ){
         //console.log(device);
@@ -297,6 +303,7 @@ class GruenbeckApp extends Homey.App {
     }
     catch(err){
       this.updateLog("Error Get Devices: "+err);
+      throw new Error(err.message);
     };
   }
 

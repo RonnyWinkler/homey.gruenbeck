@@ -1,8 +1,8 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.ronnywinkler.homey.gruenbeck",
-  "version": "1.1.6",
-  "compatibility": ">=5.0.0",
+  "version": "1.2.0",
+  "compatibility": ">=8.1.1",
   "sdk": 3,
   "name": {
     "en": "Gruenbeck",
@@ -492,15 +492,38 @@
       },
       "pair": [
         {
-          "id": "list_my_devices",
-          "template": "list_devices",
+          "id": "loading",
+          "template": "loading",
           "navigation": {
-            "next": "add_my_devices"
+            "next": "list_devices"
           }
         },
         {
-          "id": "add_my_devices",
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png"
+          }
         }
       ],
       "images": {
@@ -601,15 +624,38 @@
       },
       "pair": [
         {
-          "id": "list_my_devices",
-          "template": "list_devices",
+          "id": "loading",
+          "template": "loading",
           "navigation": {
-            "next": "add_my_devices"
+            "next": "list_devices"
           }
         },
         {
-          "id": "add_my_devices",
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
           "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png"
+          }
         }
       ],
       "images": {

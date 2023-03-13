@@ -16,7 +16,7 @@
         "loginError": "Login nicht möglich.",
         "diagnosticsLog": "Diagnose-Log",
         "logEnabled": "Log aktiviert",
-        "clearLog": "Clear Löschen"
+        "clearLog": "Log Löschen"
     },
     "capabilityCaption": {
         "regProgressDescription00": "Nutzung",

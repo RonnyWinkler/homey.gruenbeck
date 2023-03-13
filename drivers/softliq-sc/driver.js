@@ -10,11 +10,97 @@ class softliqscDriver extends Driver {
     this.log('softliqscDriver has been initialized');
   }
 
+  onPair(session) {
+    this.log("onPair()");
+
+    session.setHandler('showView', async (view) => {
+      return await this.onShowView(session, view);
+    });
+
+    session.setHandler("list_devices", async () => {
+        return await this.onPairListDevices(session);
+    });
+
+    session.setHandler("login", async (data) => {
+      return await this.checkLogin(data); 
+    });
+  }
+
+  onRepair(session) {
+    this.log("onPair()");
+
+    session.setHandler("login", async (data) => {
+      return await this.checkLogin(data); 
+    });
+  }
+
+  async onShowView(session, view){
+    if (view === 'loading') {
+        this.log("onShowView(loading)");
+
+        let settings = this.homey.settings.get('settings');
+        if (this.homey.app.gruenbeckSrv.isConnected()
+            && settings.user && settings.user != "" 
+            && settings.password && settings.password != "" ){
+            await session.showView("list_devices");
+        }
+        else{
+            if(settings.user && settings.user != "" 
+                && settings.password && settings.password != "") {
+                try{
+                    await this.homey.app.gruenbeckSrv.login(settings.user, settings.password);
+                    if (this.homey.app.gruenbeckSrv.isConnected()){
+                        await session.showView("list_devices")
+                    }
+                    else{
+                        await session.showView("login_credentials");
+                    }
+                }
+                catch(error){
+                    await session.showView("login_credentials");
+                }
+            }
+            else{
+                await session.showView("login_credentials");
+            }
+        }
+    }
+  }
+
+  async checkLogin(data){
+    let user = data.username;
+    let password = data.password;
+
+    try{
+        await this.homey.app.gruenbeckSrv.login(user, password);
+        if (this.homey.app.gruenbeckSrv && this.homey.app.gruenbeckSrv.isConnected()){
+  
+          await this.homey.settings.set("settings", 
+            {
+              "user": user,
+              "password": password,
+              "updateInterval": 5,
+              "active": true
+            }
+          );
+
+          return true;
+        }
+        else{
+          return false;
+        }
+    }
+    catch (error){
+        this.log("Connection error in pairing login view: "+error.message);
+        return false;
+    }
+  }
+
   /**
    * onPairListDevices is called when a user is adding a device and the 'list_devices' view is called.
    * This should return an array with the data of devices that are available for pairing.
    */
-  async onPairListDevices() {
+  async onPairListDevices(session) {
     const searchData = await this.homey.app.getDevices(true);
     // Create an array of devices
     let data = {};

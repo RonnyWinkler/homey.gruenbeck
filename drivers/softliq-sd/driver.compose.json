@@ -96,15 +96,38 @@
   },
   "pair": [
     {
-        "id": "list_my_devices",
+      "id": "loading",
+      "template": "loading",
+      "navigation": {
+        "next": "list_devices"
+      }
+    },
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+          "logo": "logo.png"
+      }
+    },
+    {
+        "id": "list_devices",
         "template": "list_devices",
         "navigation": {
-            "next": "add_my_devices"
+            "next": "add_devices"
         }
     },
     {
-        "id": "add_my_devices",
+        "id": "add_devices",
         "template": "add_devices"
+    }
+  ],
+  "repair": [
+    {
+      "id": "login_credentials",
+      "template": "login_credentials",
+      "options": {
+          "logo": "logo.png"
+      }
     }
   ],
   "images": {

@@ -14,7 +14,7 @@
         "testLogin": "Test login",
         "loginOK": "Login OK",
         "loginError": "Login not possible.",
-        "diagnosticsLog": "Diagnistic log",
+        "diagnosticsLog": "Diagnostic log",
         "logEnabled": "Log enabled",
         "clearLog": "Clear log"
     },
