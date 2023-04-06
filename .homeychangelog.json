@@ -113,5 +113,13 @@
   "1.2.0": {
     "en": "Optimized app settings. Added pair and repair dialog. Reduced NodeJS dependencies.",
     "de": "App-Einstellungen verbessert. Pair- und Repair-Dialog ergänzt. NodeJS-Abhängigkeiten reduziert."
+  },
+  "1.2.1": {
+    "en": "Testversion for SC bugfix.",
+    "de": "Testversion für SC-Korrektur."
+  },
+  "1.2.2": {
+    "en": "SC bugfix for data retrieval.",
+    "de": "SC-Korrektur für Datenabruf."
   }
 }

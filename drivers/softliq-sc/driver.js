@@ -40,12 +40,14 @@ class softliqscDriver extends Driver {
 
         let settings = this.homey.settings.get('settings');
         if (this.homey.app.gruenbeckSrv.isConnected()
+            && settings 
             && settings.user && settings.user != "" 
             && settings.password && settings.password != "" ){
             await session.showView("list_devices");
         }
         else{
-            if(settings.user && settings.user != "" 
+            if( settings 
+                && settings.user && settings.user != "" 
                 && settings.password && settings.password != "") {
                 try{
                     await this.homey.app.gruenbeckSrv.login(settings.user, settings.password);

@@ -283,7 +283,7 @@ class GruenbeckApp extends Homey.App {
         //TEST DATA softliQ-SC virtual device!!!
         // searchData.push(
         // {
-        //   "ipAddress": "192.168.1.XXX",
+        //   "ipAddress": "192.168.50.50",
         //   "id": "softliQ.C/BS000XXXXX",
         //   "series": "softliQ.C",
         //   "serialNumber": "BS000XXXXX",
@@ -376,9 +376,9 @@ class GruenbeckApp extends Homey.App {
 
   updateLog(newMessage, errorLevel = 1)
   {
+      this.log(newMessage);
       if ((errorLevel == 0) || this.homey.settings.get('logEnabled'))
       {
-          console.log(newMessage);
   
           // const nowTime = new Date(Date.now());
   

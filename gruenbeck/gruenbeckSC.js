@@ -17,10 +17,41 @@ class GruenbeckSCSrv{
 
     }
 
-    async requestDataSC(ipAddress, command){
+    async requestDataSC(ipAddress, command = this.requestAllCommand){
         let url = "http://" + ipAddress + "/mux_http";
-        return await this._http(url, {method: 'POST'});
+        return await this._httpPost(url, command);
     }
+
+    _httpPost(url, payload) {
+      return new Promise((resolve, reject) => {
+          let options = {
+              method: 'POST',
+              // headers: {
+              //     'Content-Type': 'application/xml',
+              //     'Content-Length': Buffer.byteLength(payload),
+              // },
+              // maxRedirects: 20,
+              // keepAlive: false
+          };
+          const req = http.request(url, options, res => {
+              if (res.statusCode !== 200) {
+                  // console.log('Failed to POST to url:' + url +' status code: '+res.statusCode);
+                  return reject( new Error('Failed to POST to url:' + url +' status code: '+res.statusCode));
+              }
+              res.setEncoding('utf8');
+              const data = [];
+
+              res.on('data', chunk => data.push(chunk));
+              res.on('end', () => {
+                  return resolve(data.join(''));
+              });
+          });
+
+          req.on('error', (error) => reject(error));
+          req.write(payload);
+          req.end();
+      });
+  }
 
     // requestDataSC(ipAddress, command){
     //     return new Promise((resolve, reject) => {
@@ -87,58 +118,58 @@ class GruenbeckSCSrv{
     //     });
     // }
 
-    async _http(url, options){
-        return new Promise( ( resolve, reject ) =>
-        {
-            try
-            {
-              let request = http
-                .get(url, options, (response) => { 
-                  if (response.statusCode !== 200){
-                    response.resume();
+    // async _http(url, options){
+    //     return new Promise( ( resolve, reject ) =>
+    //     {
+    //         try
+    //         {
+    //           let request = http
+    //             .get(url, options, (response) => { 
+    //               if (response.statusCode !== 200){
+    //                 response.resume();
     
-                    let message = "";
-                    if ( response.statusCode === 204 )
-                    { message = "No Data Found"; }
-                    else if ( response.statusCode === 400 )
-                    { message = "Bad request"; }
-                    else if ( response.statusCode === 401 )
-                    { message = "Unauthorized"; }
-                    else if ( response.statusCode === 403 )
-                    { message = "Forbidden"; }
-                    else if ( response.statusCode === 404 )
-                    { message = "Not Found"; }
-                    reject( new Error( "HTTP Error: " + response.statusCode + " " + message ) );
-                    return;
-                  }
-                  else{
-                    let rawData = '';
-                    response.setEncoding('utf8');
-                    response.on( 'data', (chunk) => { rawData += chunk; })
-                    response.on( 'end', () => {
-                      resolve( rawData );
-                    })
-                  }
-                })
-                .on('error', (err) => {
-                  //console.log(err);
-                  reject( new Error( "HTTP Error: " + err.message ) );
-                  return;
-                });
-              request.setTimeout( 5000, function()
-                {
-                  request.destroy();
-                  reject( new Error( "HTTP Catch: Timeout" ) );
-                  return;
-                });
-              }
-            catch ( err )
-            {
-                reject( new Error( "HTTP Catch: " + err.message ) );
-                return;
-            }
-        });
-      }
+    //                 let message = "";
+    //                 if ( response.statusCode === 204 )
+    //                 { message = "No Data Found"; }
+    //                 else if ( response.statusCode === 400 )
+    //                 { message = "Bad request"; }
+    //                 else if ( response.statusCode === 401 )
+    //                 { message = "Unauthorized"; }
+    //                 else if ( response.statusCode === 403 )
+    //                 { message = "Forbidden"; }
+    //                 else if ( response.statusCode === 404 )
+    //                 { message = "Not Found"; }
+    //                 reject( new Error( "HTTP Error: " + response.statusCode + " " + message ) );
+    //                 return;
+    //               }
+    //               else{
+    //                 let rawData = '';
+    //                 response.setEncoding('utf8');
+    //                 response.on( 'data', (chunk) => { rawData += chunk; })
+    //                 response.on( 'end', () => {
+    //                   resolve( rawData );
+    //                 })
+    //               }
+    //             })
+    //             .on('error', (err) => {
+    //               //console.log(err);
+    //               reject( new Error( "HTTP Error: " + err.message ) );
+    //               return;
+    //             });
+    //           request.setTimeout( 5000, function()
+    //             {
+    //               request.destroy();
+    //               reject( new Error( "HTTP Catch: Timeout" ) );
+    //               return;
+    //             });
+    //           }
+    //         catch ( err )
+    //         {
+    //             reject( new Error( "HTTP Catch: " + err.message ) );
+    //             return;
+    //         }
+    //     });
+    //   }
 }
 
 module.exports = GruenbeckSCSrv;
