@@ -121,5 +121,29 @@
   "1.2.2": {
     "en": "SC bugfix for data retrieval.",
     "de": "SC-Korrektur für Datenabruf."
+  },
+  "1.2.3": {
+    "en": "SC test version (http header issue).",
+    "de": "SC-Testversion (http Header-Fehler)."
+  },
+  "1.2.4": {
+    "en": "SC test version (http header issue).",
+    "de": "SC-Testversion (http Header-Fehler)."
+  },
+  "1.2.5": {
+    "en": "SC test version (http header issue).",
+    "de": "SC-Testversion (http Header-Fehler)."
+  },
+  "1.2.6": {
+    "en": "SC test version (http header issue).",
+    "de": "SC-Testversion (http Header-Fehler)."
+  },
+  "1.2.7": {
+    "en": "SC test version (http header issue).",
+    "de": "SC-Testversion (http Header-Fehler)."
+  },
+  "1.2.8": {
+    "en": "Fixed the SC18 http header issue for HomeyPro23 caused by new NodeJS version.",
+    "de": "SC18 http Header-Fehler für HomeyPro23 behoben, verursacht durch neue NodeJS-Version."
   }
 }

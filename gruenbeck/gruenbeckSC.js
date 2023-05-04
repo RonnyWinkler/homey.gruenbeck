@@ -1,5 +1,6 @@
 'use strict';
 
+const axios = require("axios");
 const http = require('http');
 
 class GruenbeckSCSrv{
@@ -22,14 +23,18 @@ class GruenbeckSCSrv{
         return await this._httpPost(url, command);
     }
 
+    // HTTP-Version
     _httpPost(url, payload) {
       return new Promise((resolve, reject) => {
           let options = {
               method: 'POST',
-              // headers: {
-              //     'Content-Type': 'application/xml',
-              //     'Content-Length': Buffer.byteLength(payload),
-              // },
+              insecureHTTPParser: true,
+              headers: {
+                   'Content-Type': 'application/x-www-form-urlencoded',
+                   'Content-Length': Buffer.byteLength(payload),
+                   'accept': '*/*',
+                   'timeout': 10000
+              }
               // maxRedirects: 20,
               // keepAlive: false
           };
@@ -51,7 +56,25 @@ class GruenbeckSCSrv{
           req.write(payload);
           req.end();
       });
-  }
+    }
+
+    // // Axios-Version
+    // async _httpPost(url, payload) {
+    //     let config = {
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             // Accept: "application/json, text/html, text/xml, */*; q=0.01",
+    //             Accept: "*/*",
+    //             insecureHTTPParser: true
+    //         }
+    //     };
+
+    //     return await axios.post(
+    //         url,
+    //         payload,
+    //         config
+    //     );
+    // }
 
     // requestDataSC(ipAddress, command){
     //     return new Promise((resolve, reject) => {
