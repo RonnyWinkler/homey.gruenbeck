@@ -145,5 +145,9 @@
   "1.2.8": {
     "en": "Fixed the SC18 http header issue for HomeyPro23 caused by new NodeJS version.",
     "de": "SC18 http Header-Fehler für HomeyPro23 behoben, verursacht durch neue NodeJS-Version."
+  },
+  "1.2.9": {
+    "en": "Added tags for app store search.",
+    "de": "Tags für App-Store-Suche ergänzt."
   }
 }

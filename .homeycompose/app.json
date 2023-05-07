@@ -1,6 +1,6 @@
 {
   "id": "de.ronnywinkler.homey.gruenbeck",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "compatibility": ">=8.1.1",
   "sdk": 3,
   "name": {
@@ -10,6 +10,27 @@
   "description": {
     "en": "Experience new worlds of soft water!",
     "de": "Erleben Sie neue Welten weichen Wassers!"
+  },
+
+ "tags": {
+    "en": [
+        "Gruenbeck",
+        "water softener",
+        "water",
+        "SD18",
+        "SD",
+        "SC18",
+        "SC"
+    ],
+    "de": [
+        "Grünbeck",
+        "Wasserenthärter",
+        "Wasser",
+        "SD18",
+        "SD",
+        "SC18",
+        "SC"
+    ]
   },
   "category": [
     "appliances"
