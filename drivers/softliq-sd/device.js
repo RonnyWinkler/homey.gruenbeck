@@ -359,6 +359,9 @@ class softliqsdDevice extends Device {
   }
 
   decimalToString(number){
+    if (!number){
+      return '00';
+    }
     let string = number.toString();
     if (string.length == 1){
       string = '0' + string;

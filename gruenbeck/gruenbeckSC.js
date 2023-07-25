@@ -41,14 +41,14 @@ class GruenbeckSCSrv{
           const req = http.request(url, options, res => {
               if (res.statusCode !== 200) {
                   // console.log('Failed to POST to url:' + url +' status code: '+res.statusCode);
-                  return reject( new Error('Failed to POST to url:' + url +' status code: '+res.statusCode));
+                  reject( new Error('Failed to POST to url:' + url +' status code: '+res.statusCode));
               }
               res.setEncoding('utf8');
               const data = [];
 
               res.on('data', chunk => data.push(chunk));
               res.on('end', () => {
-                  return resolve(data.join(''));
+                  resolve(data.join(''));
               });
           });
 

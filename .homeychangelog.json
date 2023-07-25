@@ -149,5 +149,13 @@
   "1.2.9": {
     "en": "Added tags for app store search.",
     "de": "Tags für App-Store-Suche ergänzt."
+  },
+  "1.2.10": {
+    "en": "SD18: Fix for initial time in device settings.",
+    "de": "SD18: Korrektur für initiale Zeiten in Geräteeinstellungen."
+  },
+  "1.2.11": {
+    "en": "SD18: Fix for crash on Websocket error.",
+    "de": "SD18: Korrektur für Abbruch bei Websocket-Fehler."
   }
 }

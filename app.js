@@ -26,6 +26,7 @@ class GruenbeckApp extends Homey.App {
     this.gruenbeckSrv = new gruenbeckSDSrv();
     this.gruenbeckSCSrv = new gruenbeckSCSrv();
     this.gruenbeckSrv.on("wsMessage", this.onWsMessage.bind(this));
+    this.gruenbeckSrv.on("wsError", this.onWsError.bind(this));
     // Timer
     this.timeoutReconnectSD = null;
     // local data
@@ -354,6 +355,11 @@ class GruenbeckApp extends Homey.App {
     // emit event to device instance
     //console.log("WS Data Message");
     this.events.emit("deviceUpdateSC", deviceSerialNumber, deviceData);
+  }
+
+  //async websocketCallback(data){
+  onWsError(error){
+    this.updateLog("WebSocket error: "+error.message);
   }
 
   //async websocketCallback(data){
