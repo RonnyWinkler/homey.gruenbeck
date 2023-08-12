@@ -157,5 +157,9 @@
   "1.2.11": {
     "en": "SD18: Fix for crash on Websocket error.",
     "de": "SD18: Korrektur für Abbruch bei Websocket-Fehler."
+  },
+  "1.2.12": {
+    "en": "SD18: Fix for invalid device settings.",
+    "de": "SD18: Korrektur für ungültige Geräte-Einstellungen."
   }
 }
