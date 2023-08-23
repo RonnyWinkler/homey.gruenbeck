@@ -99,7 +99,7 @@ class GruenbeckApp extends Homey.App {
       try{
         await this.login();
         this.updateLog("---> Connect WebSocket");
-        this.gruenbeckSrv.connectMgWebSocket();
+        await this.gruenbeckSrv.connectMgWebSocket();
         //await this.devicesUpdate();
         // First Start, gibe WS-Connect 5 seconds to connect before reading device data
         this.timeoutDevicesUpdate = setTimeout(() => this.devicesUpdate().catch(e => console.log(e)), 5 * 1000 );
@@ -145,10 +145,15 @@ class GruenbeckApp extends Homey.App {
     clearTimeout(this.timeoutReconnectSD);
     this.timeoutReconnectSD = null;
     this.updateLog("---> Relogin (Reconnect timer)");
-    await this.login().then(() => {
-        this.updateLog("---> Reconnect WebSocket");
-        this.gruenbeckSrv.connectMgWebSocket();
-    });
+    try{
+      await this.login();
+      this.updateLog("---> Reconnect WebSocket");
+      await this.gruenbeckSrv.connectMgWebSocket();
+    }
+    catch(err){
+      this.updateLog("Login Error: "+err.message);
+      return;
+    }
   }
 
   async devicesUpdate(noTimeout) {
@@ -157,7 +162,13 @@ class GruenbeckApp extends Homey.App {
       this.timeoutDevicesUpdate = setTimeout(() => this.devicesUpdate().catch(e => console.log(e)), 1000 * 60 * this.updateInterval );
     }
     if (!this.gruenbeckSrv.isConnected()){
-      await this.login();
+      try{
+        await this.login();
+      }
+      catch(err){
+        this.updateLog("Login Error: "+err.message);
+        return;
+      }  
     }
     this.updateLog("===> Devices Update");
     let deviceStatistic;
@@ -268,7 +279,13 @@ class GruenbeckApp extends Homey.App {
         this.updateLog("Please set User/Password in app settings.");
         return;
       }
-      await this.login(this.user, this.password);
+      try{
+        await this.login(this.user, this.password);
+      }
+      catch(err){
+        this.updateLog("Login Error: "+err.message);
+        return;
+      }  
     }
     this.updateLog("---> Get Devices");
     const devices = [];

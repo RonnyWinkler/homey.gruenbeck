@@ -161,5 +161,9 @@
   "1.2.12": {
     "en": "SD18: Fix for invalid device settings.",
     "de": "SD18: Korrektur für ungültige Geräte-Einstellungen."
+  },
+  "1.2.13": {
+    "en": "Additional checks for connection errors added.",
+    "de": "Weitere Prüfungen auf Verbindungs-Fehler ergänzt."
   }
 }
