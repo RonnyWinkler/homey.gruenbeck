@@ -1030,7 +1030,13 @@ class GruenbeckSDSrv extends EventEmitter{
 
                                     this.ws.on("open", async () => {
                                         //console.log("WS connected");
-                                        this.ws.send('{"protocol":"json","version":1}');
+                                        try{
+                                            this.ws.send('{"protocol":"json","version":1}')
+                                        }
+                                        catch(error){
+                                            // console.log("WS error:", error);
+                                            this.emit('wsError', error);
+                                        }
                                     });
                                     this.ws.on("error", async (error) => {
                                         // console.log("WS error:", error);

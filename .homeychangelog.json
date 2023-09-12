@@ -165,5 +165,9 @@
   "1.2.13": {
     "en": "Additional checks for connection errors added.",
     "de": "Weitere Prüfungen auf Verbindungs-Fehler ergänzt."
+  },
+  "1.2.14": {
+    "en": "SD18: Prevent crash on Websocket error.",
+    "de": "SD18: Vermeide Abbruch bei Websocket-Fehler."
   }
 }
