@@ -49,7 +49,7 @@ class softliqscDevice extends Device {
         }
         // Restkapazität Prozent
         if ( data.indexOf("<D_Y_10_1>") != -1 ){
-          indexStart = data.indexOf("<D_Y_10_1>") + 9;
+          indexStart = data.indexOf("<D_Y_10_1>") + 10;
           indexEnd = data.indexOf("</D_Y_10_1>");
           await this.setCapabilityValue('measure_remaining_percent', parseInt(data.substring(indexStart, indexEnd)) ).catch(this.error);
         }

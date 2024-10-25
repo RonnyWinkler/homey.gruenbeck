@@ -1,6 +1,6 @@
 {
   "id": "de.ronnywinkler.homey.gruenbeck",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "compatibility": ">=8.1.1",
   "sdk": 3,
   "name": {
@@ -15,6 +15,7 @@
  "tags": {
     "en": [
         "Gruenbeck",
+        "Grünbeck",
         "water softener",
         "water",
         "SD18",
@@ -24,6 +25,7 @@
     ],
     "de": [
         "Grünbeck",
+        "Gruenbeck",
         "Wasserenthärter",
         "Wasser",
         "SD18",
