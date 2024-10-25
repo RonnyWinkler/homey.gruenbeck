@@ -21,6 +21,12 @@ class softliqscDevice extends Device {
 
     async updateCapabilities(){
       // Add new capabilities (if not already added)
+      // add new capabilities for version 1.3.0
+      if (!this.hasCapability('measure_remaining_percent'))
+      {
+          await this.addCapability('measure_remaining_percent');
+      }
+        
     }
 
     async resetSaltLevel(){
@@ -40,6 +46,12 @@ class softliqscDevice extends Device {
           indexStart = data.indexOf("<D_A_1_2>") + 9;
           indexEnd = data.indexOf("</D_A_1_2>");
           await this.setCapabilityValue('measure_remaining_capacity', parseInt(data.substring(indexStart, indexEnd) * 1000) ).catch(this.error);
+        }
+        // Restkapazität Prozent
+        if ( data.indexOf("<D_Y_10_1>") != -1 ){
+          indexStart = data.indexOf("<D_Y_10_1>") + 9;
+          indexEnd = data.indexOf("</D_Y_10_1>");
+          await this.setCapabilityValue('measure_remaining_percent', parseInt(data.substring(indexStart, indexEnd)) ).catch(this.error);
         }
         // Letzter Wasserverbrauch
         if ( data.indexOf("<D_Y_2_1>") != -1 ){

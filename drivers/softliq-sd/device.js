@@ -60,6 +60,12 @@ class softliqsdDevice extends Device {
       {
         await this.addCapability('measure_reg_remaining_step_description');
       }
+      // add new capabilities for version 1.3.0
+      if (!this.hasCapability('measure_remaining_percent'))
+      {
+          await this.addCapability('measure_remaining_percent');
+      }
+        
 
       // remove unused capabilities if existzing
       if (this.hasCapability('meter_water.remaining_capacity'))
@@ -173,6 +179,8 @@ class softliqsdDevice extends Device {
       }
       if (data.type == "Current"){
         await this.setCapabilityValue('measure_remaining_capacity', parseInt( parseFloat(data.mrescapa1) * 1000) ).catch(this.error);
+        await this.setCapabilityValue('measure_remaining_percent', parseInt( data.mresidcap1) ).catch(this.error);
+
         //await this.setCapabilityValue('meter_water.remaining_capacity', parseInt( parseFloat(data.mrescapa1) * 1000) / 1000 ).catch(this.error);
         await this.setCapabilityValue('measure_last_reg_percent', parseInt(data.mregpercent1) ).catch(this.error);
         //Regeneration is active if mregstatus <> 0

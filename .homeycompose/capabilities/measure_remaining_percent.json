@@ -1,0 +1,13 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Percentage of remaining capacity",
+        "de": "Prozentuale Restkapazität"
+    },
+    "getable": true,
+    "setable": false,
+    "uiComponent": null,
+    "unit": "%",
+    "insights": true,
+    "icon": "/assets/measure_remaining_percent.svg"
+}

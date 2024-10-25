@@ -173,5 +173,9 @@
   "1.2.15": {
     "en": "SD18: Added some error handlings.",
     "de": "SD18: Einige Fehlerbehandlungen ergänzt."
+  },
+  "1.3.0": {
+    "en": "SD+SC series: Added capability for percentage of remaining capacity (only as tag).",
+    "de": "SD+SC Reihe: Capability für prozentuale Restkapazität hinzugefügt (nur als Tag)."
   }
 }
