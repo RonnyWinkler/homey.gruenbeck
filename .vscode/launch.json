@@ -23,6 +23,16 @@
             "port": 9231,
             "localRoot": "${workspaceFolder}",
             "remoteRoot": "/"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "restart": true,
+            "name": "Attach Grünbeck to Homey23 Docker",
+            "address": "192.168.1.42",
+            "port": 9229,
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/app/"
         }
     ]
 }

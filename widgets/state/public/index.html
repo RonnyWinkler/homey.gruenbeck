@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <style>
+        .homey-custom-icon-background {
+            -webkit-mask-image: url('background.svg');
+            mask-image: url('background.svg');
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+        .div_device{
+            position: relative;
+        }
+        .homey-custom-icon-device {
+            -webkit-mask-image: url('device.png');
+            mask-image: url('device.png');
+            height: 180px;
+            width: 800px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 2;
+        }
+        .homey-custom-icon-bar {
+            -webkit-mask-image: url('bar.svg');
+            mask-image: url('bar.svg');
+            height: 180px;
+            width: 800px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<!-- <body class="homey-widget-small"> -->
+<body class="homey-widget">
+    <div id="div_background">
+        <div is="div_device">
+            <div id="div_device_bar" class="homey-custom-icon-bar"></div>
+            <div id="div_device_img" class="homey-custom-icon-device"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let widget_data = {};
+        
+        const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
+        async function onHomeyReady(Homey) {
+            Homey.ready({ height: 200 });
+
+            console.log('instanceId: ', Homey.getWidgetInstanceId());
+            console.log('settings', Homey.getSettings());
+
+            // Realtime event for changed car data
+            Homey.on('device_data_changed', (id)=> _getDeviceData(Homey.getSettings().device.id));
+            // initial data reading
+            if (!Homey.getSettings().device || !Homey.getSettings().device.id){
+                // document.getElementById('text_car_state').innerText = Homey.__('widget.car_select');
+            }
+            else{
+                _getDeviceData(Homey.getSettings().device);
+            }
+        }
+
+        async function _getdeviceData(device){
+            console.log('Update device data: ID:' + device.id);
+            if (Homey.getSettings().device && 
+                id != Homey.getSettings().device.id){
+                return;
+            }
+            // read/update data
+            try{
+                let data = await Homey.api('GET', '/device_data?driver_id='+device.driver_id+'&device_id='+device.device_id, {});
+                console.log(data);
+                widget_data = data;
+                if (data){
+
+                }
+            }
+            catch(error){
+                console.error;
+                document.getElementById('div_data').style.visibility = "hidden";
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

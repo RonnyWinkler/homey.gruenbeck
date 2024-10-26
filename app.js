@@ -1,7 +1,7 @@
-if (process.env.DEBUG === '1')
-{
-    require('inspector').open(9231, '0.0.0.0', true);
-}
+// if (process.env.DEBUG === '1')
+// {
+//     require('inspector').open(9231, '0.0.0.0', true);
+// }
 
 'use strict';
 
@@ -20,6 +20,19 @@ class GruenbeckApp extends Homey.App {
    */
   async onInit() {
     this.log('Grünbeck has been initialized');
+
+    // Init Debugger
+    if (process.env.DEBUG === '1') {
+      if (this.homey.platform == "local") {
+        try {
+          require('inspector').waitForDebugger();
+        }
+        catch (error) {
+          require('inspector').open(9231, '0.0.0.0', true);
+        }
+      }
+    }
+
     // Eventhandler
     this.events = new EventEmitter();
     // Grübbeck instance and event handler:
@@ -454,7 +467,18 @@ class GruenbeckApp extends Homey.App {
           this.homey.api.realtime('de.ronnywinkler.homey.gruenbeck.logupdated', { 'log': this.diagLog });
       }
   }
-
+  
+  // WIDGET API ============================================================================
+  async apiGetCarData(driver_id, device_id){
+    let data = { };
+    let device = this.homey.drivers.getDriver(driver_id).getDevices().filter(e=>{ return ( e.getData().id == device_id ) })[0];
+    if (device == undefined){
+      throw new Error('No device found.');
+    }
+    data.id = device.getData().id;
+    data.name = device.getName();
+    return data;
+  }
 }
 
 

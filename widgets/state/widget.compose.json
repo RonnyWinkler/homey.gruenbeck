@@ -1,0 +1,23 @@
+{
+    "name": {
+        "en": "Gerätestatus",
+        "de": "Device state"
+    },
+    "settings": [
+        {
+            "id": "device",
+            "type": "autocomplete",
+            "title": {
+                "en": "Gerät",
+                "de": "Device"
+            }
+        }
+    ],
+    "height": 200,
+    "api": {
+        "getDeviceData": {
+            "method": "GET",
+            "path": "/device_data"
+        }
+    }
+  }
