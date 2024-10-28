@@ -189,5 +189,9 @@
   "1.3.3": {
     "en": "Widget: SC specific texts.",
     "de": "Widget: SC-spezifische Texte."
+  },
+  "1.3.4": {
+    "en": "Widget: Added light/dark theme.",
+    "de": "Widget: Helles/dunkles Thema ergänzt."
   }
 }
