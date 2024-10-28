@@ -25,5 +25,8 @@
         "regProgressDescription03": "Verdrängen",
         "regProgressDescription04": "Rückspülen",
         "regProgressDescription05": "Auswaschen"
+    },
+    "widget": {
+        "regeneration_active": "Regenerierung aktiv"
     }
 }

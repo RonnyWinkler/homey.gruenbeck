@@ -139,7 +139,7 @@
             
         </div>
         <div id="div_data">
-            <div id="div_data_main" style="display: unset">
+            <div id="div_data_main" style="display: none">
                 <div class="div_capability">
                     <div id="div_icon_measure_remaining_capacity" class="homey-custom-icon-measure_remaining_capacity"></div>
                     <span id="text_measure_remaining_capacity" class="homey-text-regular text_capability"></span>
@@ -157,7 +157,7 @@
                     <span id="text_measure_reg_progress" class="homey-text-regular text_capability"></span>
                 </div>
             </div>
-            <div id="div_data_last_update"  class="div_capability">
+            <div id="div_data_last_update"  class="div_capability" style="display: none">
                 <div class="div_capability">
                     <div id="div_icon_measure_last_update" class="homey-custom-icon-measure_last_update"></div>
                     <span id="text_measure_last_update" class="homey-text-small-light text_last_update"></span>
@@ -221,7 +221,10 @@
 
                     // General data
                     document.getElementById('text_measure_last_update').innerText = data.measure_last_update;
+                    document.getElementById('div_data_last_update').style.display = 'unset';
+
                     document.getElementById('text_measure_remaining_capacity').innerText = data.measure_remaining_capacity+' l';
+                    document.getElementById('div_data_main').style.display = 'unset';
                     
                     // SD data
                     if (driver_id == 'softliq-sd'){
@@ -233,17 +236,20 @@
                     }
 
                     // Test data:
-                    // data.alarm_regeneration_active = true;
-                    // data.measure_reg_progress = '30';
-                    // data.measure_reg_progress_text = 'Besalzen';
-                    // data.measure_reg_progress_description = '10:45';
+                    data.alarm_regeneration_active = true;
+                    data.measure_reg_progress = '30';
+                    data.measure_reg_progress_text = '10:45';
+                    data.measure_reg_progress_description = 'Besalzen';
 
                     // Regeration data
                     if (data.alarm_regeneration_active){
                         document.getElementById('div_data_regeration').style.display = 'unset';
-                        document.getElementById('text_measure_reg_progress').innerText = data.measure_reg_progress+' %' +
-                            ' (' + data.measure_reg_progress_description +')';
-
+                        document.getElementById('text_measure_reg_progress').innerText = Homey.__("widget.regeneration_active");
+                        if (driver_id == 'softliq-sd'){
+                            document.getElementById('text_measure_reg_progress').innerText = document.getElementById('text_measure_reg_progress').innerText + 
+                                '\n'+data.measure_reg_progress+' %' +
+                                ' (' + data.measure_reg_progress_description +')';                            
+                        }
                     }
                     else{
                         document.getElementById('div_data_regeration').style.display = 'none';

@@ -25,5 +25,8 @@
         "regProgressDescription03": "Displace",
         "regProgressDescription04": "Backwash",
         "regProgressDescription05": "Wash out"
+    },
+    "widget": {
+        "regeneration_active": "Regeneration active"
     }
 }
