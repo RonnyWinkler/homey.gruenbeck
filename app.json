@@ -551,7 +551,23 @@
       "images": {
         "small": "/drivers/softliq-sd/assets/images/small.jpg",
         "large": "/drivers/softliq-sd/assets/images/large.jpg"
-      }
+      },
+      "settings": [
+        {
+          "id": "capacity",
+          "type": "number",
+          "value": 0,
+          "label": {
+            "en": "Total capacity in liters",
+            "de": "Gesamtkapazität in Litern"
+          },
+          "hint": {
+            "en": "Indicates the total capacity. If this value is specified, the capacity percentage is calculated based on the total capacity. Otherwise, the percentage value provided by the device is used. This indicates the remaining capacity since the last regeneration (for the level to which regeneration was carried out).",
+            "de": "Gibt die Gesamtkapazität an. Wird dieser Wert angegeben, dann wird der Kapazitäts-Prozentwert auf Basis der Gesmatkapazität berechnet. Sonst wird der vom Gerät gelieferte Prozentwert verwendet. Dieser gibt die Restkakazität seit der letzte Regeneration an (für das Level, zu dem Regeneriert wurde)."
+          },
+          "units": "l"
+        }
+      ]
     },
     {
       "id": "softliq-sd",
@@ -698,6 +714,20 @@
             "de": "Salz-Füllstand angeben, der beim Zurücksetzen des Füllstands im Wartungsdialog verwendet werden soll."
           },
           "units": "kg"
+        },
+        {
+          "id": "capacity",
+          "type": "number",
+          "value": 0,
+          "label": {
+            "en": "Total capacity in liters",
+            "de": "Gesamtkapazität in Litern"
+          },
+          "hint": {
+            "en": "Indicates the total capacity. If this value is specified, the capacity percentage is calculated based on the total capacity. Otherwise, the percentage value provided by the device is used. This indicates the remaining capacity since the last regeneration (for the level to which regeneration was carried out).",
+            "de": "Gibt die Gesamtkapazität an. Wird dieser Wert angegeben, dann wird der Kapazitäts-Prozentwert auf Basis der Gesmatkapazität berechnet. Sonst wird der vom Gerät gelieferte Prozentwert verwendet. Dieser gibt die Restkakazität seit der letzte Regeneration an (für das Level, zu dem Regeneriert wurde)."
+          },
+          "units": "l"
         },
         {
           "type": "group",
@@ -1097,8 +1127,8 @@
   "widgets": {
     "state": {
       "name": {
-        "en": "Gerätestatus",
-        "de": "Device state"
+        "en": "Grünbeck",
+        "de": "Grünbeck"
       },
       "settings": [
         {

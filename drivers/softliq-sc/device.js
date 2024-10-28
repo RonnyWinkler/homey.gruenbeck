@@ -51,7 +51,16 @@ class softliqscDevice extends Device {
         if ( data.indexOf("<D_Y_10_1>") != -1 ){
           indexStart = data.indexOf("<D_Y_10_1>") + 10;
           indexEnd = data.indexOf("</D_Y_10_1>");
-          await this.setCapabilityValue('measure_remaining_percent', parseInt(data.substring(indexStart, indexEnd)) ).catch(this.error);
+
+          // Kapazität in %
+          if (this.getSetting('capacity') != undefined && this.getSetting('capacity') > 0){
+            // percentage based on total capacity (settings)
+            await this.setCapabilityValue('measure_remaining_percent', Math.round( this.getCapabilityValue('measure_remaining_capacity')*100/this.getSetting('capacity') ) ).catch(this.error);
+          }
+          else{
+            // percentage based on device value (% since last regeneration level)
+            await this.setCapabilityValue('measure_remaining_percent', parseInt(data.substring(indexStart, indexEnd)) ).catch(this.error);
+          }
         }
         // Letzter Wasserverbrauch
         if ( data.indexOf("<D_Y_2_1>") != -1 ){
@@ -100,7 +109,10 @@ class softliqscDevice extends Device {
             date = date.split("/")[2] + "-" + date.split("/")[0] + "-" + date.split("/")[1]; 
             let time = now.split(", ")[1];
         await this.setCapabilityValue('measure_last_update', date + " " + time).catch(this.error);
-    }
+
+        // Realtime event - Widget update 
+        await this.homey.api.realtime("device_data_changed", {driver_id:'softliq-sd', device_id: this.getData().id} );
+      }
 
   /**
    * onAdded is called when the user adds the device, called just after pairing.

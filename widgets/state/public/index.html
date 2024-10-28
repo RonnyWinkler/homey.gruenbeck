@@ -2,6 +2,7 @@
 
 <head>
     <style>
+
         .homey-custom-icon-background {
             -webkit-mask-image: url('background.svg');
             mask-image: url('background.svg');
@@ -11,38 +12,157 @@
             top: 0px;
             left: 0px;
         }
-        .div_device{
+        #body{
+            background-image: url('background.svg');
+        }
+        #div_background{
+            padding: var(--homey-su-2);
+        }
+        #div_device{
             position: relative;
+            top: 0px;
+            left: 10px;
         }
-        .homey-custom-icon-device {
-            -webkit-mask-image: url('device.png');
-            mask-image: url('device.png');
+        #div_data{
+            position: relative;
+            top: 70px;
+            left: 120px;
+        }
+        .div_capability{
+            display: flex;
+            margin-bottom: 10px;;
+        }
+        #div_data_last_update{
+            position: absolute;
+            display: table-cell;
+            top: 95px;
+        }
+        #div_device_img {
             height: 180px;
-            width: 800px;
+            width: 80px;
             position: absolute;
             top: 0px;
             left: 0px;
-            z-index: 2;
+            z-index: 10;
         }
-        .homey-custom-icon-bar {
-            -webkit-mask-image: url('bar.svg');
-            mask-image: url('bar.svg');
+        #img_device {
             height: 180px;
-            width: 800px;
+            width: 80px;
+        }
+
+        .homey-custom-icon-bar-back {
+            -webkit-mask-image: url('bar_full.svg');
+            mask-image: url('bar_full.svg');
+            height: 135px;
+            width: 42px;
             position: absolute;
-            top: 0px;
-            left: 0px;
+            top: 33px;
+            left: 20px;
             z-index: 1;
+            background-color: black;
         }
+
+        .homey-custom-icon-bar {
+            --bar_height: 135px;
+            --bar_value: 0;
+            --bar_color_ok: var(--homey-color-blue);
+            --bar_color_low: var(--homey-color-orange);
+            --bar_color_critical: var(--homey-color-red);
+            --bar_color: var(--bar_color_ok);
+            background-color: var(--bar_color);
+            -webkit-mask-image: url('bar_full.svg');
+            mask-image: url('bar_full.svg');
+            height: calc(var(--bar_value) * var(--bar_height)/100);
+            margin-top: calc( var(--bar_height) - var(--bar_value)/100 * var(--bar_height));
+            width: 42px;
+            position: absolute;
+            top: 33px;
+            left: 20px;
+            z-index: 2;
+
+            box-shadow: rgb(0, 0, 0) 3px 1px 2px 0px inset, rgb(0, 0, 0) -3px -0px 2px 0px inset;
+
+            /* box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset; */
+        }
+
+        .homey-custom-icon-measure_remaining_capacity {
+            -webkit-mask-image: url('measure_remaining_capacity.svg');
+            mask-image: url('measure_remaining_capacity.svg');
+            /* display: inline-grid; */
+            --homey-icon-size: var(--homey-icon-size-regular);
+            background-color: var(--homey-color-white);
+        }
+        .homey-custom-icon-measure_salt_level {
+            -webkit-mask-image: url('measure_salt_level.svg');
+            mask-image: url('measure_salt_level.svg');
+            /* display: inline-grid; */
+            --homey-icon-size: var(--homey-icon-size-regular);
+            background-color: var(--homey-color-white);
+        }
+        .homey-custom-icon-alarm_regeneration_active {
+            -webkit-mask-image: url('alarm_regeneration_active.svg');
+            mask-image: url('alarm_regeneration_active.svg');
+            /* display: inline-grid; */
+            --homey-icon-size: var(--homey-icon-size-regular);
+            background-color: var(--homey-color-white);
+        }
+        .homey-custom-icon-measure_last_update {
+            -webkit-mask-image: url('measure_last_update.svg');
+            mask-image: url('measure_last_update.svg');
+            /* display: inline-grid; */
+            --homey-icon-size: var(--homey-icon-size-small);
+            background-color: var(--homey-color-mono-500);
+        }
+        
+        .text_capability {
+            vertical-align: super;
+            color: var(--homey-color-white);
+            margin-left: 3px;
+        }
+        .text_last_update {
+            vertical-align: super;
+            color: var(--homey-color-mono-500);
+        }
+
     </style>
 </head>
 
 <!-- <body class="homey-widget-small"> -->
-<body class="homey-widget">
+<body id="body" class="homey-widget-full">
     <div id="div_background">
-        <div is="div_device">
+        <div id="div_device">
+            <div id="div_device_bar_back" class="homey-custom-icon-bar-back"></div>
             <div id="div_device_bar" class="homey-custom-icon-bar"></div>
-            <div id="div_device_img" class="homey-custom-icon-device"></div>
+            <div id="div_device_img">
+                <img id="img_device" src="device.png" />
+            </div>
+            
+        </div>
+        <div id="div_data">
+            <div id="div_data_main" style="display: unset">
+                <div class="div_capability">
+                    <div id="div_icon_measure_remaining_capacity" class="homey-custom-icon-measure_remaining_capacity"></div>
+                    <span id="text_measure_remaining_capacity" class="homey-text-regular text_capability"></span>
+                </div>
+            </div>
+            <div id="div_data_sd" style="display: none">
+                <div class="div_capability">
+                    <div id="div_icon_measure_salt_level" class="homey-custom-icon-measure_salt_level"></div>
+                    <span id="text_measure_salt_level" class="homey-text-regular text_capability"></span>
+                </div>
+            </div>
+            <div id="div_data_regeration"  class="div_capability" style="display: none">
+                <div class="div_capability">
+                    <div id="div_icon_alarm_regeneration_active" class="homey-custom-icon-alarm_regeneration_active"></div>
+                    <span id="text_measure_reg_progress" class="homey-text-regular text_capability"></span>
+                </div>
+            </div>
+            <div id="div_data_last_update"  class="div_capability">
+                <div class="div_capability">
+                    <div id="div_icon_measure_last_update" class="homey-custom-icon-measure_last_update"></div>
+                    <span id="text_measure_last_update" class="homey-text-small-light text_last_update"></span>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -58,34 +178,80 @@
             console.log('settings', Homey.getSettings());
 
             // Realtime event for changed car data
-            Homey.on('device_data_changed', (id)=> _getDeviceData(Homey.getSettings().device.id));
+            Homey.on('device_data_changed', ({driver_id, device_id})=> _getDeviceData(driver_id, device_id));
             // initial data reading
-            if (!Homey.getSettings().device || !Homey.getSettings().device.id){
+            if (!Homey.getSettings().device || !Homey.getSettings().device.device_id){
                 // document.getElementById('text_car_state').innerText = Homey.__('widget.car_select');
             }
             else{
-                _getDeviceData(Homey.getSettings().device);
+                _getDeviceData(Homey.getSettings().device.driver_id, Homey.getSettings().device.device_id);
             }
         }
 
-        async function _getdeviceData(device){
-            console.log('Update device data: ID:' + device.id);
-            if (Homey.getSettings().device && 
-                id != Homey.getSettings().device.id){
+        async function _getDeviceData(driver_id,device_id){
+            console.log('Update device data: DriverID: '+driver_id+' DeviceID: ' + device_id);
+            if (Homey.getSettings().device &&
+                driver_id != Homey.getSettings().device.driver_id && 
+                device_id != Homey.getSettings().device.device_id){
+                console.log("wrong device...");
                 return;
             }
             // read/update data
             try{
-                let data = await Homey.api('GET', '/device_data?driver_id='+device.driver_id+'&device_id='+device.device_id, {});
+                console.log("request API: GET /device_data");
+                let data = await Homey.api('GET', '/device_data?driver_id='+driver_id+'&device_id='+device_id, {});
                 console.log(data);
                 widget_data = data;
                 if (data){
 
+                    // Test data:
+                    // data.measure_remaining_percent = 20;
+
+                    document.getElementById('div_device_bar').style.setProperty('--bar_value', data.measure_remaining_percent);
+
+                    if (data.measure_remaining_percent < 15){
+                        document.getElementById('div_device_bar').style.setProperty('--bar_color', 'var(--bar_color_critical)');
+                    }
+                    else if (data.measure_remaining_percent < 30){
+                        document.getElementById('div_device_bar').style.setProperty('--bar_color', 'var(--bar_color_low)');
+                    }
+                    else{
+                        document.getElementById('div_device_bar').style.setProperty('--bar_color', 'var(--bar_color_ok)');
+                    }
+
+                    // General data
+                    document.getElementById('text_measure_last_update').innerText = data.measure_last_update;
+                    document.getElementById('text_measure_remaining_capacity').innerText = data.measure_remaining_capacity+' l';
+                    
+                    // SD data
+                    if (driver_id == 'softliq-sd'){
+                        document.getElementById('div_data_sd').style.display = 'unset';
+                        document.getElementById('text_measure_salt_level').innerText = Math.round(data.measure_salt_level*10)/10+' kg';
+                    }
+                    else{
+                        document.getElementById('div_data_sd').style.display = 'none';
+                    }
+
+                    // Test data:
+                    // data.alarm_regeneration_active = true;
+                    // data.measure_reg_progress = '30';
+                    // data.measure_reg_progress_text = 'Besalzen';
+                    // data.measure_reg_progress_description = '10:45';
+
+                    // Regeration data
+                    if (data.alarm_regeneration_active){
+                        document.getElementById('div_data_regeration').style.display = 'unset';
+                        document.getElementById('text_measure_reg_progress').innerText = data.measure_reg_progress+' %' +
+                            ' (' + data.measure_reg_progress_description +')';
+
+                    }
+                    else{
+                        document.getElementById('div_data_regeration').style.display = 'none';
+                    }
                 }
             }
             catch(error){
                 console.error;
-                document.getElementById('div_data').style.visibility = "hidden";
             }
         }
 

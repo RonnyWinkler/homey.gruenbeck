@@ -178,8 +178,18 @@ class softliqsdDevice extends Device {
           await this.setCapabilityValue('meter_salt', parseFloat( data.msaltusage ) ).catch(this.error);            
       }
       if (data.type == "Current"){
+        // Kapazität in l
         await this.setCapabilityValue('measure_remaining_capacity', parseInt( parseFloat(data.mrescapa1) * 1000) ).catch(this.error);
-        await this.setCapabilityValue('measure_remaining_percent', parseInt( data.mresidcap1) ).catch(this.error);
+
+        // Kapazität in %
+        if (this.getSetting('capacity') != undefined && this.getSetting('capacity') > 0){
+          // percentage based on total capacity (settings)
+          await this.setCapabilityValue('measure_remaining_percent', Math.round( parseInt( parseFloat(data.mrescapa1) * 1000) *100/this.getSetting('capacity') ) ).catch(this.error);
+        }
+        else{
+          // percentage based on device value (% since last regeneration level)
+          await this.setCapabilityValue('measure_remaining_percent', parseInt( data.mresidcap1) ).catch(this.error);
+        }
 
         //await this.setCapabilityValue('meter_water.remaining_capacity', parseInt( parseFloat(data.mrescapa1) * 1000) / 1000 ).catch(this.error);
         await this.setCapabilityValue('measure_last_reg_percent', parseInt(data.mregpercent1) ).catch(this.error);
@@ -268,6 +278,10 @@ class softliqsdDevice extends Device {
 
         await this.setCapabilityValue('measure_reg_remaining_step_description', regRemaining ).catch(this.error);
       }
+
+      // Realtime event - Widget update 
+      await this.homey.api.realtime("device_data_changed", {driver_id:'softliq-sd', device_id: this.getData().id} );
+
     }
 
   /**

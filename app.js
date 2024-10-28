@@ -93,7 +93,10 @@ class GruenbeckApp extends Homey.App {
     startRegenerationAction.registerRunListener(async (args, state) => {
             return args.device.startRegeneration();
     });
-    
+
+    // register widgets
+    await this._initWidgets();
+
     // START WORK...
     if (this.active)
       this.timeoutLoginAttempt = setTimeout(() => this.start().catch(e => console.log(e)), 3 * 1000 );
@@ -468,8 +471,35 @@ class GruenbeckApp extends Homey.App {
       }
   }
   
+  // WIDGETS ==============================================================================
+  async _initWidgets(){
+    this.homey.dashboards.getWidget('state').registerSettingAutocompleteListener('device', async (query, settings) => {
+      let devices = [];
+
+      let sc = this.homey.drivers.getDriver('softliq-sc').getDevices();
+      sc.forEach(device => {
+          devices.push({
+            name: device.getName(),
+            device_id: device.getData().id,
+            driver_id: 'softliq-sc'
+          })
+      });
+
+      let sd = this.homey.drivers.getDriver('softliq-sd').getDevices();
+      sd.forEach(device => {
+          devices.push({
+            name: device.getName(),
+            device_id: device.getData().id,
+            driver_id: 'softliq-sd'
+          })
+      });
+
+      return devices.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()));
+    });
+  }
+  
   // WIDGET API ============================================================================
-  async apiGetCarData(driver_id, device_id){
+  async apiGetDeviceData(driver_id, device_id){
     let data = { };
     let device = this.homey.drivers.getDriver(driver_id).getDevices().filter(e=>{ return ( e.getData().id == device_id ) })[0];
     if (device == undefined){
@@ -477,6 +507,23 @@ class GruenbeckApp extends Homey.App {
     }
     data.id = device.getData().id;
     data.name = device.getName();
+
+    data.measure_remaining_percent = device.getCapabilityValue('measure_remaining_percent');
+    data.measure_remaining_capacity = device.getCapabilityValue('measure_remaining_capacity');
+    data.measure_last_update = device.getCapabilityValue('measure_last_update');
+    data.alarm_regeneration_active = device.getCapabilityValue('alarm_regeneration_active');
+
+    data.measure_last_waterusage = device.getCapabilityValue('measure_last_waterusage');
+    data.measure_last_reg_percent = device.getCapabilityValue('measure_last_reg_percent');
+       
+    if (driver_id == 'softliq-sd'){
+      data.measure_last_saltusage = device.getCapabilityValue('measure_last_saltusage');
+      data.measure_salt_level = device.getCapabilityValue('measure_salt_level');
+      data.measure_reg_progress = device.getCapabilityValue('measure_reg_progress');
+      data.measure_reg_progress_text = device.getCapabilityValue('measure_reg_progress_text');
+      data.measure_reg_progress_description = device.getCapabilityValue('measure_reg_progress_description');
+    }
+
     return data;
   }
 }
