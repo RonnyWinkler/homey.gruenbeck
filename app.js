@@ -1,8 +1,3 @@
-// if (process.env.DEBUG === '1')
-// {
-//     require('inspector').open(9231, '0.0.0.0', true);
-// }
-
 'use strict';
 
 const Homey = require('homey');
@@ -523,6 +518,12 @@ class GruenbeckApp extends Homey.App {
       data.measure_reg_progress_text = device.getCapabilityValue('measure_reg_progress_text');
       data.measure_reg_progress_description = device.getCapabilityValue('measure_reg_progress_description');
     }
+
+    // history data
+    // data.history_capacity_24h = [];
+    // device.getStoreValue('history_capacity_24h').forEach( (element) => data.history_capacity_24h.push({date: new Date(element.timestamp), value: element.value}) );
+
+    data.history_capacity_24h = device.getStoreValue('history_capacity_24h');
 
     return data;
   }

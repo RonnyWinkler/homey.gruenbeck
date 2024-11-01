@@ -1,6 +1,6 @@
 {
   "id": "de.ronnywinkler.homey.gruenbeck",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "compatibility": ">=12.1.0",
   "sdk": 3,
   "name": {

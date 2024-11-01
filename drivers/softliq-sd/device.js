@@ -1,6 +1,7 @@
 'use strict';
 
 const { Device } = require('homey');
+const WINDOW_SIZE_24H = 86400;     // Window size in seconds
 
 class softliqsdDevice extends Device {
   /**
@@ -25,6 +26,11 @@ class softliqsdDevice extends Device {
         this.registerCapabilityListener('button.regeneration', this.startRegeneration.bind(this));
         // register eventhandler for capability changes (setable capabilities)
         this.registerCapabilityListener('measure_salt_level', this.setSaltLevel.bind(this));
+
+        // init history data
+        if (this.getStoreValue('history_capacity_24h') == undefined) {
+          await this.setStoreValue('history_capacity_24h', []);
+        }
       }
 
     async updateCapabilities(){
@@ -178,8 +184,29 @@ class softliqsdDevice extends Device {
           await this.setCapabilityValue('meter_salt', parseFloat( data.msaltusage ) ).catch(this.error);            
       }
       if (data.type == "Current"){
+        let capacity = parseInt( parseFloat(data.mrescapa1) * 1000);
+
+        // add history value if no value is present yet or capability value has changed
+        try{
+          let hist = this.getStoreValue('history_capacity_24h');
+          if (hist == undefined){
+            hist = [];
+          }
+          if (hist[hist.length == 0] || capacity != this.getCapabilityValue('measure_remaining_capacity') ){
+            hist.push({timestamp: new Date(), value: capacity} );
+            let windowStart = new Date(Date.now() - WINDOW_SIZE_24H * 1000);
+            hist = hist.filter((entry) => {
+              return ( new Date(entry.timestamp) > windowStart );
+            });
+            await this.setStoreValue('history_capacity_24h', hist);              
+          }
+        }
+        catch(error){
+          this.log("Error add history value: "+error.message);
+        }
+
         // Kapazität in l
-        await this.setCapabilityValue('measure_remaining_capacity', parseInt( parseFloat(data.mrescapa1) * 1000) ).catch(this.error);
+        await this.setCapabilityValue('measure_remaining_capacity', capacity ).catch(this.error);
 
         // Kapazität in %
         if (this.getSetting('capacity') != undefined && this.getSetting('capacity') > 0){

@@ -17,6 +17,11 @@ class softliqscDevice extends Device {
 
         // register eventhandler for maintenance buttons
         this.registerCapabilityListener('button.reset_measure_salt_level', this.resetSaltLevel.bind(this));
+
+        // init history data
+        if (this.getStoreValue('history_capacity_24h') == undefined) {
+          await this.setStoreValue('history_capacity_24h', []);
+        }
     }
 
     async updateCapabilities(){
@@ -40,12 +45,34 @@ class softliqscDevice extends Device {
             return;
         }
 
+        // Restkapazität
         let indexStart, indexEnd;
         // Restkapazität
         if ( data.indexOf("<D_A_1_2>") != -1 ){
           indexStart = data.indexOf("<D_A_1_2>") + 9;
           indexEnd = data.indexOf("</D_A_1_2>");
-          await this.setCapabilityValue('measure_remaining_capacity', parseInt(data.substring(indexStart, indexEnd) * 1000) ).catch(this.error);
+          let capacity = parseInt(data.substring(indexStart, indexEnd) * 1000);
+          // Kapazität
+          // add history value if no value is present yet or capability value has changed
+          try{
+            let hist = this.getStoreValue('history_capacity_24h');
+            if (hist == undefined){
+              hist = [];
+            }
+            if (hist[hist.length == 0] || capacity != this.getCapabilityValue('measure_remaining_capacity') ){
+              hist.push({timestamp: new Date(), value: capacity} );
+              let windowStart = new Date(Date.now() - WINDOW_SIZE_24H * 1000);
+              hist = hist.filter((entry) => {
+                return ( new Date(entry.timestamp) > windowStart );
+              });
+              await this.setStoreValue('history_capacity_24h', hist);              
+            }
+          }
+          catch(error){
+            this.log("Error add history value: "+error.message);
+          }
+
+          await this.setCapabilityValue('measure_remaining_capacity', capacity ).catch(this.error);
         }
         // Restkapazität Prozent
         if ( data.indexOf("<D_Y_10_1>") != -1 ){
