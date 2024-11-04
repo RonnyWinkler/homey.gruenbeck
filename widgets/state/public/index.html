@@ -1,139 +1,7 @@
-<html>
+<html id="html">
 
 <head>
-    <style>
-
-        .homey-custom-icon-background {
-            -webkit-mask-image: url('background.svg');
-            mask-image: url('background.svg');
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-        }
-        #body{
-            background-image: url('background_transparent.svg');
-        }
-        #div_background{
-            padding: var(--homey-su-2);
-        }
-        #div_device{
-            position: relative;
-            top: 0px;
-            left: 10px;
-        }
-        #div_data{
-            position: relative;
-            top: 70px;
-            left: 120px;
-        }
-        .div_capability{
-            display: flex;
-            margin-bottom: 10px;;
-        }
-        #div_data_last_update{
-            position: absolute;
-            display: table-cell;
-            top: 95px;
-        }
-        #div_device_img {
-            height: 180px;
-            width: 80px;
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            z-index: 10;
-        }
-        #img_device {
-            height: 180px;
-            width: 80px;
-        }
-
-        .homey-custom-icon-bar-back {
-            -webkit-mask-image: url('bar_full.svg');
-            mask-image: url('bar_full.svg');
-            height: 135px;
-            width: 42px;
-            position: absolute;
-            top: 33px;
-            left: 20px;
-            z-index: 1;
-            background-color: black;
-        }
-
-        .homey-custom-icon-bar {
-            --bar_height: 135px;
-            --bar_value: 0;
-            --bar_color_ok: var(--homey-color-blue);
-            --bar_color_low: var(--homey-color-orange);
-            --bar_color_critical: var(--homey-color-red);
-            --bar_color: var(--bar_color_ok);
-            background-color: var(--bar_color);
-            -webkit-mask-image: url('bar_full.svg');
-            mask-image: url('bar_full.svg');
-            height: calc(var(--bar_value) * var(--bar_height)/100);
-            margin-top: calc( var(--bar_height) - var(--bar_value)/100 * var(--bar_height));
-            width: 42px;
-            position: absolute;
-            top: 33px;
-            left: 20px;
-            z-index: 2;
-
-            box-shadow: rgb(0, 0, 0) 3px 1px 2px 0px inset, rgb(0, 0, 0) -3px -0px 2px 0px inset;
-
-            /* box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset; */
-        }
-
-        .homey-custom-icon-measure_remaining_capacity {
-            -webkit-mask-image: url('measure_remaining_capacity.svg');
-            mask-image: url('measure_remaining_capacity.svg');
-            /* display: inline-grid; */
-            --homey-icon-size: var(--homey-icon-size-regular);
-            /* background-color: var(--homey-color-white); */
-        }
-        .homey-custom-icon-measure_salt_level {
-            -webkit-mask-image: url('measure_salt_level.svg');
-            mask-image: url('measure_salt_level.svg');
-            /* display: inline-grid; */
-            --homey-icon-size: var(--homey-icon-size-regular);
-            /* background-color: var(--homey-color-white); */
-        }
-        .homey-custom-icon-alarm_regeneration_active {
-            -webkit-mask-image: url('alarm_regeneration_active.svg');
-            mask-image: url('alarm_regeneration_active.svg');
-            /* display: inline-grid; */
-            --homey-icon-size: var(--homey-icon-size-regular);
-            /* background-color: var(--homey-color-white); */
-        }
-        .homey-custom-icon-measure_last_update {
-            -webkit-mask-image: url('measure_last_update.svg');
-            mask-image: url('measure_last_update.svg');
-            /* display: inline-grid; */
-            --homey-icon-size: var(--homey-icon-size-small);
-            background-color: var(--homey-color-mono-500);
-        }
-        
-        .text_capability {
-            vertical-align: super;
-            /* color: var(--homey-color-white); */
-            margin-left: 3px;
-        }
-        .text_last_update {
-            vertical-align: super;
-            color: var(--homey-color-mono-500);
-        }
-
-        .chart{
-            position: absolute;
-            top: 55px;
-            left: 180px;
-            width: 192px;
-            height: 75px;
-            z-index: 1;
-        }
-
-    </style>
+    <link rel="stylesheet" href="index.css" type="text/css">
 </head>
 
 <!-- <body class="homey-widget-small"> -->
@@ -165,13 +33,17 @@
                     <span id="text_measure_salt_level" class="homey-text-regular text_capability"></span>
                 </div>
             </div>
-            <div id="div_data_regeration"  class="div_capability" style="display: none">
+            <div id="div_data_regeration" style="display: none">
                 <div class="div_capability">
                     <div id="div_icon_alarm_regeneration_active" class="homey-custom-icon-alarm_regeneration_active"></div>
                     <span id="text_measure_reg_progress" class="homey-text-regular text_capability"></span>
                 </div>
+                <div class="div_capability">
+                    <div id="div_icon_dummy"></div>
+                    <span id="text_measure_reg_progress2" class="homey-text-regular text_capability"></span>
+                </div>
             </div>
-            <div id="div_data_last_update"  class="div_capability" style="display: none">
+            <div id="div_data_last_update" style="display: none">
                 <div class="div_capability">
                     <div id="div_icon_measure_last_update" class="homey-custom-icon-measure_last_update"></div>
                     <span id="text_measure_last_update" class="homey-text-small-light text_last_update"></span>
@@ -256,19 +128,23 @@
                         document.getElementById('div_data_sd').style.display = 'none';
                     }
 
-                    // Test data:
+                    // TEST ==>
                     // data.alarm_regeneration_active = true;
                     // data.measure_reg_progress = '30';
                     // data.measure_reg_progress_text = '10:45';
                     // data.measure_reg_progress_description = 'Besalzen';
+                    // <==TEST
 
                     // Regeration data
                     if (data.alarm_regeneration_active){
                         document.getElementById('div_data_regeration').style.display = 'unset';
                         document.getElementById('text_measure_reg_progress').innerText = Homey.__("widget.regeneration_active");
                         if (driver_id == 'softliq-sd'){
-                            document.getElementById('text_measure_reg_progress').innerText = document.getElementById('text_measure_reg_progress').innerText + 
-                                '\n'+data.measure_reg_progress+' %' +
+                            // document.getElementById('text_measure_reg_progress').innerText = document.getElementById('text_measure_reg_progress').innerText + 
+                            //     '\n'+data.measure_reg_progress+' %' +
+                            //     ' (' + data.measure_reg_progress_description +')';                            
+                            document.getElementById('text_measure_reg_progress2').innerText = 
+                                data.measure_reg_progress+' %' +
                                 ' (' + data.measure_reg_progress_description +')';                            
                         }
                     }
@@ -369,6 +245,14 @@
             catch(error){
                 console.error;
             }
+
+            // TEST ==>
+            // --homey-font-scale: 0.800000011920929;
+            // await document.getElementById('html').style.setProperty('--homey-font-scale', 1.5);
+            // <== TEST
+
+            await Homey.setHeight(document.getElementById('body').offsetHeight);
+
         }
 
 
