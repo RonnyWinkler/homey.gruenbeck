@@ -205,5 +205,9 @@
   "1.3.7": {
     "en": "Widget: Responsive design based on text size.",
     "de": "Widget: Responsive-Design basierend auf Textgröße."
+  },
+  "1.3.8": {
+    "en": "Widget: Improved chart.",
+    "de": "Widget: Verbessertes Diagramm."
   }
 }
