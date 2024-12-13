@@ -23,7 +23,7 @@ class GruenbeckApp extends Homey.App {
           require('inspector').waitForDebugger();
         }
         catch (error) {
-          require('inspector').open(9231, '0.0.0.0', true);
+          require('inspector').open(9291, '0.0.0.0', true);
         }
       }
     }

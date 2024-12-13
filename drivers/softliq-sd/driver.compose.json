@@ -94,6 +94,9 @@
       }
     }
   },
+  "energy": {
+    "cumulative": true
+  },
   "pair": [
     {
       "id": "loading",

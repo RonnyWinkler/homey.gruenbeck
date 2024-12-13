@@ -209,5 +209,9 @@
   "1.3.8": {
     "en": "Widget: Improved chart.",
     "de": "Widget: Verbessertes Diagramm."
+  },
+  "1.4.0": {
+    "en": "HomeyEnergy: Defines SD18 as cumulative device for water usage to show up in energy dashboard.",
+    "de": "HomeyEnergy: Definiert SD18 als kumuliertes Geräte für Wasserverbrauch, um im Energie-Dashboard angezeigt zu werden."
   }
 }

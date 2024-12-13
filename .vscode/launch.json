@@ -10,7 +10,7 @@
             "restart": true,
             "name": "Attach Grünbeck to Homey-Dev",
             "address": "192.168.1.13",
-            "port": 9231,
+            "port": 9291,
             "localRoot": "${workspaceFolder}",
             "remoteRoot": "/"
         }, 
@@ -20,7 +20,7 @@
             "restart": true,
             "name": "Attach Grünbeck to Homey-Pro",
             "address": "192.168.1.12",
-            "port": 9231,
+            "port": 9291,
             "localRoot": "${workspaceFolder}",
             "remoteRoot": "/"
         },
@@ -30,7 +30,7 @@
             "restart": true,
             "name": "Attach Grünbeck to Homey23 Docker",
             "address": "192.168.1.42",
-            "port": 9229,
+            "port": 9291,
             "localRoot": "${workspaceFolder}",
             "remoteRoot": "/app/"
         }
