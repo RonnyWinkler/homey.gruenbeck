@@ -196,7 +196,7 @@ class GruenbeckApp extends Homey.App {
         //console.log(device);
         if (device.serialNumber){
           // ==> softliQ-SD Updates
-          if (device.series == "softliQ.D" || device.series == "softliQ.E"){
+          if (device.series == "softliQ.D" || device.series == "softliQ.SE"){
             this.updateLog("---> Device: SD");
             // Get Statictic data ofrom REST service 
             this.updateLog("---> Device Statistics: "+device.id);
