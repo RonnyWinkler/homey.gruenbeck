@@ -15,6 +15,7 @@ class GruenbeckSDSrv extends EventEmitter{
         super();
 
         this.sdVersion = "2020-08-03";
+        this.seVersion = "2024-05-02";
         this.userAgent = "Gruenbeck/354 CFNetwork/1209 Darwin/20.2.0";
         this.heartBeatTimeout = null;
     
@@ -427,7 +428,10 @@ class GruenbeckSDSrv extends EventEmitter{
                         try {
                             //filter for softliq devices
                             //console.log(JSON.stringify(response.data));
+                            
+                            // Test: List all devices without filter
                             response.data = response.data.filter((el) => el.series.toLowerCase().indexOf("softliq") > -1);
+                            
                             //console.log(JSON.stringify(response.data));
                             //this.homey.settings.set('detectedDevices', JSON.stringify(response.data));
                             //const device = response.data[0];

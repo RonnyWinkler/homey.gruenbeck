@@ -213,5 +213,9 @@
   "1.4.0": {
     "en": "HomeyEnergy: Defines SD18 as cumulative device for water usage to show up in energy dashboard.",
     "de": "HomeyEnergy: Definiert SD18 als kumuliertes Geräte für Wasserverbrauch, um im Energie-Dashboard angezeigt zu werden."
+  },
+  "1.4.1": {
+    "en": "Adjust device filter for device list in app settings.",
+    "de": "Gerätefilter angepasst für Geräteliste in App-Einstellungen."
   }
 }
