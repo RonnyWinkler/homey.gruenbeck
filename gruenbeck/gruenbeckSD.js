@@ -14,8 +14,8 @@ class GruenbeckSDSrv extends EventEmitter{
     constructor() {
         super();
 
-        this.sdVersion = "2020-08-03";
-        this.seVersion = "2024-05-02";
+        // this.sdVersion = "2020-08-03";
+        this.sdVersion = "2024-05-02";
         this.userAgent = "Gruenbeck/354 CFNetwork/1209 Darwin/20.2.0";
         this.heartBeatTimeout = null;
     
