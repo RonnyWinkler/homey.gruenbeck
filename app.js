@@ -23,7 +23,7 @@ class GruenbeckApp extends Homey.App {
           require('inspector').waitForDebugger();
         }
         catch (error) {
-          require('inspector').open(9291, '0.0.0.0', true);
+          require('inspector').open(9913, '0.0.0.0', true);
         }
       }
     }
@@ -196,7 +196,7 @@ class GruenbeckApp extends Homey.App {
         //console.log(device);
         if (device.serialNumber){
           // ==> softliQ-SD Updates
-          if (device.series == "softliQ.D" || device.series == "softliQ.SE"){
+          if (device.series == "softliQ.D"){
             this.updateLog("---> Device: SD");
             // Get Statictic data ofrom REST service 
             this.updateLog("---> Device Statistics: "+device.id);
@@ -204,11 +204,17 @@ class GruenbeckApp extends Homey.App {
             deviceParameters = await this.gruenbeckSrv.parseMgInfos(device.id, "parameters");
             this.updateLog("DeviceStatistics:" + JSON.stringify(deviceStatistic));
             this.updateLog("DeviceParameters:" + JSON.stringify(deviceParameters));
-            this.deviceUpdateStatistics(device.serialNumber, deviceStatistic);
-            this.deviceUpdateParameters(device.serialNumber, deviceParameters);
+            try{
+              await this.deviceUpdateStatistics(device.serialNumber, deviceStatistic);
+              await this.deviceUpdateParameters(device.serialNumber, deviceParameters);
+            }
+            catch(error){
+              this.updateLog("---> devicesUpdate() Error update device: "+error.message);
+            }
             // Get live data from WebSocket/device
             this.updateLog("---> Device Live Data: "+device.id);
             //console.log("---> Enter SD "+device.data.id);
+            
             this.gruenbeckSrv.enterSD(device.id)
             .then(() => {
                 //console.log("---> Refresh SD");
@@ -241,7 +247,104 @@ class GruenbeckApp extends Homey.App {
                 //     this.gruenbeckSrv.connectMgWebSocket();
                 // });
             });
-          };
+          }
+          if (device.series == "softliQ.SE"){
+            this.updateLog("---> Device: SE");
+            // Get Statictic data ofrom REST service 
+            this.updateLog("---> Device Statistics: "+device.id);
+            deviceStatistic = await this.gruenbeckSrv.parseMgInfos(device.id);
+            deviceParameters = await this.gruenbeckSrv.parseMgInfos(device.id, "parameters");
+            let deviceStatisticSalt = {};
+            deviceStatisticSalt["salt"] = await this.gruenbeckSrv.parseMgInfos(device.id, "measurements/salt");
+            let deviceStatisticWater = {};
+            deviceStatisticWater["water"] = await this.gruenbeckSrv.parseMgInfos(device.id, "measurements/water");
+            this.updateLog("DeviceStatistics:" + JSON.stringify(deviceStatistic));
+            this.updateLog("DeviceStatisticsSalt:" + JSON.stringify(deviceStatisticSalt));
+            this.updateLog("DeviceStatisticsWater:" + JSON.stringify(deviceStatisticWater));
+            this.updateLog("DeviceParameters:" + JSON.stringify(deviceParameters));
+            try{
+              await this.deviceUpdateStatistics(device.serialNumber, deviceStatistic);
+              await this.deviceUpdateStatistics(device.serialNumber, deviceStatisticSalt);
+              await this.deviceUpdateStatistics(device.serialNumber, deviceStatisticWater);
+              await this.deviceUpdateParameters(device.serialNumber, deviceParameters);
+            }
+            catch(error){
+              this.updateLog("---> devicesUpdate() Error update device: "+error.message);
+            }
+            // Get live data from WebSocket/device
+            this.updateLog("---> Device Live Data: "+device.id);
+            //console.log("---> Enter SD "+device.data.id);
+
+            try {
+                //console.log("---> Update SE");
+                // clear timer from EnterSE-Error/Reconnect
+                clearTimeout(this.timeoutReconnectSD);
+                this.timeoutReconnectSD = null;
+                this.gruenbeckSrv.updateSE(device.id)
+                .then((response) => {
+                    this.updateLog("Device Live Data: " + JSON.stringify(response) );
+                    this.deviceUpdateData(response.serialNumber, response);
+                      
+                })
+                .catch(() => {
+                    this.updateLog("---> Failed update SE");
+                });
+                //close SD-connection to prevent too much duplicate websocket updates
+                // setTimeout(() => this.gruenbeckSrv.leaveSD(device.id).catch(() => {
+                //   this.updateLog("---> Failed leave SD")
+                // }), 3 * 1000 );
+            }
+            catch(error){
+                // Set timer for ReLogin after EnterSD-Error. 
+                //This timer is cleared if next EnterSD is ok (device temporary unavailable)
+                //Only clear/set timer if not already active to prevent endless timer restarts 
+                if (!this.timeoutReconnectSD){
+                  this.updateLog("---> Failed enter SD - Started reconnect timer. Wait for next try and ReLogin in "+reconnectTimer+" min if error still occours.");
+                  clearTimeout(this.timeoutReconnectSD);
+                  this.timeoutReconnectSD = setTimeout(() => this.reconnectSD().catch(e => console.log(e)), 1000 * 60 * reconnectTimer );
+                }
+                else{
+                  this.updateLog("---> Failed enter SD - Reconnect timer is still active. Waiting for connection or reconnect timer.");
+                }
+                  // this.updateLog("---> Relogin");
+                // this.login().then(() => {
+                //     this.updateLog("---> Reconnect WebSocket");
+                //     this.gruenbeckSrv.connectMgWebSocket();
+                // });
+            }
+            // this.gruenbeckSrv.enterSD(device.id)
+            // .then(() => {
+            //     //console.log("---> Refresh SD");
+            //     // clear timer from EnterSD-Error/Reconnect
+            //     clearTimeout(this.timeoutReconnectSD);
+            //     this.timeoutReconnectSD = null;
+            //     this.gruenbeckSrv.refreshSD(device.id).catch(() => {
+            //         this.updateLog("---> Failed refresh SD");
+            //     });
+            //     //close SD-connection to prevent too much duplicate websocket updates
+            //     setTimeout(() => this.gruenbeckSrv.leaveSD(device.id).catch(() => {
+            //       this.updateLog("---> Failed leave SD")
+            //     }), 3 * 1000 );
+            // })
+            // .catch(() => {
+            //     // Set timer for ReLogin after EnterSD-Error. 
+            //     //This timer is cleared if next EnterSD is ok (device temporary unavailable)
+            //     //Only clear/set timer if not already active to prevent endless timer restarts 
+            //     if (!this.timeoutReconnectSD){
+            //       this.updateLog("---> Failed enter SD - Started reconnect timer. Wait for next try and ReLogin in "+reconnectTimer+" min if error still occours.");
+            //       clearTimeout(this.timeoutReconnectSD);
+            //       this.timeoutReconnectSD = setTimeout(() => this.reconnectSD().catch(e => console.log(e)), 1000 * 60 * reconnectTimer );
+            //     }
+            //     else{
+            //       this.updateLog("---> Failed enter SD - Reconnect timer is still active. Waiting for connection or reconnect timer.");
+            //     }
+            //       // this.updateLog("---> Relogin");
+            //     // this.login().then(() => {
+            //     //     this.updateLog("---> Reconnect WebSocket");
+            //     //     this.gruenbeckSrv.connectMgWebSocket();
+            //     // });
+            // });
+          }
           // ==> softliQ-SC Updates
           if (device.series == "softliQ.C"){
             this.updateLog("---> Device: SC (requestAllCommand)");
@@ -377,6 +480,12 @@ class GruenbeckApp extends Homey.App {
     // emit event to device instance
     //console.log("WS Data Message");
     this.events.emit("deviceUpdateData", deviceSerialNumber, deviceData);
+  }
+
+  deviceUpdateDataSE(deviceSerialNumber, deviceData){
+    // emit event to device instance
+    //console.log("WS Data Message");
+    this.events.emit("deviceUpdateDataSE", deviceSerialNumber, deviceData);
   }
 
   deviceUpdateSC(deviceSerialNumber, deviceData){

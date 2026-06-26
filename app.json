@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "de.ronnywinkler.homey.gruenbeck",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "compatibility": ">=12.1.0",
   "sdk": 3,
   "name": {
@@ -572,7 +572,7 @@
     {
       "id": "softliq-sd",
       "name": {
-        "en": "softliQ-SD & softliQ-SE"
+        "en": "softliQ-SD"
       },
       "class": "other",
       "capabilities": [
@@ -1115,6 +1115,230 @@
               "steps": 1,
               "label": {
                 "en": "",
+                "de": "Uhrzeit (Minuten)"
+              },
+              "hint": {
+                "en": "Time for fixed regeneration time (minutes).",
+                "de": "Uhrzeit für feste Regenerationszeit (Minuten)."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "softliq-se",
+      "name": {
+        "en": "softliQ-SE"
+      },
+      "class": "other",
+      "capabilities": [
+        "measure_remaining_capacity",
+        "measure_last_update",
+        "measure_salt_level",
+        "alarm_regeneration_active",
+        "measure_last_waterusage",
+        "measure_last_saltusage",
+        "meter_water",
+        "meter_salt",
+        "measure_last_reg_percent",
+        "measure_reg_progress",
+        "measure_reg_progress_text",
+        "measure_reg_progress_description",
+        "measure_reg_remaining_step",
+        "button.refresh",
+        "button.reset_measure_salt_level"
+      ],
+      "defaultCapabilities": [
+        "meter_water.remaining_capacity"
+      ],
+      "capabilitiesOptions": {
+        "measure_remaining_capacity": {
+          "units": "l"
+        },
+        "measure_last_waterusage": {
+          "units": "l"
+        },
+        "measure_last_saltusage": {
+          "units": "g"
+        },
+        "measure_last_reg_percent": {
+          "units": "%"
+        },
+        "measure_salt_level": {
+          "units": "kg"
+        },
+        "meter_water": {
+          "units": "m³"
+        },
+        "meter_salt": {
+          "units": "kg"
+        },
+        "measure_reg_progress": {
+          "units": "%"
+        },
+        "measure_reg_remaining_step": {
+          "units": ""
+        },
+        "measure_reg_remaining_desctiption": {
+          "units": ""
+        },
+        "button.refresh": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Refresh device data",
+            "de": "Daten aktualisieren"
+          },
+          "desc": {
+            "en": "One-time refresh of device data.",
+            "de": "Gerätedaten einmalig aktualisieren."
+          }
+        },
+        "button.reset_measure_salt_level": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset salt level",
+            "de": "Salz-Füllstand zurücksetzen"
+          },
+          "desc": {
+            "en": "Reset the salt level after filling up salt to default value set in device options.",
+            "de": "Zurücksetzen des Salz-Füllstands nach Auffüllen mit neuem Salz auf den in den Geräteeinstellungen festgelegten Wert."
+          }
+        },
+        "button.regeneration": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Request regeneration",
+            "de": "Regenerierung anfordern"
+          },
+          "desc": {
+            "en": "Start of regeneration is requested via Grünbeck Cloud.",
+            "de": "Start der Regeneration wird über Grünbeck-Cloud angefordert."
+          }
+        }
+      },
+      "energy": {
+        "cumulative": true
+      },
+      "pair": [
+        {
+          "id": "loading",
+          "template": "loading",
+          "navigation": {
+            "next": "list_devices"
+          }
+        },
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png"
+          }
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "login_credentials",
+          "template": "login_credentials",
+          "options": {
+            "logo": "logo.png"
+          }
+        }
+      ],
+      "images": {
+        "small": "/drivers/softliq-se/assets/images/small.jpg",
+        "large": "/drivers/softliq-se/assets/images/large.jpg"
+      },
+      "settings": [
+        {
+          "id": "salt_level",
+          "type": "number",
+          "value": 25,
+          "label": {
+            "en": "Salt level for reset",
+            "de": "Salz-Füllstand für Zurücksetzen"
+          },
+          "hint": {
+            "en": "Set a desired salt level for reset in maintenance view.",
+            "de": "Salz-Füllstand angeben, der beim Zurücksetzen des Füllstands im Wartungsdialog verwendet werden soll."
+          },
+          "units": "kg"
+        },
+        {
+          "id": "capacity",
+          "type": "number",
+          "value": 0,
+          "label": {
+            "en": "Total capacity in liters",
+            "de": "Gesamtkapazität in Litern"
+          },
+          "hint": {
+            "en": "Indicates the total capacity. If this value is specified, the capacity percentage is calculated based on the total capacity. Otherwise, the percentage value provided by the device is used. This indicates the remaining capacity since the last regeneration (for the level to which regeneration was carried out).",
+            "de": "Gibt die Gesamtkapazität an. Wird dieser Wert angegeben, dann wird der Kapazitäts-Prozentwert auf Basis der Gesmatkapazität berechnet. Sonst wird der vom Gerät gelieferte Prozentwert verwendet. Dieser gibt die Restkakazität seit der letzte Regeneration an (für das Level, zu dem Regeneriert wurde)."
+          },
+          "units": "l"
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Regeneration",
+            "de": "Regeneration"
+          },
+          "children": [
+            {
+              "id": "reg_mode",
+              "type": "checkbox",
+              "value": true,
+              "label": {
+                "en": "iQ-Regeneration mode",
+                "de": "iQ-Regenerationsmodus"
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Regeneration time (fixed)",
+            "de": "Regenerationszeit (fest)"
+          },
+          "children": [
+            {
+              "id": "reg_mode_hours",
+              "type": "number",
+              "value": 0,
+              "min": 0,
+              "max": 23,
+              "steps": 1,
+              "label": {
+                "en": "Time (hour)",
+                "de": "Uhrzeit (Stunde)"
+              },
+              "hint": {
+                "en": "Time for fixed regeneration time (hour). ",
+                "de": "Uhrzeit für feste Regenerationszeit (Stunde)."
+              }
+            },
+            {
+              "id": "reg_mode_minutes",
+              "type": "number",
+              "value": 0,
+              "min": 0,
+              "max": 59,
+              "steps": 1,
+              "label": {
+                "en": "Time (minutes)",
                 "de": "Uhrzeit (Minuten)"
               },
               "hint": {

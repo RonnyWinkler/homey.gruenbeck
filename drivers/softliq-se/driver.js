@@ -111,7 +111,7 @@ class softliqsdDriver extends Driver {
       for (const device of searchData)
       {
         // Filter: only softliQ.D and .E allowed
-        if (device.series == "softliQ.D"){  
+        if (device.series == "softliQ.SE"){  
           data = {
               "id": device.id,
               "series": device.series,

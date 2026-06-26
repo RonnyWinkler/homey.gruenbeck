@@ -229,5 +229,9 @@
   "1.4.4": {
     "en": "SoftliQ-SE test.",
     "de": "SoftliQ-SE Test."
+  },
+  "1.4.5": {
+    "en": "SoftliQ-SE added as new device.",
+    "de": "SoftliQ-SE Ergänzt als neues Gerät."
   }
 }

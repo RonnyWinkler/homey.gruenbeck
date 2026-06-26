@@ -91,82 +91,86 @@ class softliqsdDevice extends Device {
             return;
         }
         // calculate salt level
-        if (this.getCapabilityValue('measure_last_saltusage') != data.salt[0].value ){
+        if ( data.salt != undefined && this.getCapabilityValue('measure_last_saltusage') != data.salt[0].value ){
             let new_salt_level = ( Math.round( this.getCapabilityValue('measure_salt_level') * 1000 - (data.salt[0].value) ) ) /1000;
             await this.setCapabilityValue('measure_salt_level', new_salt_level).catch(this.error); 
         }
-        await this.setCapabilityValue('measure_last_waterusage', data.water[0].value).catch(this.error);
-        await this.setCapabilityValue('measure_last_saltusage', data.salt[0].value).catch(this.error);
+        if ( data.water != undefined ){
+          await this.setCapabilityValue('measure_last_waterusage', data.water[0].value).catch(this.error);        
+        }
+        if ( data.salt != undefined ){
+          await this.setCapabilityValue('measure_last_saltusage', data.salt[0].value).catch(this.error);
+        }
     }
 
     async onDeviceUpdateParameters(deviceSerialNumber, data){
-      if( this.getData().serialNumber != deviceSerialNumber ){
+      if( this.getData().serialNumber != deviceSerialNumber || data == undefined || data.pmode == undefined ){
           // event is not valid for this device
           return;
       }
       // Write device parameters into settings
 
-      if ( this.getSetting('working_mode') != data.pmode.toString() ){ 
+      if ( data.pmode != undefined && this.getSetting('working_mode') != data.pmode.toString() ){ 
         let settings = {
           working_mode: data.pmode.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set working_mode to value "+data.pmode+" Error: "+error.message));
       }
-      if ( this.getSetting('working_mode_mo') != data.pmodemo.toString() ){ 
+      if ( data.pmodemo != undefined && this.getSetting('working_mode_mo') != data.pmodemo.toString() ){ 
         let settings = {
           working_mode_mo: data.pmodemo.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set working_mode_mo to value "+data.pmodemo+" Error: "+error.message));
       }
-      if ( this.getSetting('working_mode_tu') != data.pmodetu.toString() ){ 
+      if ( data.pmodetu != undefined && this.getSetting('working_mode_tu') != data.pmodetu.toString() ){ 
         let settings = {
           working_mode_tu: data.pmodetu.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set working_mode_tu to value "+data.pmodetu+" Error: "+error.message));
       }
-      if ( this.getSetting('working_mode_we') != data.pmodewe.toString() ){ 
+      if ( data.pmodewe != undefined && this.getSetting('working_mode_we') != data.pmodewe.toString() ){ 
         let settings = {
           working_mode_we: data.pmodewe.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set working_mode_we to value "+data.pmodewe+" Error: "+error.message));
       }
-      if ( this.getSetting('working_mode_th') != data.pmodeth.toString() ){ 
+      if ( data.pmodeth != undefined && this.getSetting('working_mode_th') != data.pmodeth.toString() ){ 
         let settings = {
           working_mode_th: data.pmodeth.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set working_mode_th to value "+data.pmodeth+" Error: "+error.message));
       }
-      if ( this.getSetting('working_mode_fr') != data.pmodefr.toString() ){ 
+      if ( data.pmodefr != undefined && this.getSetting('working_mode_fr') != data.pmodefr.toString() ){ 
         let settings = {
           working_mode_fr: data.pmodefr.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set working_mode_fr to value "+data.pmodefr+" Error: "+error.message));
       }
-      if ( this.getSetting('working_mode_sa') != data.pmodesa.toString() ){ 
+      if ( data.pmodesa != undefined && this.getSetting('working_mode_sa') != data.pmodesa.toString() ){ 
         let settings = {
           working_mode_sa: data.pmodesa.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set working_mode_sa to value "+data.pmodesa+" Error: "+error.message));
       }
-      if ( this.getSetting('working_mode_su') != data.pmodesu.toString() ){ 
+      if ( data.pmodesu != undefined && this.getSetting('working_mode_su') != data.pmodesu.toString() ){ 
         let settings = {
           working_mode_su: data.pmodesu.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set working_mode_su to value "+data.pmodesu+" Error: "+error.message));
       }
-      if ( this.getSetting('reg_mode') != data.pregmode.toString() ){ 
+      if ( data.pregmode != undefined && this.getSetting('reg_mode') != data.pregmode.toString() ){ 
         let settings = {
           reg_mode: data.pregmode.toString()
         };
         this.setSettings(settings).catch(error => this.log("Error set reg_mode to value "+data.pregmode+" Error: "+error.message));
       }
-      if ( this.decimalToString(this.getSetting('reg_mode_hours')) != data.pregmo1.split(':')[0] ){ 
+      if ( data.pregmo1 != undefined && this.decimalToString(this.getSetting('reg_mode_hours')) != data.pregmo1.split(':')[0] ){ 
         let settings = {
           reg_mode_hours: parseInt(data.pregmo1.split(':')[0])
         };
         this.setSettings(settings).catch(error => this.log("Error set reg_mode_hours to value "+data.pregmo1+" Error: "+error.message));
       }
-      if ( this.decimalToString(this.getSetting('reg_mode_minutes')) != data.pregmo1.split(':')[1] ){ 
+      if ( data.pregmo1 != undefined && this.decimalToString(this.getSetting('reg_mode_minutes')) != data.pregmo1.split(':')[1] ){ 
         let settings = {
           reg_mode_minutes: parseInt(data.pregmo1.split(':')[1])
         };

@@ -724,6 +724,49 @@ class GruenbeckSDSrv extends EventEmitter{
         });
     }
 
+    updateSE(mgDeviceId) {
+        return new Promise((resolve, reject) => {
+            //console.log("===== EnterSD "+mgDeviceId+" =====");
+            const axiosConfig = {
+                headers: {
+                    Host: "prod-eu-gruenbeck-api.azurewebsites.net",
+                    Accept: "application/json, text/plain, */*",
+                    "User-Agent": "Gruenbeck/354 CFNetwork/1209 Darwin/20.2.0",
+                    "Accept-Language": "de-de",
+                    Authorization: "Bearer " + this.accessToken,
+                },
+            };
+            axios
+                .get("https://prod-eu-gruenbeck-api.azurewebsites.net/api/devices/" + mgDeviceId + "/update?api-version=" + this.sdVersion, axiosConfig)
+                .then((response) => {
+                    //console.log("enterSD response: "+JSON.stringify(response.data));
+                    if (response.status < 400) {
+                        this.heartBeatTimeout = setTimeout(() => {
+                            //console.log("No Data since 20 min start login");
+                            this.login()
+                            .then(() => {
+                                //console.log("Reconnect");
+                                this.connectMgWebSocket();
+                            })
+                            .catch(error => {
+                                reject(error);
+
+                            });
+                        }, 20 * 60 * 1000);
+                        resolve(response.data);
+                    } else {
+                        reject(response);
+                    }
+                })
+                .catch((error) => {
+                    // handle error
+                    //console.log("EnterSD-Error: "+error);
+                    reject(error);
+                });
+        });
+    }
+
+
     // async parseMgInfos(mgDeviceId, endpoint) {
     //     endpoint = endpoint || "";
     //     let response = await this._http(
