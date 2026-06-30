@@ -237,5 +237,9 @@
   "1.4.6": {
     "en": "SoftliQ-SE: fixed live data update.",
     "de": "SoftliQ-SE: Live-Datenaktualisierung korrigiert."
+  },
+  "1.4.7": {
+    "en": "SoftliQ-SE: fixed water/salt update.",
+    "de": "SoftliQ-SE: Wasser/Salz-Aktualisierung korrigiert."
   }
 }

@@ -47,15 +47,15 @@ class softliqsdDevice extends Device {
             return;
         }
         // calculate salt level
-        if ( data.salt != undefined && this.getCapabilityValue('measure_last_saltusage') != data.salt[0].value ){
-            let new_salt_level = ( Math.round( this.getCapabilityValue('measure_salt_level') * 1000 - (data.salt[0].value) ) ) /1000;
+        if ( data.salt != undefined && this.getCapabilityValue('measure_last_saltusage') != data.salt[data.salt.length-1].value ){
+            let new_salt_level = ( Math.round( this.getCapabilityValue('measure_salt_level') * 1000 - (data.salt[data.salt.length-1].value) ) ) /1000;
             await this.setCapabilityValue('measure_salt_level', new_salt_level).catch(this.error); 
         }
-        if ( data.water != undefined ){
-          await this.setCapabilityValue('measure_last_waterusage', data.water[0].value).catch(this.error);        
+        if ( data.water != undefined && data.water[data.water.length-1] != undefined ){
+          await this.setCapabilityValue('measure_last_waterusage', data.water[data.water.length-1].value).catch(this.error);        
         }
-        if ( data.salt != undefined ){
-          await this.setCapabilityValue('measure_last_saltusage', data.salt[0].value).catch(this.error);
+        if ( data.salt != undefined && data.salt[data.salt.length-1] != undefined ){
+          await this.setCapabilityValue('measure_last_saltusage', data.salt[data.salt.length-1].value).catch(this.error);
         }
     }
 
