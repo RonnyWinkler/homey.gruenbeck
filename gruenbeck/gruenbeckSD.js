@@ -32,6 +32,8 @@ class GruenbeckSDSrv extends EventEmitter{
 
         this.user = "";
         this.password = "";
+
+        this.lastUpdateDate = new Date().toUTCString();
     }
 
     // async login(user, password) {
@@ -733,13 +735,17 @@ class GruenbeckSDSrv extends EventEmitter{
                     Accept: "application/json, text/plain, */*",
                     "User-Agent": "Gruenbeck/354 CFNetwork/1209 Darwin/20.2.0",
                     "Accept-Language": "de-de",
-                    Authorization: "Bearer " + this.accessToken,
+                    "Authorization": "Bearer " + this.accessToken,
+                    "If-Modified-Since": this.lastUpdateDate,
+                    "Content-Type": 'application/x-www-form-urlencoded',
+                    "Connection": 'Keep-Alive',
                 },
             };
             axios
                 .get("https://prod-eu-gruenbeck-api.azurewebsites.net/api/devices/" + mgDeviceId + "/update?api-version=" + this.sdVersion, axiosConfig)
                 .then((response) => {
                     //console.log("enterSD response: "+JSON.stringify(response.data));
+                    this.lastUpdateDate = new Date().toUTCString();
                     if (response.status < 400) {
                         this.heartBeatTimeout = setTimeout(() => {
                             //console.log("No Data since 20 min start login");

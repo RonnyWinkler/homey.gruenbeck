@@ -233,5 +233,9 @@
   "1.4.5": {
     "en": "SoftliQ-SE added as new device.",
     "de": "SoftliQ-SE Ergänzt als neues Gerät."
+  },
+  "1.4.6": {
+    "en": "SoftliQ-SE: fixed live data update.",
+    "de": "SoftliQ-SE: Live-Datenaktualisierung korrigiert."
   }
 }
