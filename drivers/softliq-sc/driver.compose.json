@@ -59,8 +59,8 @@
     }
   ],
   "images": {
-    "small": "/drivers/softliq-sd/assets/images/small.jpg",
-    "large": "/drivers/softliq-sd/assets/images/large.jpg"
+    "small": "/drivers/softliq-sd/assets/images/small.png",
+    "large": "/drivers/softliq-sd/assets/images/large.png"
   },
   "settings": [
     {

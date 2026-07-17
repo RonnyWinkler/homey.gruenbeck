@@ -134,8 +134,8 @@
     }
   ],
   "images": {
-    "small": "/drivers/softliq-sd/assets/images/small.jpg",
-    "large": "/drivers/softliq-sd/assets/images/large.jpg"
+    "small": "/drivers/softliq-sd/assets/images/small.png",
+    "large": "/drivers/softliq-sd/assets/images/large.png"
   },
   "settings": [
     {
@@ -403,7 +403,7 @@
             "de": "Freitag"
           },
           "hint": {
-            "en": "Freiday working method for individual mode",
+            "en": "Friday working method for individual mode",
             "de": "Freitag-Arbeitsweise bei individuellem Modus."
           }
         }

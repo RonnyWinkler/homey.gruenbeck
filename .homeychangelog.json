@@ -241,5 +241,9 @@
   "1.4.7": {
     "en": "SoftliQ-SE: fixed water/salt update.",
     "de": "SoftliQ-SE: Wasser/Salz-Aktualisierung korrigiert."
+  },
+  "1.4.8": {
+    "en": "Appstore styleguide update.",
+    "de": "Appstore-Styleguide-Aktualisierung."
   }
 }

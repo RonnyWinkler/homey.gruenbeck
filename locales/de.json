@@ -6,7 +6,7 @@
         "accountDetails": "Konto-Details",
         "user": "Benutzername",
         "password": "Passwort",
-        "updateInterval": "Update-Intervall (min)",
+        "updateInterval": "Aktualisierungs-Intervall (min)",
         "updateIntervalDescr": "softliQ-SD: Verwende einen Wert >5min, um eine Limit-Sperre zu vermeiden.<br> softliQ-SC: Verwende einen Wert >1min.<br> Der Standardwert ist 15min.",
         "active": "Aktiviere Datenermittlung aus der Grünbeck-Cloud",
         "saveChanges": "Einstellungen speichern",

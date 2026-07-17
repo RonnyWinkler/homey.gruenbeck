@@ -134,8 +134,8 @@
     }
   ],
   "images": {
-    "small": "/drivers/softliq-se/assets/images/small.jpg",
-    "large": "/drivers/softliq-se/assets/images/large.jpg"
+    "small": "/drivers/softliq-se/assets/images/small.png",
+    "large": "/drivers/softliq-se/assets/images/large.png"
   },
   "settings": [
     {

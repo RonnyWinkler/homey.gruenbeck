@@ -8,8 +8,8 @@
             "id": "device",
             "type": "autocomplete",
             "title": {
-                "en": "Gerät",
-                "de": "Device"
+                "en": "Device",
+                "de": "Gerät"
             }
         }
     ],
